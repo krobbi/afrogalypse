@@ -21,7 +21,7 @@ Need to upgrade stuff to progress more easily through enemies,
 but then you switch sides and need to beat other side
 switching between player/cpu
 
-** Horror game where you play as the monster
+Horror game where you play as the monster
 	Can only move when player doesn't see you
 		Can move stuff to block line of sight maybe
 		Or move items around
@@ -35,3 +35,4 @@ switching between player/cpu
 		Player navigates more easily with torch
 		But you can also find the player more easily
 		Could somehow place betteries strategically
+	WAS NOT FUN! JUST A WASTE OF TIME!
