@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://b4q17xt4v1fg4"]
+[gd_scene load_steps=3 format=3 uid="uid://b4q17xt4v1fg4"]
 
 [ext_resource type="Texture2D" uid="uid://bp761k2802pbp" path="res://textures/terrain.png" id="1_moj3b"]
+[ext_resource type="PackedScene" uid="uid://bebm4s1ufchtr" path="res://entities/stickman/stickman.tscn" id="2_bvrbi"]
 
 [node name="Forest" type="Node2D"]
 process_mode = 3
@@ -8,5 +9,8 @@ metadata/_edit_lock_ = true
 
 [node name="Terrain" type="Sprite2D" parent="."]
 texture = ExtResource("1_moj3b")
-centered = false
 metadata/_edit_lock_ = true
+
+[node name="Stickman" parent="." instance=ExtResource("2_bvrbi")]
+light_mask = 0
+visibility_layer = 2

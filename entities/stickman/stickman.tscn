@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://bebm4s1ufchtr"]
+
+[ext_resource type="Script" path="res://entities/stickman/stickman.gd" id="1_k1erq"]
+[ext_resource type="Texture2D" uid="uid://c5qoq44iljvvj" path="res://textures/stickman/stickman.png" id="1_wqxkv"]
+
+[node name="Stickman" type="CharacterBody2D"]
+script = ExtResource("1_k1erq")
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_wqxkv")
+offset = Vector2(0, -14)
+
+[node name="Camera2D" type="Camera2D" parent="."]
