@@ -37,4 +37,4 @@ Horror game where you play as the monster
 		Could somehow place betteries strategically
 	WAS NOT FUN! JUST A WASTE OF TIME!
 
-Frogger, but you're driving and have to avoid a swarm of frogs
+* Frogger, but you're driving and have to avoid a swarm of frogs
