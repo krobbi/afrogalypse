@@ -1,0 +1,15 @@
+# Godot Engine:
+.godot/*
+
+# IDE:
+.idea/*
+.vscode/*
+*.code-workspace
+*.sublime-project
+*.sublime-workspace
+*.suo
+
+# OS:
+.DS_Store
+desktop.ini
+Thumbs.db

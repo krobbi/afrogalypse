@@ -1,0 +1,34 @@
+Krobbizoid Game License
+
+Copyright (c) 2023 Chris Roberts
+All rights reserved.
+
+Permission is granted to any person obtaining a copy of this software, its
+source code, and/or its documentation (the "Software"), to use, modify, copy,
+produce media based on, document, and/or archive the Software, subject to the
+following conditions:
+
+The Software may only be distributed if the copyright holders are no longer
+distributing the Software. In this case, the Software must be distributed
+non-commercially.
+
+Media based on the Software must not be used commercially, except for revenue
+from advertising and/or funding.
+
+Media based on the Software must not provide a reasonable substitute for the
+Software.
+
+The Software, media based on the Software, or parts thereof must not be used in
+the promotion or production of generative AI models, cryptocurrencies,
+non-fungible tokens, and/or blockchain technologies.
+
+The copyright holders reserve the rights to remove access to the Software or to
+parts of the Software, and to sell copies of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
