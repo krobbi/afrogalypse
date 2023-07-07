@@ -10,5 +10,6 @@ metadata/_edit_group_ = true
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_wqxkv")
 offset = Vector2(0, -14)
+hframes = 4
 
 [node name="Camera2D" type="Camera2D" parent="."]
