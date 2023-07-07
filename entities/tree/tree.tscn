@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=3 uid="uid://4g17s4mju858"]
+
+[ext_resource type="Texture2D" uid="uid://c7xb6vrebxj7p" path="res://textures/tree.png" id="1_6055q"]
+[ext_resource type="Script" path="res://entities/tree/tree.gd" id="1_v88bt"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_o0rtt"]
+radius = 16.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4j305"]
+size = Vector2(32, 224)
+
+[node name="Tree" type="StaticBody2D"]
+collision_mask = 0
+script = ExtResource("1_v88bt")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_6055q")
+offset = Vector2(0, -110)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_o0rtt")
+
+[node name="HideArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HideArea"]
+position = Vector2(0, -128)
+shape = SubResource("RectangleShape2D_4j305")
+
+[connection signal="body_entered" from="HideArea" to="." method="_on_hide_area_body_entered"]
+[connection signal="body_exited" from="HideArea" to="." method="_on_hide_area_body_exited"]
