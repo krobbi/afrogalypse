@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://wrsulnlolt62"]
+
+[ext_resource type="Script" path="res://components/distance_clock/distance_clock.gd" id="1_2xteg"]
+
+[node name="DistanceClock" type="Node"]
+script = ExtResource("1_2xteg")

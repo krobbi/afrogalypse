@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://ctjvjk38kys8t"]
+
+[ext_resource type="Script" path="res://entities/frog_spawner/frog_spawner.gd" id="1_ltngl"]
+[ext_resource type="PackedScene" uid="uid://d4aivjhl0ysn1" path="res://entities/frog/frog.tscn" id="2_13ygi"]
+
+[node name="FrogSpawner" type="Marker2D"]
+script = ExtResource("1_ltngl")
+frog_scene = ExtResource("2_13ygi")

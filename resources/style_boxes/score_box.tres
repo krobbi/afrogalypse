@@ -1,0 +1,11 @@
+[gd_resource type="StyleBoxTexture" load_steps=2 format=3 uid="uid://crkid06fvh1rp"]
+
+[ext_resource type="Texture2D" uid="uid://bmmhomc25ditx" path="res://resources/textures/gui/score_box.png" id="1_or4yg"]
+
+[resource]
+content_margin_left = 3.0
+texture = ExtResource("1_or4yg")
+texture_margin_left = 2.0
+texture_margin_bottom = 2.0
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1

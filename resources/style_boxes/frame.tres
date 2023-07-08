@@ -1,0 +1,14 @@
+[gd_resource type="StyleBoxTexture" load_steps=2 format=3 uid="uid://vcfuqpnp7edu"]
+
+[ext_resource type="Texture2D" uid="uid://cc2napvc1roqk" path="res://resources/textures/gui/frame.png" id="1_3iygu"]
+
+[resource]
+texture = ExtResource("1_3iygu")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
+expand_margin_left = 4.0
+expand_margin_top = 4.0
+expand_margin_right = 4.0
+expand_margin_bottom = 4.0

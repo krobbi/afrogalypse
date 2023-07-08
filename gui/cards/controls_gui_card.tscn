@@ -1,0 +1,44 @@
+[gd_scene load_steps=2 format=3 uid="uid://c6an3tg3xs4d8"]
+
+[ext_resource type="PackedScene" uid="uid://deche81a76i5" path="res://gui/gui_card.tscn" id="1_f6ori"]
+
+[node name="ControlsGUICard" instance=ExtResource("1_f6ori")]
+
+[node name="HeadingLabel" type="Label" parent="VBoxContainer" index="0"]
+layout_mode = 2
+text = "Controls"
+horizontal_alignment = 1
+
+[node name="GridContainer" type="GridContainer" parent="VBoxContainer" index="1"]
+layout_mode = 2
+columns = 2
+
+[node name="LeftControl" type="Label" parent="VBoxContainer/GridContainer" index="0"]
+layout_mode = 2
+text = "A/Left Arrow:"
+
+[node name="LeftAction" type="Label" parent="VBoxContainer/GridContainer" index="1"]
+layout_mode = 2
+text = "Steer Left"
+
+[node name="RightControl" type="Label" parent="VBoxContainer/GridContainer" index="2"]
+layout_mode = 2
+text = "D/Right Arrow:"
+
+[node name="RightAction" type="Label" parent="VBoxContainer/GridContainer" index="3"]
+layout_mode = 2
+text = "Steer Right"
+
+[node name="DriftControl" type="Label" parent="VBoxContainer/GridContainer" index="4"]
+layout_mode = 2
+text = "Space/Z:"
+
+[node name="DriftAction" type="Label" parent="VBoxContainer/GridContainer" index="5"]
+layout_mode = 2
+text = "Brake/Drift"
+
+[node name="BackButton" type="Button" parent="VBoxContainer" index="2" groups=["focus"]]
+layout_mode = 2
+text = "Back"
+
+[connection signal="pressed" from="VBoxContainer/BackButton" to="." method="change_card" binds= ["main"]]

@@ -5,11 +5,10 @@ extends Node
 # a given point.
 
 @export var node: Node2D
-@export var speed: float = 256.0
 @export var despawn_position: float = 300.0
 
 func _physics_process(delta: float) -> void:
-	node.position.y += speed * delta
+	node.position.y += Global.speed * delta
 	
-	if node.position.y >= despawn_position:
+	if node.global_position.y >= despawn_position:
 		node.queue_free()

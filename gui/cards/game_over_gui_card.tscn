@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://n14bjbyf1eup"]
+
+[ext_resource type="PackedScene" uid="uid://deche81a76i5" path="res://gui/gui_card.tscn" id="1_y07bk"]
+[ext_resource type="Script" path="res://gui/cards/game_over_gui_card.gd" id="2_yigms"]
+
+[node name="GameOverGUICard" instance=ExtResource("1_y07bk")]
+script = ExtResource("2_yigms")
+
+[node name="HeadingLabel" type="Label" parent="VBoxContainer" index="0"]
+layout_mode = 2
+text = "Game Over"
+horizontal_alignment = 1
+
+[node name="RetryButton" type="Button" parent="VBoxContainer" index="1" groups=["focus"]]
+layout_mode = 2
+text = "Retry"
+
+[connection signal="pressed" from="VBoxContainer/RetryButton" to="." method="_on_retry_button_pressed"]

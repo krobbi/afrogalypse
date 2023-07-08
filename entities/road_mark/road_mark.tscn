@@ -5,6 +5,7 @@
 
 [node name="RoadMark" type="Sprite2D"]
 texture = ExtResource("1_a4lnc")
+metadata/_edit_group_ = true
 
 [node name="Mover" parent="." node_paths=PackedStringArray("node") instance=ExtResource("2_ku3q3")]
 node = NodePath("..")

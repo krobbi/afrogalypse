@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=3 uid="uid://deche81a76i5"]
+
+[ext_resource type="Theme" uid="uid://4g6q0qitk4oc" path="res://resources/theme/default_theme.tres" id="1_hq5o7"]
+[ext_resource type="Script" path="res://gui/gui_card.gd" id="2_1qjjs"]
+
+[node name="GUICard" type="PanelContainer"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -96.0
+offset_top = 16.0
+offset_right = 96.0
+offset_bottom = 56.0
+grow_horizontal = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme = ExtResource("1_hq5o7")
+script = ExtResource("2_1qjjs")
+metadata/_edit_lock_ = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+metadata/_edit_lock_ = true

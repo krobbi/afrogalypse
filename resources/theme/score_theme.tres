@@ -1,0 +1,9 @@
+[gd_resource type="Theme" load_steps=3 format=3 uid="uid://bw3woedwm4qrh"]
+
+[ext_resource type="StyleBox" uid="uid://crkid06fvh1rp" path="res://resources/style_boxes/score_box.tres" id="1_gkmav"]
+[ext_resource type="FontFile" uid="uid://5mw004debtmf" path="res://resources/fonts/m6x11.ttf" id="2_dcrfa"]
+
+[resource]
+default_font = ExtResource("2_dcrfa")
+Label/colors/font_color = Color(0.45098, 0.196078, 0.180392, 1)
+PanelContainer/styles/panel = ExtResource("1_gkmav")

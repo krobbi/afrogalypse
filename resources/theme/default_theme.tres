@@ -1,0 +1,22 @@
+[gd_resource type="Theme" load_steps=7 format=3 uid="uid://4g6q0qitk4oc"]
+
+[ext_resource type="StyleBox" uid="uid://wxt1rahslv5n" path="res://resources/style_boxes/button_hover.tres" id="1_3a3k3"]
+[ext_resource type="StyleBox" uid="uid://reeofrnymnvk" path="res://resources/style_boxes/button_normal.tres" id="1_51hm5"]
+[ext_resource type="StyleBox" uid="uid://b47x6oiolj5lt" path="res://resources/style_boxes/button_focus.tres" id="1_f10c0"]
+[ext_resource type="FontFile" uid="uid://5mw004debtmf" path="res://resources/fonts/m6x11.ttf" id="1_gjyeg"]
+[ext_resource type="StyleBox" uid="uid://vcfuqpnp7edu" path="res://resources/style_boxes/frame.tres" id="1_t1ikr"]
+[ext_resource type="StyleBox" uid="uid://cfxlxb3ig2dfs" path="res://resources/style_boxes/button_pressed.tres" id="3_n413q"]
+
+[resource]
+default_font = ExtResource("1_gjyeg")
+Button/colors/font_color = Color(0.0627451, 0.0666667, 0.0705882, 1)
+Button/colors/font_focus_color = Color(0.0627451, 0.0666667, 0.0705882, 1)
+Button/colors/font_hover_color = Color(0.945098, 0.94902, 0.945098, 1)
+Button/colors/font_hover_pressed_color = Color(0.945098, 0.94902, 0.945098, 1)
+Button/colors/font_pressed_color = Color(0.945098, 0.94902, 0.945098, 1)
+Button/styles/focus = ExtResource("1_f10c0")
+Button/styles/hover = ExtResource("1_3a3k3")
+Button/styles/normal = ExtResource("1_51hm5")
+Button/styles/pressed = ExtResource("3_n413q")
+Label/colors/font_color = Color(0.0627451, 0.0666667, 0.133333, 1)
+PanelContainer/styles/panel = ExtResource("1_t1ikr")
