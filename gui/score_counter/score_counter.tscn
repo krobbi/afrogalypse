@@ -24,6 +24,7 @@ text = "0m"
 vertical_alignment = 2
 
 [node name="DistanceClock" parent="." instance=ExtResource("3_f6pvt")]
+distance = 8.0
 instant = false
 
 [connection signal="distance_reached" from="DistanceClock" to="." method="_on_distance_clock_distance_reached"]

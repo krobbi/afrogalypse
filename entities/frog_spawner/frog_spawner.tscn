@@ -4,5 +4,6 @@
 [ext_resource type="PackedScene" uid="uid://d4aivjhl0ysn1" path="res://entities/frog/frog.tscn" id="2_13ygi"]
 
 [node name="FrogSpawner" type="Marker2D"]
+y_sort_enabled = true
 script = ExtResource("1_ltngl")
 frog_scene = ExtResource("2_13ygi")

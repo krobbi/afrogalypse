@@ -1,7 +1,7 @@
 extends Sprite2D
 
-@export var wheel_attack: float = 4.0
-@export var wheel_release: float = 3.0
+@export var wheel_attack: float = 6.0
+@export var wheel_release: float = 6.0
 
 @export var brake_attack: float = 5.0
 @export var brake_release: float = 2.0
@@ -9,12 +9,14 @@ extends Sprite2D
 @export var pivot_amount: float = 0.6
 @export var brake_pivot_amount: float = 0.4
 
-@export var turn_amount: float = 128.0
-@export var brake_turn_amount: float = -256.0
+@export var turn_amount: float = 150.0
+@export var brake_turn_amount: float = -400.0
 
 @export var start_speed: float = 200.0
+@export var max_speed: float = 400.0
 @export var start_acceleration: float = 50.0
-@export var stop_deceleration: float = 100.0
+@export var game_acceleration: float = 5.0
+@export var stop_deceleration: float = 200.0
 
 var wheel_position: float = 0.0
 var brake_position: float = 0.0
@@ -63,6 +65,7 @@ func starting_state(delta: float) -> void:
 
 
 func game_state(delta: float) -> void:
+	Global.speed = min(Global.speed + game_acceleration * delta, max_speed)
 	handle_input(delta, true)
 
 
