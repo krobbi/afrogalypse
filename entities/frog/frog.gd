@@ -2,10 +2,10 @@ class_name Frog
 extends Node2D
 
 @export var sprite: Sprite2D
-@export var jump_force: float = 20.0
-@export var gravity: float = 100.0
-@export var ground_wait: float = 0.05
-@export var forward_force: float = 200.0
+@export var jump_force: float = 40.0
+@export var gravity: float = 200.0
+@export var ground_wait: float = 0.1
+@export var forward_force: float = 250.0
 @export var friction: float = 20.0
 
 var ground_timer: float = 0.0
@@ -46,4 +46,5 @@ func _physics_process(delta: float) -> void:
 func _on_hitbox_area_entered(_area: Area2D) -> void:
 	if not is_hit:
 		is_hit = true
+		vertical_velocity = -100.0
 		Global.on_frog_hit()

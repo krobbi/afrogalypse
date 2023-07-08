@@ -1,7 +1,6 @@
-[gd_scene load_steps=9 format=3 uid="uid://db84bo3f0lyqi"]
+[gd_scene load_steps=8 format=3 uid="uid://db84bo3f0lyqi"]
 
 [ext_resource type="PackedScene" uid="uid://ce26bmikob7bk" path="res://entities/car/car.tscn" id="1_eqoqq"]
-[ext_resource type="Texture2D" uid="uid://c04fwihntm7o5" path="res://resources/textures/scenes/main/background.png" id="1_h1asa"]
 [ext_resource type="Script" path="res://scenes/main/main.gd" id="1_nf3r0"]
 [ext_resource type="PackedScene" uid="uid://c61b2hft4p2fl" path="res://entities/road_mark_spawner/road_mark_spawner.tscn" id="2_6k1et"]
 [ext_resource type="PackedScene" uid="uid://b3vh1c8ohwf5l" path="res://entities/road_mark/road_mark.tscn" id="3_xo548"]
@@ -14,24 +13,16 @@ process_mode = 3
 script = ExtResource("1_nf3r0")
 metadata/_edit_lock_ = true
 
-[node name="Background" type="Sprite2D" parent="."]
-texture = ExtResource("1_h1asa")
-centered = false
-
 [node name="RoadMarkSpawner" parent="." instance=ExtResource("2_6k1et")]
-position = Vector2(160, -80)
+position = Vector2(160, -180)
 
-[node name="InitRoadMark1" parent="RoadMarkSpawner" instance=ExtResource("3_xo548")]
-position = Vector2(0, 120)
-
-[node name="InitRoadMark2" parent="RoadMarkSpawner" instance=ExtResource("3_xo548")]
-position = Vector2(0, 240)
+[node name="InitRoadMark" parent="RoadMarkSpawner" instance=ExtResource("3_xo548")]
+position = Vector2(0, 270)
 
 [node name="TopFrogSpawner" parent="." node_paths=PackedStringArray("bottom_right") instance=ExtResource("4_dhns2")]
 position = Vector2(-48, -64)
 bottom_right = NodePath("BottomRight")
 delay = 0.5
-count = 2
 
 [node name="BottomRight" type="Marker2D" parent="TopFrogSpawner"]
 position = Vector2(308, 60)
@@ -39,14 +30,14 @@ position = Vector2(308, 60)
 [node name="SideFrogSpawner" parent="." node_paths=PackedStringArray("bottom_right") instance=ExtResource("4_dhns2")]
 position = Vector2(-48, -4)
 bottom_right = NodePath("BottomRight")
-delay = 0.2
-count = 2
+delay = 0.5
+count = 3
 
 [node name="BottomRight" type="Marker2D" parent="SideFrogSpawner"]
 position = Vector2(44, 180)
 
 [node name="Car" parent="." instance=ExtResource("1_eqoqq")]
-position = Vector2(160, 150)
+position = Vector2(160, 160)
 
 [node name="GUICardManager" parent="." instance=ExtResource("6_pwt5t")]
 

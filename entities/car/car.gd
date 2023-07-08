@@ -46,13 +46,12 @@ func handle_input(delta: float, can_steer: bool) -> void:
 	else:
 		brake_position = max(brake_position - brake_release * delta, 0.0)
 	
-	# Brake has less effect at lower speeds.
-	var speed_frac: float = Global.speed / start_speed
-	var brake_pivot: float = brake_pivot_amount * speed_frac
-	var brake_turn: float = brake_turn_amount * speed_frac
-	
-	rotation = wheel_position * (pivot_amount + brake_position * brake_pivot)
-	position.x += wheel_position * (turn_amount + brake_position * brake_turn) * delta
+	rotation = wheel_position * (pivot_amount + brake_position * brake_pivot_amount)
+	position.x = clamp(
+			position.x
+			+ wheel_position * (turn_amount + brake_position * brake_turn_amount) * delta,
+			56.0, 264.0
+	)
 
 
 func starting_state(delta: float) -> void:

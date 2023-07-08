@@ -4,8 +4,8 @@
 [ext_resource type="Script" path="res://entities/car/car.gd" id="2_tig26"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_2oq7k"]
-radius = 6.0
-height = 28.0
+radius = 5.0
+height = 26.0
 
 [node name="Car" type="Sprite2D"]
 texture = ExtResource("1_xurhx")

@@ -10,6 +10,6 @@ road_mark_scene = ExtResource("2_0cfps")
 metadata/_edit_group_ = true
 
 [node name="DistanceClock" parent="." instance=ExtResource("3_3syb0")]
-distance = 120.0
+distance = 270.0
 
 [connection signal="distance_reached" from="DistanceClock" to="." method="spawn_road_mark"]
