@@ -41,6 +41,9 @@ func _physics_process(delta: float) -> void:
 		position.x += horizontal_velocity * delta
 		horizontal_velocity = max(horizontal_velocity - friction * delta, 0.0)
 		
+		if global_position.x > 332.0:
+			queue_free()
+		
 		if vertical_velocity >= 0.0 and sprite.position.y >= 0.0:
 			ground_timer = Global.rng.randf_range(ground_wait_min, ground_wait_max)
 

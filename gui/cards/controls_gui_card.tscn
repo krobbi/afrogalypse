@@ -35,7 +35,7 @@ text = "Space/Z:"
 
 [node name="DriftAction" type="Label" parent="VBoxContainer/GridContainer" index="5"]
 layout_mode = 2
-text = "Brake/Drift"
+text = "Brake"
 
 [node name="BackButton" type="Button" parent="VBoxContainer" index="2" groups=["focus"]]
 layout_mode = 2

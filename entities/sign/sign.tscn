@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://bmeflkttin1ks"]
+
+[ext_resource type="Texture2D" uid="uid://8n7gd3p7irab" path="res://resources/textures/entities/grass_patch/sign.png" id="1_6p7df"]
+[ext_resource type="PackedScene" uid="uid://ny61orou7nqh" path="res://components/mover/mover.tscn" id="2_bn40y"]
+
+[node name="Sign" type="Sprite2D"]
+texture = ExtResource("1_6p7df")
+offset = Vector2(0, -24)
+metadata/_edit_group_ = true
+
+[node name="Mover" parent="." node_paths=PackedStringArray("node") instance=ExtResource("2_bn40y")]
+node = NodePath("..")
