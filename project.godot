@@ -16,7 +16,9 @@ run/main_scene="res://scenes/main/main.tscn"
 config/use_custom_user_dir=true
 config/custom_user_dir_name="krobbizoid/afrogalypse"
 config/features=PackedStringArray("4.0", "GL Compatibility")
-config/icon="res://icon.svg"
+config/icon="res://resources/textures/game/icon.png"
+config/macos_native_icon="res://resources/textures/game/icon.icns"
+config/windows_native_icon="res://resources/textures/game/icon.ico"
 
 [autoload]
 

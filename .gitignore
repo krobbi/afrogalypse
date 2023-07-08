@@ -1,3 +1,13 @@
+# Builds:
+builds/linux/*
+builds/mac/*
+builds/web/*
+builds/win/*
+!builds/linux/.itch
+!builds/mac/.itch
+!builds/web/.itch
+!builds/win/.itch
+
 # Godot Engine:
 .godot/*
 
