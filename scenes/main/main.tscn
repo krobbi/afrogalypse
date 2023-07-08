@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://db84bo3f0lyqi"]
+[gd_scene load_steps=10 format=3 uid="uid://db84bo3f0lyqi"]
 
 [ext_resource type="PackedScene" uid="uid://ce26bmikob7bk" path="res://entities/car/car.tscn" id="1_eqoqq"]
 [ext_resource type="Script" path="res://scenes/main/main.gd" id="1_nf3r0"]
 [ext_resource type="PackedScene" uid="uid://c61b2hft4p2fl" path="res://entities/road_mark_spawner/road_mark_spawner.tscn" id="2_6k1et"]
 [ext_resource type="PackedScene" uid="uid://b3vh1c8ohwf5l" path="res://entities/road_mark/road_mark.tscn" id="3_xo548"]
 [ext_resource type="PackedScene" uid="uid://ctjvjk38kys8t" path="res://entities/frog_spawner/frog_spawner.tscn" id="4_dhns2"]
+[ext_resource type="PackedScene" uid="uid://e48x6rmcjgy7" path="res://entities/sign_spawner/sign_spawner.tscn" id="6_k81c5"]
 [ext_resource type="PackedScene" uid="uid://sr272lnrwpkk" path="res://gui/gui_card_manager.tscn" id="6_pwt5t"]
 [ext_resource type="PackedScene" uid="uid://ix2m6stdmdjt" path="res://gui/score_counter/score_counter.tscn" id="8_dg5x7"]
 [ext_resource type="AudioStream" uid="uid://o46cvkf5ntio" path="res://resources/audio/frogrock.ogg" id="8_fr3hv"]
@@ -45,6 +46,9 @@ position = Vector2(308, 60)
 [node name="Car" parent="Entities" instance=ExtResource("1_eqoqq")]
 position = Vector2(160, 160)
 
+[node name="SignSpawner" parent="Entities" instance=ExtResource("6_k81c5")]
+position = Vector2(24, -16)
+
 [node name="GUICardManager" parent="." instance=ExtResource("6_pwt5t")]
 
 [node name="ScoreCounter" parent="GUICardManager" instance=ExtResource("8_dg5x7")]
@@ -52,5 +56,6 @@ layout_mode = 1
 
 [node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("8_fr3hv")
-volume_db = -12.0
+volume_db = -80.0
 autoplay = true
+bus = &"Music"

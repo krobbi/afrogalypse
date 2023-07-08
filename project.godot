@@ -20,6 +20,10 @@ config/icon="res://resources/textures/game/icon.png"
 config/macos_native_icon="res://resources/textures/game/icon.icns"
 config/windows_native_icon="res://resources/textures/game/icon.ico"
 
+[audio]
+
+buses/default_bus_layout="res://resources/audio_bus_layouts/default_bus_layout.tres"
+
 [autoload]
 
 Global="*res://autoloads/global/global.tscn"

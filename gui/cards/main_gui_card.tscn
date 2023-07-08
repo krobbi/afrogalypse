@@ -16,14 +16,9 @@ stretch_mode = 3
 layout_mode = 2
 text = "Start"
 
-[node name="ControlsButton" type="Button" parent="VBoxContainer" index="2"]
+[node name="OptionsButton" type="Button" parent="VBoxContainer" index="2"]
 layout_mode = 2
-text = "Controls"
-
-[node name="CreditsButton" type="Button" parent="VBoxContainer" index="3"]
-layout_mode = 2
-text = "Credits"
+text = "Options"
 
 [connection signal="pressed" from="VBoxContainer/StartButton" to="." method="_on_start_button_pressed"]
-[connection signal="pressed" from="VBoxContainer/ControlsButton" to="." method="change_card" binds= ["controls"]]
-[connection signal="pressed" from="VBoxContainer/CreditsButton" to="." method="change_card" binds= ["credits"]]
+[connection signal="pressed" from="VBoxContainer/OptionsButton" to="." method="change_card" binds= ["options"]]

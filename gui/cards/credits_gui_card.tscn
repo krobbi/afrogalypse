@@ -13,33 +13,32 @@ horizontal_alignment = 1
 layout_mode = 2
 columns = 2
 
-[node name="GameLabel" type="Label" parent="VBoxContainer/CreditsGridContainer" index="0"]
-layout_mode = 2
-text = "Game:"
-
-[node name="GameCreditLabel" type="Label" parent="VBoxContainer/CreditsGridContainer" index="1"]
-layout_mode = 2
-text = "Chris Roberts (krobbizoid.itch.io)"
-
-[node name="FontLabel" type="Label" parent="VBoxContainer/CreditsGridContainer" index="2"]
+[node name="FontLabel" type="Label" parent="VBoxContainer/CreditsGridContainer" index="0"]
 layout_mode = 2
 text = "Font:"
 
-[node name="FontCreditLabel" type="Label" parent="VBoxContainer/CreditsGridContainer" index="3"]
+[node name="FontCreditLabel" type="Label" parent="VBoxContainer/CreditsGridContainer" index="1"]
 layout_mode = 2
 text = "m6x11 - Daniel Linssen (managore.itch.io)"
 
-[node name="LicenseLabel" type="Label" parent="VBoxContainer" index="2"]
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer" index="2"]
+layout_mode = 2
+
+[node name="LicenseLabel" type="Label" parent="VBoxContainer" index="3"]
 layout_mode = 2
 text = "Released under the Krobbizoid Game License:
 https://krobbi.github.io/license/2023/kgl.txt"
 
-[node name="VersionLabel" type="Label" parent="VBoxContainer" index="3"]
+[node name="CopyrightLabel" type="Label" parent="VBoxContainer" index="4"]
+layout_mode = 2
+text = "Copyright © 2023 Chris Roberts (Krobbizoid)."
+
+[node name="VersionLabel" type="Label" parent="VBoxContainer" index="5"]
 layout_mode = 2
 text = "v1.0.0-jam"
 
-[node name="BackButton" type="Button" parent="VBoxContainer" index="4" groups=["focus"]]
+[node name="BackButton" type="Button" parent="VBoxContainer" index="6" groups=["focus"]]
 layout_mode = 2
 text = "Back"
 
-[connection signal="pressed" from="VBoxContainer/BackButton" to="." method="change_card" binds= ["main"]]
+[connection signal="pressed" from="VBoxContainer/BackButton" to="." method="change_card" binds= ["options"]]

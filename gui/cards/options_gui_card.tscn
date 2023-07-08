@@ -1,0 +1,56 @@
+[gd_scene load_steps=3 format=3 uid="uid://dnjoq3cue8j2c"]
+
+[ext_resource type="PackedScene" uid="uid://deche81a76i5" path="res://gui/gui_card.tscn" id="1_kqotr"]
+[ext_resource type="Script" path="res://gui/cards/options_gui_card.gd" id="2_xv3dp"]
+
+[node name="OptionsGUICard" instance=ExtResource("1_kqotr")]
+script = ExtResource("2_xv3dp")
+
+[node name="HeadingLabel" type="Label" parent="VBoxContainer" index="0"]
+layout_mode = 2
+text = "Options"
+horizontal_alignment = 1
+
+[node name="GridContainer" type="GridContainer" parent="VBoxContainer" index="1"]
+layout_mode = 2
+columns = 2
+
+[node name="SoundLabel" type="Label" parent="VBoxContainer/GridContainer" index="0"]
+layout_mode = 2
+text = "Sound:"
+
+[node name="SoundSlider" type="HSlider" parent="VBoxContainer/GridContainer" index="1" groups=["focus"]]
+layout_mode = 2
+step = 5.0
+value = 50.0
+
+[node name="MusicLabel" type="Label" parent="VBoxContainer/GridContainer" index="2"]
+layout_mode = 2
+text = "Music:"
+
+[node name="MusicSlider" type="HSlider" parent="VBoxContainer/GridContainer" index="3" groups=["focus"]]
+layout_mode = 2
+size_flags_horizontal = 3
+step = 5.0
+value = 50.0
+
+[node name="ControlsButton" type="Button" parent="VBoxContainer" index="2"]
+layout_mode = 2
+text = "Controls"
+
+[node name="CreditsButton" type="Button" parent="VBoxContainer" index="3"]
+layout_mode = 2
+text = "Credits"
+
+[node name="Story" type="Button" parent="VBoxContainer" index="4"]
+layout_mode = 2
+text = "Story"
+
+[node name="BackButton" type="Button" parent="VBoxContainer" index="5"]
+layout_mode = 2
+text = "Back"
+
+[connection signal="pressed" from="VBoxContainer/ControlsButton" to="." method="change_card" binds= ["controls"]]
+[connection signal="pressed" from="VBoxContainer/CreditsButton" to="." method="change_card" binds= ["credits"]]
+[connection signal="pressed" from="VBoxContainer/Story" to="." method="change_card" binds= ["story"]]
+[connection signal="pressed" from="VBoxContainer/BackButton" to="." method="change_card" binds= ["main"]]
