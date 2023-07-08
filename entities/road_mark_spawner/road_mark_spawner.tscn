@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://c61b2hft4p2fl"]
+
+[ext_resource type="Script" path="res://entities/road_mark_spawner/road_mark_spawner.gd" id="1_gdox1"]
+
+[node name="RoadMarkSpawner" type="Marker2D"]
+script = ExtResource("1_gdox1")

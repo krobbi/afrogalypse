@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://b3vh1c8ohwf5l"]
+
+[ext_resource type="Texture2D" uid="uid://olgv3a40num4" path="res://resources/textures/entities/road_mark/road_mark.png" id="1_a4lnc"]
+[ext_resource type="PackedScene" uid="uid://ny61orou7nqh" path="res://components/mover/mover.tscn" id="2_ku3q3"]
+
+[node name="RoadMark" type="Sprite2D"]
+texture = ExtResource("1_a4lnc")
+
+[node name="Mover" parent="." node_paths=PackedStringArray("node") instance=ExtResource("2_ku3q3")]
+node = NodePath("..")

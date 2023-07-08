@@ -1,0 +1,33 @@
+[gd_scene load_steps=7 format=3 uid="uid://db84bo3f0lyqi"]
+
+[ext_resource type="PackedScene" uid="uid://ce26bmikob7bk" path="res://entities/car/car.tscn" id="1_eqoqq"]
+[ext_resource type="Texture2D" uid="uid://c04fwihntm7o5" path="res://resources/textures/scenes/main/background.png" id="1_h1asa"]
+[ext_resource type="PackedScene" uid="uid://c61b2hft4p2fl" path="res://entities/road_mark_spawner/road_mark_spawner.tscn" id="2_6k1et"]
+[ext_resource type="Script" path="res://scenes/main/debug_label.gd" id="2_shudk"]
+[ext_resource type="PackedScene" uid="uid://b3vh1c8ohwf5l" path="res://entities/road_mark/road_mark.tscn" id="3_xo548"]
+[ext_resource type="PackedScene" uid="uid://d4aivjhl0ysn1" path="res://entities/frog/frog.tscn" id="6_qhiyj"]
+
+[node name="Main" type="Node2D"]
+metadata/_edit_lock_ = true
+
+[node name="Background" type="Sprite2D" parent="."]
+texture = ExtResource("1_h1asa")
+centered = false
+
+[node name="RoadMarkSpawner" parent="." instance=ExtResource("2_6k1et")]
+position = Vector2(160, -32)
+road_mark_scene = ExtResource("3_xo548")
+
+[node name="Car" parent="." instance=ExtResource("1_eqoqq")]
+position = Vector2(160, 150)
+
+[node name="DebugLabel" type="Label" parent="."]
+offset_right = 60.0
+offset_bottom = 26.0
+text = "DEBUG:"
+script = ExtResource("2_shudk")
+
+[node name="Frog" parent="." instance=ExtResource("6_qhiyj")]
+position = Vector2(32, 100)
+
+[connection signal="debug" from="Car" to="DebugLabel" method="on_debug"]

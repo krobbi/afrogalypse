@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://ce26bmikob7bk"]
+
+[ext_resource type="Texture2D" uid="uid://x21oliy31kwa" path="res://resources/textures/entities/car/car.png" id="1_xurhx"]
+[ext_resource type="Script" path="res://entities/car/car.gd" id="2_tig26"]
+
+[node name="Car" type="Sprite2D"]
+texture = ExtResource("1_xurhx")
+offset = Vector2(0, -8)
+script = ExtResource("2_tig26")
+metadata/_edit_group_ = true

@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://d4aivjhl0ysn1"]
+
+[ext_resource type="Script" path="res://entities/frog/frog.gd" id="1_6saia"]
+[ext_resource type="Texture2D" uid="uid://cn8mtqqxm7wt7" path="res://entities/frog/frog.png" id="1_c2uii"]
+
+[node name="Frog" type="Node2D" node_paths=PackedStringArray("sprite")]
+script = ExtResource("1_6saia")
+sprite = NodePath("Sprite2D")
+metadata/_edit_lock_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_c2uii")
+offset = Vector2(4, -6)
+hframes = 2
