@@ -16,7 +16,7 @@ extends Sprite2D
 @export var max_speed: float = 250.0
 @export var boost_speed: float = 600.0
 @export var start_acceleration: float = 50.0
-@export var game_acceleration: float = 5.0
+@export var game_acceleration: float = 1.0
 @export var stop_deceleration: float = 200.0
 @export var brake_speed_mul: float = 0.8
 
@@ -44,7 +44,7 @@ func _physics_process(delta: float) -> void:
 			stopping_state(delta)
 	
 	apply_speed()
-	boost_amount = max(boost_amount - 0.2 * delta, 0.0)
+	boost_amount = maxf(boost_amount - 0.2 * delta, 0.0)
 	
 	if boost_amount <= 0.0:
 		Global.is_boosting = false
@@ -83,12 +83,12 @@ func handle_input(delta: float, can_steer: bool) -> void:
 			wheel_position = 0.0
 	
 	if can_steer and Input.is_action_pressed("brake"):
-		brake_position = min(brake_position + brake_attack * delta, 1.0)
+		brake_position = minf(brake_position + brake_attack * delta, 1.0)
 	else:
-		brake_position = max(brake_position - brake_release * delta, 0.0)
+		brake_position = maxf(brake_position - brake_release * delta, 0.0)
 	
 	rotation = wheel_position * (pivot_amount + brake_position * brake_pivot_amount)
-	position.x = clamp(
+	position.x = clampf(
 			position.x
 			+ wheel_position * (turn_amount + brake_position * brake_turn_amount) * delta,
 			56.0, 264.0
@@ -96,7 +96,7 @@ func handle_input(delta: float, can_steer: bool) -> void:
 
 
 func starting_state(delta: float) -> void:
-	target_speed = min(target_speed + start_acceleration * delta, start_speed)
+	target_speed = minf(target_speed + start_acceleration * delta, start_speed)
 	handle_input(delta, true)
 	
 	if target_speed >= start_speed and not get_tree().get_first_node_in_group("frogs"):
@@ -104,7 +104,7 @@ func starting_state(delta: float) -> void:
 
 
 func game_state(delta: float) -> void:
-	target_speed = min(target_speed + game_acceleration * delta, max_speed)
+	target_speed = minf(target_speed + game_acceleration * delta, max_speed)
 	handle_input(delta, true)
 	
 	if Global.no_hit_time < 100.0:
@@ -112,7 +112,7 @@ func game_state(delta: float) -> void:
 
 
 func stopping_state(delta: float) -> void:
-	target_speed = max(target_speed - stop_deceleration * delta, 0.0)
+	target_speed = maxf(target_speed - stop_deceleration * delta, 0.0)
 	handle_input(delta, false)
 	
 	if Global.speed <= 0.0:

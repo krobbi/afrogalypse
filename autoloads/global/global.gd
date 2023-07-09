@@ -61,7 +61,7 @@ func new_game() -> void:
 
 
 func on_frog_hit() -> void:
-	no_hit_time = 0.0
+	no_hit_time *= 0.6
 	energy_removed.emit()
 
 
