@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://dnjoq3cue8j2c"]
+[gd_scene load_steps=4 format=3 uid="uid://dnjoq3cue8j2c"]
 
 [ext_resource type="PackedScene" uid="uid://deche81a76i5" path="res://gui/gui_card.tscn" id="1_kqotr"]
 [ext_resource type="Script" path="res://gui/cards/options_gui_card.gd" id="2_xv3dp"]
+[ext_resource type="AudioStream" uid="uid://ck8yg1glcuwmk" path="res://resources/audio/volume_pip.ogg" id="3_xcue6"]
 
 [node name="OptionsGUICard" instance=ExtResource("1_kqotr")]
 script = ExtResource("2_xv3dp")
@@ -22,13 +23,13 @@ text = "Sound:"
 [node name="SoundSlider" type="HSlider" parent="VBoxContainer/GridContainer" index="1" groups=["focus"]]
 layout_mode = 2
 step = 5.0
-value = 50.0
+value = 75.0
 
 [node name="MusicLabel" type="Label" parent="VBoxContainer/GridContainer" index="2"]
 layout_mode = 2
 text = "Music:"
 
-[node name="MusicSlider" type="HSlider" parent="VBoxContainer/GridContainer" index="3" groups=["focus"]]
+[node name="MusicSlider" type="HSlider" parent="VBoxContainer/GridContainer" index="3"]
 layout_mode = 2
 size_flags_horizontal = 3
 step = 5.0
@@ -49,6 +50,10 @@ text = "Tutorial"
 [node name="BackButton" type="Button" parent="VBoxContainer" index="5"]
 layout_mode = 2
 text = "Back"
+
+[node name="PipPlayer" type="AudioStreamPlayer" parent="." index="1"]
+stream = ExtResource("3_xcue6")
+bus = &"Sound"
 
 [connection signal="pressed" from="VBoxContainer/ControlsButton" to="." method="change_card" binds= ["controls"]]
 [connection signal="pressed" from="VBoxContainer/CreditsButton" to="." method="change_card" binds= ["credits"]]

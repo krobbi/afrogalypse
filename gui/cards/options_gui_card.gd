@@ -2,6 +2,7 @@ extends GUICard
 
 @onready var sound_slider: HSlider = $VBoxContainer/GridContainer/SoundSlider
 @onready var music_slider: HSlider = $VBoxContainer/GridContainer/MusicSlider
+@onready var pip_player: AudioStreamPlayer = $PipPlayer
 
 var has_changed_options: bool = false
 
@@ -23,6 +24,7 @@ func _exit_tree() -> void:
 
 func _on_sound_slider_value_changed(value: float) -> void:
 	Global.set_sound_volume(value)
+	pip_player.play()
 	has_changed_options = true
 
 

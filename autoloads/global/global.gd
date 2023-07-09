@@ -23,13 +23,13 @@ var speed: float = 0.0
 var rng: RandomNumberGenerator = RandomNumberGenerator.new()
 var high_score: int = 0
 var is_main_card: bool = true
-var sound_volume: float = 50.0
+var sound_volume: float = 75.0
 var music_volume: float = 50.0
 var is_boosting: bool = false
 var no_hit_time: float = 0.0
 
 func _ready() -> void:
-	set_sound_volume(50.0)
+	set_sound_volume(75.0)
 	set_music_volume(50.0)
 	load_data()
 
