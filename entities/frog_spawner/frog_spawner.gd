@@ -10,6 +10,7 @@ enum SpawnFacing { LEFT, RIGHT, BOTH }
 @export var min_count: int = 5
 @export var max_count: int = 5
 @export var spawn_facing: SpawnFacing = SpawnFacing.RIGHT
+@export var difficulty_curve: float = 5.0
 
 var timer: float = 0.0
 
@@ -23,7 +24,9 @@ func _physics_process(delta: float) -> void:
 	if timer <= 0.0:
 		timer += delay
 		
-		for i in range(Global.rng.randi_range(min_count, max_count)):
+		var scaled_max: int = max_count + int(Global.no_hit_time * difficulty_curve)
+		
+		for i in range(Global.rng.randi_range(min_count, scaled_max)):
 			spawn_frog()
 
 

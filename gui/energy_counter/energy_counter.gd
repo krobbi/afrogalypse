@@ -9,6 +9,7 @@ var boost_cooldown: float = 0.0
 
 @onready var gain_player: AudioStreamPlayer = $GainPlayer
 @onready var deplete_player: AudioStreamPlayer = $DepletePlayer
+@onready var refill_player: AudioStreamPlayer = $RefillPlayer
 
 func _ready() -> void:
 	Global.new_game_started.connect(reset)
@@ -26,24 +27,28 @@ func _physics_process(delta: float) -> void:
 	
 	if boost_cooldown > 0.0:
 		boost_cooldown -= delta
-		modulate = Color(0.5, 0.25, 0.25, 1.0)
-	else:
-		modulate = Color.WHITE
+		
+		if boost_cooldown <= 0.0:
+			create_tween().tween_property(self, "modulate", Color.WHITE, 0.1)
+			
+			if len(points) > 0:
+				refill_player.play()
 	
 	if (
 			Global.state == Global.GameState.GAME
 			and boost_cooldown <= 0.0
-			and remove_cooldown <= 0.0
 			and Input.is_action_just_pressed("boost")
 			and len(points) > 0):
 		remove_point(false)
-		boost_cooldown = 10.0
+		create_tween().tween_property(self, "modulate", Color(0.5, 0.25, 0.25, 1.0), 0.1)
+		boost_cooldown = 12.0
 		Global.boost_used.emit()
 
 
 func reset() -> void:
 	remove_cooldown = 2.0
-	boost_cooldown = 2.0
+	boost_cooldown = 0.0
+	modulate = Color.WHITE
 
 
 func add_point() -> void:

@@ -14,7 +14,7 @@ extends Sprite2D
 
 @export var start_speed: float = 200.0
 @export var max_speed: float = 250.0
-@export var boost_speed: float = 500.0
+@export var boost_speed: float = 600.0
 @export var start_acceleration: float = 50.0
 @export var game_acceleration: float = 5.0
 @export var stop_deceleration: float = 200.0
@@ -106,6 +106,9 @@ func starting_state(delta: float) -> void:
 func game_state(delta: float) -> void:
 	target_speed = min(target_speed + game_acceleration * delta, max_speed)
 	handle_input(delta, true)
+	
+	if Global.no_hit_time < 100.0:
+		Global.no_hit_time += delta
 
 
 func stopping_state(delta: float) -> void:

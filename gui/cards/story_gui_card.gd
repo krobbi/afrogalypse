@@ -1,7 +1,6 @@
 extends GUICard
 
 const STORY: Array[String] = [
-	"Warning:\nThis game may not be\nsuitable for players with\nepilepsy or motion sickness.",
 	"The plague of robotic frogs\nhas descended upon the city.",
 	"Maybe you can escape if\nyou take to the road.",
 	"Beware of crossing frogs.\nThey will damage your car.",

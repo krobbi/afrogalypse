@@ -26,6 +26,7 @@ var is_main_card: bool = true
 var sound_volume: float = 50.0
 var music_volume: float = 50.0
 var is_boosting: bool = false
+var no_hit_time: float = 0.0
 
 func _ready() -> void:
 	set_sound_volume(50.0)
@@ -55,10 +56,12 @@ func set_music_volume(value: float) -> void:
 func new_game() -> void:
 	state = GameState.STARTING
 	reset_rng()
+	no_hit_time = 0.0
 	new_game_started.emit()
 
 
 func on_frog_hit() -> void:
+	no_hit_time = 0.0
 	energy_removed.emit()
 
 
