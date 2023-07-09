@@ -5,6 +5,9 @@ extends Node
 signal gui_card_changed(card_name: String)
 signal new_game_started
 signal game_over_cleared
+signal energy_added
+signal energy_removed
+signal boost_used
 
 const SAVE_PATH: String = "user://save.json"
 
@@ -22,6 +25,7 @@ var high_score: int = 0
 var is_main_card: bool = true
 var sound_volume: float = 50.0
 var music_volume: float = 50.0
+var is_boosting: bool = false
 
 func _ready() -> void:
 	set_sound_volume(50.0)
@@ -55,6 +59,10 @@ func new_game() -> void:
 
 
 func on_frog_hit() -> void:
+	energy_removed.emit()
+
+
+func on_energy_depleted() -> void:
 	state = GameState.STOPPING
 
 

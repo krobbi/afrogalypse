@@ -52,5 +52,9 @@ func _physics_process(delta: float) -> void:
 func _on_hitbox_area_entered(_area: Area2D) -> void:
 	if not is_hit and Global.state == Global.GameState.GAME:
 		is_hit = true
-		vertical_velocity = -50.0
-		Global.on_frog_hit()
+		
+		if Global.is_boosting:
+			vertical_velocity = -100.0
+		else:
+			vertical_velocity = -50.0
+			Global.on_frog_hit()

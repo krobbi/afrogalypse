@@ -13,7 +13,8 @@ extends Sprite2D
 @export var brake_turn_amount: float = -100.0
 
 @export var start_speed: float = 200.0
-@export var max_speed: float = 400.0
+@export var max_speed: float = 250.0
+@export var boost_speed: float = 500.0
 @export var start_acceleration: float = 50.0
 @export var game_acceleration: float = 5.0
 @export var stop_deceleration: float = 200.0
@@ -22,6 +23,16 @@ extends Sprite2D
 var target_speed: float = 0.0
 var wheel_position: float = 0.0
 var brake_position: float = 0.0
+var boost_amount: float = 0.0
+
+@onready var boost_player: AudioStreamPlayer2D = $BoostPlayer
+@onready var boost_particles: GPUParticles2D = $BoostParticles
+@onready var boost_light: PointLight2D = $BoostLight
+
+func _ready() -> void:
+	Global.new_game_started.connect(reset)
+	Global.boost_used.connect(apply_boost)
+
 
 func _physics_process(delta: float) -> void:
 	match Global.state:
@@ -33,10 +44,30 @@ func _physics_process(delta: float) -> void:
 			stopping_state(delta)
 	
 	apply_speed()
+	boost_amount = max(boost_amount - 0.2 * delta, 0.0)
+	
+	if boost_amount <= 0.0:
+		Global.is_boosting = false
+		boost_particles.emitting = false
+		boost_light.hide()
+
+
+func reset() -> void:
+	boost_amount = 0.0
+
+
+func apply_boost() -> void:
+	boost_amount = 1.0
+	Global.is_boosting = true
+	boost_particles.emitting = true
+	boost_light.show()
+	boost_player.play()
 
 
 func apply_speed() -> void:
-	Global.speed = lerpf(target_speed, target_speed * brake_speed_mul, brake_position)
+	var boosted_speed: float = lerpf(target_speed, boost_speed, boost_amount)
+	var braked_speed: float = lerpf(boosted_speed, boosted_speed * brake_speed_mul, brake_position)
+	Global.speed = braked_speed
 
 
 func handle_input(delta: float, can_steer: bool) -> void:

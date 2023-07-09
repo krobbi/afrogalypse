@@ -31,11 +31,19 @@ text = "Steer Right"
 
 [node name="DriftControl" type="Label" parent="VBoxContainer/GridContainer" index="4"]
 layout_mode = 2
-text = "Space/Z:"
+text = "Shift/X:"
 
 [node name="DriftAction" type="Label" parent="VBoxContainer/GridContainer" index="5"]
 layout_mode = 2
 text = "Brake"
+
+[node name="BoostControl" type="Label" parent="VBoxContainer/GridContainer" index="6"]
+layout_mode = 2
+text = "Space/Z:"
+
+[node name="BoostAction" type="Label" parent="VBoxContainer/GridContainer" index="7"]
+layout_mode = 2
+text = "Boost"
 
 [node name="BackButton" type="Button" parent="VBoxContainer" index="2" groups=["focus"]]
 layout_mode = 2

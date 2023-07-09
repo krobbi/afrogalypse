@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://bauw6w8ags5vv"]
+
+[ext_resource type="Script" path="res://gui/energy_counter/energy_counter.gd" id="1_ekfxp"]
+[ext_resource type="AudioStream" uid="uid://bdyicyi7olsk7" path="res://resources/audio/gain_energy.ogg" id="2_bjo58"]
+[ext_resource type="AudioStream" uid="uid://kmfj4on6gys" path="res://resources/audio/deplete.ogg" id="3_76ian"]
+
+[node name="EnergyCounter" type="Marker2D"]
+script = ExtResource("1_ekfxp")
+metadata/_edit_group_ = true
+
+[node name="GainPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_bjo58")
+bus = &"Sound"
+
+[node name="DepletePlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_76ian")
+bus = &"Sound"

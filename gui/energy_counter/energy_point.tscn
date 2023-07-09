@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://2bwnajs3a2yu"]
+
+[ext_resource type="Texture2D" uid="uid://bjspaaxg8wpuh" path="res://gui/energy_counter/energy_point.png" id="1_vmbab"]
+[ext_resource type="Script" path="res://gui/energy_counter/energy_point.gd" id="2_d227w"]
+
+[node name="EnergyPoint" type="Sprite2D"]
+modulate = Color(1, 1, 1, 0)
+texture = ExtResource("1_vmbab")
+script = ExtResource("2_d227w")

@@ -1,11 +1,26 @@
-[gd_scene load_steps=4 format=3 uid="uid://ce26bmikob7bk"]
+[gd_scene load_steps=8 format=3 uid="uid://ce26bmikob7bk"]
 
 [ext_resource type="Texture2D" uid="uid://x21oliy31kwa" path="res://resources/textures/entities/car/car.png" id="1_xurhx"]
 [ext_resource type="Script" path="res://entities/car/car.gd" id="2_tig26"]
+[ext_resource type="AudioStream" uid="uid://ccm5jtxnh3ujh" path="res://resources/audio/boost.ogg" id="3_tq5rk"]
+[ext_resource type="Texture2D" uid="uid://c5j8u8vbr7gsc" path="res://resources/textures/entities/car/boost_particle.png" id="4_v0txi"]
+[ext_resource type="Texture2D" uid="uid://c0dsl3hnor1gn" path="res://resources/textures/entities/car/boost_light.png" id="5_vubd6"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_2oq7k"]
 radius = 5.0
 height = 26.0
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_gwiaw"]
+particle_flag_disable_z = true
+direction = Vector3(0, 1, 0)
+spread = 4.85
+initial_velocity_min = 64.0
+initial_velocity_max = 128.0
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+angle_min = -720.0
+angle_max = 720.0
+scale_min = 0.5
 
 [node name="Car" type="Sprite2D"]
 texture = ExtResource("1_xurhx")
@@ -21,3 +36,22 @@ metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
 shape = SubResource("CapsuleShape2D_2oq7k")
+
+[node name="BoostPlayer" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_tq5rk")
+bus = &"Sound"
+
+[node name="BoostParticles" type="GPUParticles2D" parent="."]
+position = Vector2(-3, 6)
+emitting = false
+amount = 16
+process_material = SubResource("ParticleProcessMaterial_gwiaw")
+texture = ExtResource("4_v0txi")
+lifetime = 0.3
+visibility_rect = Rect2(-10, -10, 20, 50)
+local_coords = true
+
+[node name="BoostLight" type="PointLight2D" parent="."]
+visible = false
+texture = ExtResource("5_vubd6")
+offset = Vector2(-3, 20)

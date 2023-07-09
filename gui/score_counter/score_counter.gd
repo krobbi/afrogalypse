@@ -25,6 +25,9 @@ func _on_game_over_cleared() -> void:
 
 
 func _on_distance_clock_distance_reached() -> void:
+	if score % 10 == 9 and score < 30:
+		Global.energy_added.emit()
+	
 	set_score(score + 1)
 
 

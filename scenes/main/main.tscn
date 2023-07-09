@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://db84bo3f0lyqi"]
+[gd_scene load_steps=12 format=3 uid="uid://db84bo3f0lyqi"]
 
 [ext_resource type="PackedScene" uid="uid://ce26bmikob7bk" path="res://entities/car/car.tscn" id="1_eqoqq"]
 [ext_resource type="Script" path="res://scenes/main/main.gd" id="1_nf3r0"]
@@ -9,6 +9,8 @@
 [ext_resource type="PackedScene" uid="uid://sr272lnrwpkk" path="res://gui/gui_card_manager.tscn" id="6_pwt5t"]
 [ext_resource type="PackedScene" uid="uid://ix2m6stdmdjt" path="res://gui/score_counter/score_counter.tscn" id="8_dg5x7"]
 [ext_resource type="AudioStream" uid="uid://o46cvkf5ntio" path="res://resources/audio/frogrock.ogg" id="8_fr3hv"]
+[ext_resource type="PackedScene" uid="uid://2bwnajs3a2yu" path="res://gui/energy_counter/energy_point.tscn" id="8_hkfef"]
+[ext_resource type="PackedScene" uid="uid://bauw6w8ags5vv" path="res://gui/energy_counter/energy_counter.tscn" id="10_goe63"]
 
 [node name="Main" type="Node2D"]
 process_mode = 3
@@ -29,7 +31,7 @@ metadata/_edit_lock_ = true
 position = Vector2(-48, -4)
 bottom_right = NodePath("BottomRight")
 delay = 0.5
-count = 2
+count = 3
 
 [node name="BottomRight" type="Marker2D" parent="Entities/SideFrogSpawner"]
 position = Vector2(44, 180)
@@ -48,6 +50,10 @@ position = Vector2(160, 160)
 
 [node name="SignSpawner" parent="Entities" instance=ExtResource("6_k81c5")]
 position = Vector2(24, -16)
+
+[node name="EnergyCounter" parent="." instance=ExtResource("10_goe63")]
+position = Vector2(296, 164)
+point_scene = ExtResource("8_hkfef")
 
 [node name="GUICardManager" parent="." instance=ExtResource("6_pwt5t")]
 

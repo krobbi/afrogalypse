@@ -44,7 +44,7 @@ text = "Credits"
 
 [node name="Story" type="Button" parent="VBoxContainer" index="4"]
 layout_mode = 2
-text = "Story"
+text = "Tutorial"
 
 [node name="BackButton" type="Button" parent="VBoxContainer" index="5"]
 layout_mode = 2
