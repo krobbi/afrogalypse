@@ -10,7 +10,7 @@ extends Sprite2D
 @export var brake_pivot_amount: float = -0.4
 
 @export var turn_amount: float = 150.0
-@export var brake_turn_amount: float = -100.0
+@export var brake_turn_amount: float = -240.0
 
 @export var start_speed: float = 200.0
 @export var max_speed: float = 250.0
@@ -76,10 +76,10 @@ func handle_input(delta: float, can_steer: bool) -> void:
 	if steer_axis:
 		wheel_position = clampf(wheel_position + steer_axis * wheel_attack * delta, -1.0, 1.0)
 	else:
-		var wheel_position_sign: float = sign(wheel_position)
+		var wheel_position_sign: float = signf(wheel_position)
 		wheel_position = wheel_position - wheel_release * wheel_position_sign * delta
 		
-		if sign(wheel_position) != wheel_position_sign:
+		if signf(wheel_position) != wheel_position_sign:
 			wheel_position = 0.0
 	
 	if can_steer and Input.is_action_pressed("brake"):

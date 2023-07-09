@@ -4,10 +4,10 @@ extends Node2D
 @export var sprite: Sprite2D
 @export var jump_force: float = 40.0
 @export var gravity: float = 200.0
-@export var ground_wait_min: float = 0.15
-@export var ground_wait_max: float = 0.5
+@export var ground_wait_min: float = 0.3
+@export var ground_wait_max: float = 0.9
 @export var forward_force: float = 160.0
-@export var friction: float = 20.0
+@export var friction: float = 100.0
 
 var ground_timer: float = 0.0
 var horizontal_velocity: float = 0.0
@@ -39,13 +39,24 @@ func _physics_process(delta: float) -> void:
 		sprite.position.y += vertical_velocity * delta
 		vertical_velocity += gravity * delta
 		position.x += horizontal_velocity * delta
-		horizontal_velocity = max(horizontal_velocity - friction * delta, 0.0)
 		
-		if global_position.x > 332.0:
+		var horizontal_velocity_sign: float = signf(horizontal_velocity)
+		horizontal_velocity = horizontal_velocity - horizontal_velocity_sign * friction * delta
+		
+		if signf(horizontal_velocity) != horizontal_velocity_sign:
+			horizontal_velocity = 0.0
+		
+		if global_position.x > 384.0 or global_position.x < -64.0:
 			queue_free()
 		
 		if vertical_velocity >= 0.0 and sprite.position.y >= 0.0:
 			ground_timer = Global.rng.randf_range(ground_wait_min, ground_wait_max)
+
+
+# Make the frog move right to left.
+func flip_left() -> void:
+	sprite.flip_h = true
+	forward_force = -forward_force
 
 
 # Hit by car.
