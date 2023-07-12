@@ -17,5 +17,6 @@ Fix Bugs:
 Implement Features:
 * Add configurable controls.
 * Add engine noise to car.
+* Add menu music.
 * Add custom splash screen.
 * Separate credits into multiple pages.
