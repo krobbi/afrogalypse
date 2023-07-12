@@ -1,11 +1,11 @@
 [gd_scene load_steps=4 format=3 uid="uid://bmeflkttin1ks"]
 
-[ext_resource type="Texture2D" uid="uid://8n7gd3p7irab" path="res://resources/textures/entities/grass_patch/sign.png" id="1_6p7df"]
+[ext_resource type="Texture2D" uid="uid://8n7gd3p7irab" path="res://resources/textures/entities/sign/sign.png" id="1_afkk3"]
 [ext_resource type="PackedScene" uid="uid://ny61orou7nqh" path="res://components/mover/mover.tscn" id="2_bn40y"]
 [ext_resource type="Script" path="res://entities/sign/sign.gd" id="2_lm5ff"]
 
 [node name="Sign" type="Sprite2D"]
-texture = ExtResource("1_6p7df")
+texture = ExtResource("1_afkk3")
 offset = Vector2(0, -24)
 script = ExtResource("2_lm5ff")
 metadata/_edit_group_ = true
