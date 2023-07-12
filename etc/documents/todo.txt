@@ -1,0 +1,21 @@
+To Do:
+* Release version 1.0.0.
+* Fix bugs.
+* Implement features.
+
+Release Version 1.0.0:
+* Refactor version 1.0.0-jam.
+* Keep identical to version 1.0.0-jam for end user except for version numbers.
+* Class names and documentation for every script.
+* Improve project architecture.
+* Create build script.
+
+Fix Bugs:
+* Fix misaligned sprite for left-facing frogs.
+* Cache gameplay sounds in web build to prevent lag spikes.
+
+Implement Features:
+* Add configurable controls.
+* Add engine noise to car.
+* Add custom splash screen.
+* Separate credits into multiple pages.
