@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://c61b2hft4p2fl"]
+
+[ext_resource type="Script" path="res://entities/road_section_spawner/road_section_spawner.gd" id="1_1nfcr"]
+[ext_resource type="PackedScene" uid="uid://wrsulnlolt62" path="res://components/distance_clock/distance_clock.tscn" id="2_8l37g"]
+[ext_resource type="PackedScene" uid="uid://b3vh1c8ohwf5l" path="res://entities/road_section/road_section.tscn" id="2_iixqk"]
+
+[node name="RoadSectionSpawner" type="Marker2D"]
+script = ExtResource("1_1nfcr")
+road_section_scene = ExtResource("2_iixqk")
+metadata/_edit_group_ = true
+
+[node name="DistanceClock" parent="." instance=ExtResource("2_8l37g")]
+distance = 270.0
+
+[connection signal="distance_reached" from="DistanceClock" to="." method="spawn_road_section"]

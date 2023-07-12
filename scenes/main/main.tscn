@@ -2,8 +2,8 @@
 
 [ext_resource type="PackedScene" uid="uid://ce26bmikob7bk" path="res://entities/car/car.tscn" id="1_eqoqq"]
 [ext_resource type="Script" path="res://scenes/main/main.gd" id="1_nf3r0"]
-[ext_resource type="PackedScene" uid="uid://c61b2hft4p2fl" path="res://entities/road_mark_spawner/road_mark_spawner.tscn" id="2_6k1et"]
-[ext_resource type="PackedScene" uid="uid://b3vh1c8ohwf5l" path="res://entities/road_mark/road_mark.tscn" id="3_xo548"]
+[ext_resource type="PackedScene" uid="uid://c61b2hft4p2fl" path="res://entities/road_section_spawner/road_section_spawner.tscn" id="2_8bdmp"]
+[ext_resource type="PackedScene" uid="uid://b3vh1c8ohwf5l" path="res://entities/road_section/road_section.tscn" id="3_t6qlo"]
 [ext_resource type="PackedScene" uid="uid://ctjvjk38kys8t" path="res://entities/frog_spawner/frog_spawner.tscn" id="4_dhns2"]
 [ext_resource type="PackedScene" uid="uid://e48x6rmcjgy7" path="res://entities/sign_spawner/sign_spawner.tscn" id="6_k81c5"]
 [ext_resource type="PackedScene" uid="uid://sr272lnrwpkk" path="res://gui/gui_card_manager.tscn" id="6_pwt5t"]
@@ -17,10 +17,11 @@ process_mode = 3
 script = ExtResource("1_nf3r0")
 metadata/_edit_lock_ = true
 
-[node name="RoadMarkSpawner" parent="." instance=ExtResource("2_6k1et")]
+[node name="RoadSectionSpawner" parent="." instance=ExtResource("2_8bdmp")]
 position = Vector2(160, -180)
+metadata/_edit_lock_ = true
 
-[node name="InitRoadMark" parent="RoadMarkSpawner" instance=ExtResource("3_xo548")]
+[node name="InitRoadSection" parent="RoadSectionSpawner" instance=ExtResource("3_t6qlo")]
 position = Vector2(0, 270)
 
 [node name="Entities" type="Node2D" parent="."]

@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://b3vh1c8ohwf5l"]
+
+[ext_resource type="Texture2D" uid="uid://dih4ohpafftuk" path="res://resources/textures/entities/road_section/road_section.png" id="1_ldylj"]
+[ext_resource type="PackedScene" uid="uid://ny61orou7nqh" path="res://components/mover/mover.tscn" id="2_egimy"]
+
+[node name="RoadSection" type="Sprite2D"]
+texture = ExtResource("1_ldylj")
+metadata/_edit_group_ = true
+
+[node name="Mover" parent="." node_paths=PackedStringArray("node") instance=ExtResource("2_egimy")]
+node = NodePath("..")
