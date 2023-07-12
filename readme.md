@@ -19,10 +19,10 @@ avoid an apocalypse of robotic frogs. You gain hit points when you pass road
 signs, which can be exchanged for a boost and a brief period of invincibility.
 
 [![Afrogalypse gameplay.](etc/screenshots/screenshot_gameplay.png)](
-   https://krobbizoid.itch.io/afrogalypse)
+   https://itch.io/jam/gmtk-2023/rate/2155249)
 
 You can download Afrogalypse or play it online at
-[itch.io](https://krobbizoid.itch.io/afrogalypse) or the
+[itch.io](https://itch.io/jam/gmtk-2023/rate/2155249) or the
 [GitHub releases page](https://github.com/krobbi/afrogalypse/releases).
 
 # Controls
