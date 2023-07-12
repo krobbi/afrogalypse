@@ -18,7 +18,8 @@ Afrogalypse is a bullet hell-esque score attack game where you are driving to
 avoid an apocalypse of robotic frogs. You gain hit points when you pass road
 signs, which can be exchanged for a boost and a brief period of invincibility.
 
-![Afrogalypse gameplay.](etc/screenshots/screenshot_gameplay.png)
+[![Afrogalypse gameplay.](etc/screenshots/screenshot_gameplay.png)](
+   https://krobbizoid.itch.io/afrogalypse)
 
 You can download Afrogalypse or play it online at
 [itch.io](https://krobbizoid.itch.io/afrogalypse) or the
@@ -58,8 +59,10 @@ together with an aesthetic.
 I have participated in two GMTK game jams before with
 [Ruxaroh](https://github.com/ruxaroh).
 
-* [2022 - Roll of the Dice.](https://github.com/krobbi/gmtk-2022)
-* [2021 - Joined Together.](https://ruxaroh.itch.io/pandemonium)
+* 2022 - Roll of the Dice:
+[The House Always Wins](https://github.com/krobbi/gmtk-2022).
+* 2021 - Joined Together:
+[Pandemonium](https://ruxaroh.itch.io/pandemonium).
 
 # Credits
 * Font: [m6x11](https://managore.itch.io/m6x11) by
