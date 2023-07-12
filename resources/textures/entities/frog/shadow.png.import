@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://burjoj85dxohh"
-path="res://.godot/imported/shadow.png-5ac1fa48917fb67a05b7ee8606d980fa.ctex"
+path="res://.godot/imported/shadow.png-e4273fbe05c2a0987e63e3c5bc6764ac.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://entities/frog/shadow.png"
-dest_files=["res://.godot/imported/shadow.png-5ac1fa48917fb67a05b7ee8606d980fa.ctex"]
+source_file="res://resources/textures/entities/frog/shadow.png"
+dest_files=["res://.godot/imported/shadow.png-e4273fbe05c2a0987e63e3c5bc6764ac.ctex"]
 
 [params]
 
