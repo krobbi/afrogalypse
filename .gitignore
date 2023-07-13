@@ -1,3 +1,6 @@
+# Godot Engine:
+.godot/*
+
 # Builds:
 builds/linux/*
 builds/mac/*
@@ -8,8 +11,12 @@ builds/win/*
 !builds/web/.itch
 !builds/win/.itch
 
-# Godot Engine:
-.godot/*
+# Python:
+__pycache__/*
+*$py.class
+*.pyc
+*.pyd
+*.pyo
 
 # IDE:
 .idea/*
