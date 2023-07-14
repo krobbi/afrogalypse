@@ -162,6 +162,11 @@ class BuildSession:
                 return self.print_command_usage()
             elif command[0] == "list":
                 return self.print_all_channels()
+            elif command[0] == "clean":
+                return self.clean_all_channels()
+        elif len(command) == 2:
+            if command[0] == "clean":
+                return self.clean_channel(command[1])
         
         self.print_command_usage()
         return False
@@ -173,8 +178,10 @@ class BuildSession:
         """
         
         print("Usage:")
-        print(" * 'build help' - Display this usage message.")
-        print(" * 'build list' - Display a list of channels.")
+        print(" * 'build help'            - Display this usage message.")
+        print(" * 'build list'            - Display a list of channels.")
+        print(" * 'build clean'           - Clean all channels.")
+        print(" * 'build clean <channel>' - Clean a channel.")
         return True
     
     
@@ -190,10 +197,97 @@ class BuildSession:
         return True
     
     
+    def clean_all_channels(self: Self) -> bool:
+        """ Clean all channels and return whether it was successful. """
+        
+        if not self._channels_status.is_valid():
+            return False
+        
+        is_valid: bool = True
+        
+        for channel in self._get_channels():
+            if not self.clean_channel(channel):
+                is_valid = False
+        
+        return is_valid
+    
+    
+    def clean_channel(self: Self, channel: str) -> bool:
+        """ Clean a channel and return whether it was successful. """
+        
+        if not self._has_channel(channel):
+            return False
+        
+        return self._clean_dir(channel)
+    
+    
     def _get_channels(self: Self) -> list[str]:
         """ Return the build session's channels. """
         
         return self._config.get_list("channels")
+    
+    
+    def _has_channel(self: Self, channel: str) -> bool:
+        """
+        Return whether the build session has a channel and log an error
+        message if it doesn't.
+        """
+        
+        if not self._channels_status.is_valid():
+            return False
+        
+        if channel in self._get_channels():
+            return True
+        else:
+            print(f"Channel '{channel}' does not exist. (See 'build list'.)")
+            return False
+    
+    
+    def _clean_dir(self: Self, path: str, depth: int = 0) -> bool:
+        """
+        Recursively clean a directory and return whether it was
+        successful.
+        """
+        
+        if depth >= 8:
+            print(f"Cleaning depth exceeded at path '{path}'.")
+            return False
+        
+        is_valid: bool = True
+        
+        try:
+            with os.scandir(path) as dir:
+                for entry in dir:
+                    if entry.name == ".itch" and depth == 0:
+                        continue
+                    
+                    if entry.is_file(follow_symlinks=False):
+                        try:
+                            os.remove(entry.path)
+                        except OSError:
+                            print(f"Could not remove file '{entry.path}'.")
+                            is_valid = False
+                    elif entry.is_dir(follow_symlinks=False):
+                        if self._clean_dir(entry.path, depth + 1):
+                            try:
+                                os.rmdir(entry.path)
+                            except OSError:
+                                print(
+                                        "Could not remove "
+                                        f"directory '{entry.path}'.")
+                                is_valid = False
+                        else:
+                            is_valid = False
+                    else:
+                        print(
+                                f"Path '{entry.path}' is "
+                                "not a file or directory.")
+                        is_valid = False
+        except OSError:
+            print(f"Could not scan path '{path}'.")
+            return False
+        
+        return is_valid
     
     
     def _resolve_config(self: Self) -> bool:
