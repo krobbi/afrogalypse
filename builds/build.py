@@ -4,6 +4,51 @@ import sys
 from collections.abc import Callable
 from typing import Self
 
+class Status:
+    """
+    A valid or invalid status with dependency statuses that can be
+    resolved lazily.
+    """
+    
+    _resolver: Callable[[], bool]
+    """ The status' resolver. """
+    
+    _dependencies: tuple[Self]
+    """ The status' dependencies. """
+    
+    _is_resolved: bool = False
+    """ Whether the status has been resolved. """
+    
+    _is_valid: bool = False
+    """ Whether the status has been resolved as valid. """
+    
+    def __init__(
+            self: Self,
+            resolver: Callable[[], bool], *dependencies: Self) -> None:
+        """ Initialize the status' resolver and dependencies. """
+        
+        self._resolver = resolver
+        self._dependencies = dependencies
+    
+    
+    def is_valid(self: Self) -> bool:
+        """
+        Return whether the status is valid, resolving it if necessary.
+        """
+        
+        if self._is_resolved:
+            return self._is_valid
+        
+        for dependency in self._dependencies:
+            if not dependency.is_valid():
+                self._is_resolved = True
+                return False
+        
+        self._is_valid = self._resolver()
+        self._is_resolved = True
+        return self._is_valid
+
+
 class ConfigFile:
     """ A configuration file that can be loaded from disk. """
     
@@ -57,77 +102,31 @@ class ConfigFile:
                     value: str = pair[1].strip() if len(pair) == 2 else ""
                     
                     if not key and not value:
-                        print(f"A line in '{path}' has no key or value.")
-                        is_valid = False
+                        is_valid = err(
+                                f"A line in '{path}' has no key or value.")
                     elif not key:
-                        print(f"A value '{value}' in '{path}' has no key.")
-                        is_valid = False
+                        is_valid = err(
+                                f"A value '{value}' in {path} has no key.")
                     elif not value:
-                        print(f"Key '{key}' in '{path}' has no value.")
-                        is_valid = False
+                        is_valid = err(
+                                f"Key '{key}' in '{path}' has no value.")
                     elif key in self._data:
-                        print(f"Key '{key}' is already defined in '{path}'.")
-                        is_valid = False
+                        is_valid = err(
+                                f"Key '{key}' is already defined in {path}.")
                     elif key not in required_keys:
-                        print(f"Key '{key}' is not allowed in '{path}'.")
-                        is_valid = False
+                        is_valid = err(
+                                f"Key '{key}' is not allowed in '{path}'.")
                     else:
                         self._data[key] = value
         except OSError:
-            print(f"Could not read '{path}'.")
-            return False
+            return err(f"Could not read '{path}'.")
         
         for key in required_keys:
             if key not in self._data:
-                print(f"Required key '{key}' is not defined in '{path}'.")
-                is_valid = False
+                is_valid = err(
+                        f"Required key '{key}' is not defined in '{path}'.")
         
         return is_valid
-
-
-class Status:
-    """
-    A valid or invalid status with dependency statuses that can be
-    resolved lazily.
-    """
-    
-    _resolver: Callable[[], bool]
-    """ The status' resolver. """
-    
-    _dependencies: tuple[Self]
-    """ The status' dependencies. """
-    
-    _is_resolved: bool = False
-    """ Whether the status has been resolved. """
-    
-    _is_valid: bool = False
-    """ Whether the status has been resolved as valid. """
-    
-    def __init__(
-            self: Self,
-            resolver: Callable[[], bool], *dependencies: Self) -> None:
-        """ Initialize the status' resolver and dependencies. """
-        
-        self._resolver = resolver
-        self._dependencies = dependencies
-    
-    
-    def is_valid(self: Self) -> bool:
-        """
-        Return whether the status is valid, resolving it if necessary.
-        """
-        
-        if self._is_resolved:
-            return self._is_valid
-        
-        for dependency in self._dependencies:
-            if not dependency.is_valid():
-                self._is_resolved = True
-                return False
-        
-        self._is_valid = self._resolver()
-        self._is_resolved = True
-        return self._is_valid
 
 
 class BuildSession:
@@ -154,12 +153,24 @@ class BuildSession:
                 self._resolve_channels, self._config_status)
     
     
+    def get_command_usage(self: Self) -> str:
+        """ Return the command's usage string. """
+        
+        return (
+                "Usage:"
+                "\n * 'build help'            - Display this help message."
+                "\n * 'build list'            - Display a list of channels."
+                "\n * 'build clean'           - Clean all channels."
+                "\n * 'build clean <channel>' - Clean a channel.")
+    
+    
     def run_command(self: Self, command: list[str]) -> bool:
         """ Run a command and return whether it was successful. """
         
         if len(command) == 1:
             if command[0] == "help":
-                return self.print_command_usage()
+                print(self.get_command_usage())
+                return True
             elif command[0] == "list":
                 return self.print_all_channels()
             elif command[0] == "clean":
@@ -168,48 +179,27 @@ class BuildSession:
             if command[0] == "clean":
                 return self.clean_channel(command[1])
         
-        self.print_command_usage()
-        return False
-    
-    
-    def print_command_usage(self: Self) -> bool:
-        """
-        Print the command's usage and return whether it was successful.
-        """
-        
-        print("Usage:")
-        print(" * 'build help'            - Display this usage message.")
-        print(" * 'build list'            - Display a list of channels.")
-        print(" * 'build clean'           - Clean all channels.")
-        print(" * 'build clean <channel>' - Clean a channel.")
-        return True
+        return err(self.get_command_usage())
     
     
     def print_all_channels(self: Self) -> bool:
         """ Print all channels and return whether it was successful. """
         
-        if not self._channels_status.is_valid():
-            return False
-        
-        for channel in self._get_channels():
+        def print_channel(channel: str) -> bool:
+            """
+            Print a channel and return whether it was successful.
+            """
+            
             print(channel)
+            return True
         
-        return True
+        return self._each_channel(print_channel)
     
     
     def clean_all_channels(self: Self) -> bool:
         """ Clean all channels and return whether it was successful. """
         
-        if not self._channels_status.is_valid():
-            return False
-        
-        is_valid: bool = True
-        
-        for channel in self._get_channels():
-            if not self.clean_channel(channel):
-                is_valid = False
-        
-        return is_valid
+        return self._each_channel(self.clean_channel)
     
     
     def clean_channel(self: Self, channel: str) -> bool:
@@ -239,8 +229,54 @@ class BuildSession:
         if channel in self._get_channels():
             return True
         else:
-            print(f"Channel '{channel}' does not exist. (See 'build list'.)")
+            return err(
+                    f"Channel '{channel}' does not exist. (See 'build list'.)")
+    
+    
+    def _each_channel(self: Self, action: Callable[[str], bool]) -> bool:
+        """
+        Call an action for each channel and return whether it was
+        successful.
+        """
+        
+        if not self._channels_status.is_valid():
             return False
+        
+        is_valid: bool = True
+        
+        for channel in self._get_channels():
+            if not action(channel):
+                is_valid = False
+        
+        return is_valid
+    
+    
+    def _remove_file(self: Self, path: str) -> bool:
+        """
+        Return whether a file was removed and log an error message it it
+        wasn't.
+        """
+        
+        try:
+            os.remove(path)
+        except OSError:
+            return err(f"Could not remove file {path}.")
+        
+        return True
+    
+    
+    def _remove_dir(self: Self, path: str) -> bool:
+        """
+        Return whether an empty directory was removed and log an error
+        message if it wasn't.
+        """
+        
+        try:
+            os.rmdir(path)
+        except OSError:
+            return err(f"Could not remove directory '{path}'.")
+        
+        return True
     
     
     def _clean_dir(self: Self, path: str, depth: int = 0) -> bool:
@@ -250,8 +286,7 @@ class BuildSession:
         """
         
         if depth >= 8:
-            print(f"Cleaning depth exceeded at path '{path}'.")
-            return False
+            return err(f"Cleaning depth exceeded at path '{path}'.")
         
         is_valid: bool = True
         
@@ -262,30 +297,19 @@ class BuildSession:
                         continue
                     
                     if entry.is_file(follow_symlinks=False):
-                        try:
-                            os.remove(entry.path)
-                        except OSError:
-                            print(f"Could not remove file '{entry.path}'.")
+                        if not self._remove_file(entry.path):
                             is_valid = False
                     elif entry.is_dir(follow_symlinks=False):
-                        if self._clean_dir(entry.path, depth + 1):
-                            try:
-                                os.rmdir(entry.path)
-                            except OSError:
-                                print(
-                                        "Could not remove "
-                                        f"directory '{entry.path}'.")
-                                is_valid = False
-                        else:
+                        if not (
+                                self._clean_dir(entry.path, depth + 1)
+                                and self._remove_dir(entry.path)):
                             is_valid = False
                     else:
-                        print(
-                                f"Path '{entry.path}' is "
-                                "not a file or directory.")
-                        is_valid = False
+                        is_valid = err(
+                                f"Path '{entry.path}' is not a file or "
+                                "directory.")
         except OSError:
-            print(f"Could not scan path '{path}'.")
-            return False
+            return err(f"Could not scan path '{path}'.")
         
         return is_valid
     
@@ -302,38 +326,41 @@ class BuildSession:
         channels: list[str] = self._get_channels()
         
         if not channels:
-            print("Channel list is empty.")
-            return False
+            return err("Channel list is empty.")
         
         is_valid: bool = True
         seen_channels: list[str] = []
         
         for channel in channels:
-            if channel in seen_channels:
-                print(f"Channel '{channel}' is already defined.")
-                is_valid = False
-                continue
-            
-            seen_channels.append(channel)
-            
-            if not os.path.isfile(os.path.join(channel, ".itch")):
-                print(f"Channel '{channel}' does not exist.")
-                is_valid = False
+            if channel not in seen_channels:
+                seen_channels.append(channel)
+                
+                if not os.path.isfile(os.path.join(channel, ".itch")):
+                    is_valid = err(f"Channel '{channel}' does not exist.")
+            else:
+                is_valid = err(f"Channel '{channel}' is already defined.")
         
         return is_valid
 
 
-def main(args: list[str]) -> int | str:
+def err(message: str) -> bool:
+    """ Log an error message and return `False`. """
+    
+    print(message, file=sys.stderr)
+    return False
+
+
+def main(args: list[str]) -> bool:
     """
-    Run the build script from arguments and return an exit code or error
-    message.
+    Run the build script from arguments and return whether it was
+    successful.
     """
     
     try:
         builds_path: str = os.path.dirname(os.path.realpath(__file__))
-    except NameError:
+    except OSError:
         if not args or args[0] in ("", "-c"):
-            return "Could not find builds path from arguments."
+            return err("Could not find builds path from arguments.")
         
         builds_path = os.path.realpath(args[0])
         
@@ -341,27 +368,27 @@ def main(args: list[str]) -> int | str:
             builds_path = os.path.dirname(builds_path)
     
     if not os.path.isdir(builds_path):
-        return "Could not find builds path."
+        return err("Could not find builds path.")
     
     return_path: str = os.path.realpath(os.getcwd())
     
     if not os.path.isdir(return_path):
-        return "Could not find return path."
+        return err("Could not find return path.")
     
     try:
         os.chdir(builds_path)
     except OSError:
-        return "Could not change to builds path."
+        return err("Could not change to builds path.")
     
-    exit_code: int = 0 if BuildSession().run_command(args[1:]) else 1
+    is_valid: bool = BuildSession().run_command(args[1:])
     
     try:
         os.chdir(return_path)
     except OSError:
-        return "Could not change to return path."
+        return err("Could not change to return path.")
     
-    return exit_code
+    return is_valid
 
 
 if __name__ == "__main__":
-    sys.exit(main(sys.argv))
+    sys.exit(0 if main(sys.argv) else 1)
