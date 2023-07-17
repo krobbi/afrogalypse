@@ -69,17 +69,15 @@ def check_config() -> bool:
     
     global has_config, godot, butler
     
-    if has_config is not None:
-        return has_config
-    
-    try:
-        config: configparser.ConfigParser = configparser.ConfigParser()
-        config.read("build.cfg")
-        godot = config.get("commands", "godot")
-        butler = config.get("commands", "butler")
-        has_config = True
-    except configparser.Error:
-        has_config = err("Could not read config.")
+    if has_config is None:
+        try:
+            config: configparser.ConfigParser = configparser.ConfigParser()
+            config.read("build.cfg")
+            godot = config.get("commands", "godot")
+            butler = config.get("commands", "butler")
+            has_config = True
+        except configparser.Error:
+            has_config = err("Could not read config.")
     
     return has_config
 
@@ -92,11 +90,10 @@ def check_godot() -> bool:
     
     global has_godot
     
-    if has_godot is not None:
-        return has_godot
+    if has_godot is None:
+        print("Checking Godot Engine...")
+        has_godot = check_config() and call_process(godot, "--version")
     
-    print("Checking Godot Engine...")
-    has_godot = check_config() and call_process(godot, "--version")
     return has_godot
 
 
@@ -108,11 +105,10 @@ def check_butler() -> bool:
     
     global has_butler
     
-    if has_butler is not None:
-        return has_butler
+    if has_butler is None:
+        print("Checking butler...")
+        has_butler = check_config() and call_process(butler, "version")
     
-    print("Checking butler...")
-    has_butler = check_config() and call_process(butler, "version")
     return has_butler
 
 
