@@ -1,10 +1,17 @@
 import configparser
 import os
+import random
 import shutil
 import subprocess
 import sys
 
 from collections.abc import Callable
+
+VERSION: str = "1.0.0-jam"
+""" The version number to publish with. Only update when ready. """
+
+PROJECT: str = "krobbizoid/afrogalypse"
+""" The itch.io project to publish to. """
 
 CHANNELS: tuple[str, str, str, str] = ("web", "win", "linux", "mac")
 """ The build script's channels. """
@@ -15,11 +22,17 @@ PLAIN_CHANNELS: tuple[str] = ("web",)
 godot: str = ""
 """ The command to call Godot Engine. """
 
+butler: str = ""
+""" The command to call butler. """
+
 has_config: bool | None = None
 """ Whether the build script has a valid config file. """
 
 has_godot: bool | None = None
 """ Whether the build script has a Godot Engine command. """
+
+has_butler: bool | None = None
+""" Whether the build script has a butler command. """
 
 def err(message: str) -> bool:
     """ Log an error message and return `False`. """
@@ -54,7 +67,7 @@ def check_config() -> bool:
     error message if it does not.
     """
     
-    global has_config, godot
+    global has_config, godot, butler
     
     if has_config is not None:
         return has_config
@@ -63,6 +76,7 @@ def check_config() -> bool:
         config: configparser.ConfigParser = configparser.ConfigParser()
         config.read("build.cfg")
         godot = config.get("commands", "godot")
+        butler = config.get("commands", "butler")
         has_config = True
     except configparser.Error:
         has_config = err("Could not read config.")
@@ -84,6 +98,22 @@ def check_godot() -> bool:
     print("Checking Godot Engine...")
     has_godot = check_config() and call_process(godot, "--version")
     return has_godot
+
+
+def check_butler() -> bool:
+    """
+    Return whether the build script has a butler command and log an
+    error message if it does not.
+    """
+    
+    global has_butler
+    
+    if has_butler is not None:
+        return has_butler
+    
+    print("Checking butler...")
+    has_butler = check_config() and call_process(butler, "version")
+    return has_butler
 
 
 def is_entry_file(entry: os.DirEntry[str]) -> bool:
@@ -158,6 +188,33 @@ def export_channel(channel: str) -> bool:
     return True
 
 
+def publish_channel(channel: str) -> bool:
+    """ Publish a channel and return whether it was successful. """
+    
+    return (
+            check_channel(channel)
+            and check_godot()
+            and check_butler()
+            and export_channel(channel)
+            and call_process(
+                    butler, "push", f"--userversion={VERSION}", channel,
+                    f"{PROJECT}:{channel}"))
+
+
+def publish_all_channels() -> bool:
+    """ Publish all channels and return whether it was successful. """
+    
+    passcode: str = f"Yes. Version {VERSION}. #{random.randint(111, 999)}"
+    print(f"Are you sure you want to publish? Enter '{passcode}' to continue.")
+    prompt: str = input("> ")
+    
+    if prompt != passcode:
+        print("Publishing canceled.")
+        return True
+    
+    return for_each_channel(publish_channel)
+
+
 def for_each_channel(action: Callable[[str], bool]) -> bool:
     """
     Call an action function for each channel and return whether they
@@ -181,6 +238,8 @@ def run_command(command: list[str]) -> bool:
             return for_each_channel(clean_channel)
         elif command[0] == "export":
             return for_each_channel(export_channel)
+        elif command[0] == "publish":
+            return publish_all_channels()
     elif len(command) == 2:
         if command[0] == "clean":
             return clean_channel(command[1])
@@ -192,7 +251,8 @@ def run_command(command: list[str]) -> bool:
             "\n * 'build clean'            - Clean all channels."
             "\n * 'build clean <channel>'  - Clean a channel."
             "\n * 'build export'           - Export all channels."
-            "\n * 'build export <channel>' - Export a channel.")
+            "\n * 'build export <channel>' - Export a channel."
+            "\n * 'build publish'          - Publish all channels.")
 
 
 def main(args: list[str]) -> bool:

@@ -8,7 +8,6 @@ Release Version 1.0.0:
 * Keep identical to version 1.0.0-jam for end user except for version numbers.
 * Class names and documentation for every script.
 * Improve project architecture.
-* (WIP) Create build script.
 
 Fix Bugs:
 * Fix misaligned sprite for left-facing frogs.
