@@ -1,10 +1,25 @@
+import configparser
 import os
+import shutil
+import subprocess
 import sys
 
 from collections.abc import Callable
 
 CHANNELS: tuple[str, str, str, str] = ("web", "win", "linux", "mac")
 """ The build script's channels. """
+
+PLAIN_CHANNELS: tuple[str] = ("web",)
+""" The channels to not package with license text. """
+
+godot: str = ""
+""" The command to call Godot Engine. """
+
+has_config: bool | None = None
+""" Whether the build script has a valid config file. """
+
+has_godot: bool | None = None
+""" Whether the build script has a Godot Engine command. """
 
 def err(message: str) -> bool:
     """ Log an error message and return `False`. """
@@ -13,13 +28,62 @@ def err(message: str) -> bool:
     return False
 
 
+def call_process(*args: str) -> bool:
+    """ Call a process and return whether it was successful. """
+    
+    try:
+        subprocess.check_call(args)
+        return True
+    except (subprocess.CalledProcessError, OSError):
+        return err("Could not call process.")
+
+
 def check_channel(channel: str) -> bool:
     """
-    Return whether a channel exists and return an error if it does not.
+    Return whether a channel exists and log an error message if it does
+    not.
     """
     
     return True if channel in CHANNELS else err(
             f"Channel '{channel}' does not exist.")
+
+
+def check_config() -> bool:
+    """
+    Return whether the build script has a valid config file and log an
+    error message if it does not.
+    """
+    
+    global has_config, godot
+    
+    if has_config is not None:
+        return has_config
+    
+    try:
+        config: configparser.ConfigParser = configparser.ConfigParser()
+        config.read("build.cfg")
+        godot = config.get("commands", "godot")
+        has_config = True
+    except configparser.Error:
+        has_config = err("Could not read config.")
+    
+    return has_config
+
+
+def check_godot() -> bool:
+    """
+    Return whether the build script has a Godot Engine command and log
+    an error message if it does not.
+    """
+    
+    global has_godot
+    
+    if has_godot is not None:
+        return has_godot
+    
+    print("Checking Godot Engine...")
+    has_godot = check_config() and call_process(godot, "--version")
+    return has_godot
 
 
 def is_entry_file(entry: os.DirEntry[str]) -> bool:
@@ -73,6 +137,27 @@ def clean_channel(channel: str) -> bool:
         return err(f"Could not clean channel '{channel}'.")
 
 
+def export_channel(channel: str) -> bool:
+    """ Export a channel and return whether it was successful. """
+    
+    if (
+            not check_channel(channel)
+            or not check_godot()
+            or not clean_channel(channel)
+            or not call_process(
+                    godot, "--path", "..", "--headless",
+                    "--export-release", channel)):
+        return False
+    
+    if channel not in PLAIN_CHANNELS:
+        try:
+            shutil.copy(os.path.join("..", "license.txt"), channel)
+        except shutil.Error:
+            return err(f"Could not copy license text to channel '{channel}'.")
+    
+    return True
+
+
 def for_each_channel(action: Callable[[str], bool]) -> bool:
     """
     Call an action function for each channel and return whether they
@@ -94,14 +179,20 @@ def run_command(command: list[str]) -> bool:
     if len(command) == 1:
         if command[0] == "clean":
             return for_each_channel(clean_channel)
+        elif command[0] == "export":
+            return for_each_channel(export_channel)
     elif len(command) == 2:
         if command[0] == "clean":
             return clean_channel(command[1])
+        elif command[0] == "export":
+            return export_channel(command[1])
     
     return err(
             "Usage:"
-            "\n * 'build clean'           - Clean all channels."
-            "\n * 'build clean <channel>' - Clean a channel.")
+            "\n * 'build clean'            - Clean all channels."
+            "\n * 'build clean <channel>'  - Clean a channel."
+            "\n * 'build export'           - Export all channels."
+            "\n * 'build export <channel>' - Export a channel.")
 
 
 def main(args: list[str]) -> bool:
