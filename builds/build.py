@@ -29,7 +29,7 @@ def is_entry_file(entry: os.DirEntry[str]) -> bool:
         return True
     
     try:
-        return bool(os.readlink(entry.path))
+        return bool(os.readlink(entry))
     except OSError:
         return False
 
