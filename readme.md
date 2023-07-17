@@ -1,4 +1,5 @@
-![Afrogalypse logo.](etc/logos/logo_512x128.png)  
+[![Afrogalypse logo.](etc/logos/logo_512x128.png)](
+https://krobbizoid.itch.io/afrogalypse)  
 _Welcome to ribbit hell!_  
 __Version__ `1.0.0-jam`  
 __Godot Engine__ `4.0.3`  
@@ -19,10 +20,10 @@ avoid an apocalypse of robotic frogs. You gain hit points when you pass road
 signs, which can be exchanged for a boost and a brief period of invincibility.
 
 [![Afrogalypse gameplay.](etc/screenshots/screenshot_gameplay.png)](
-https://itch.io/jam/gmtk-2023/rate/2155249)
+https://krobbizoid.itch.io/afrogalypse)
 
 You can download Afrogalypse or play it online at
-[itch.io](https://itch.io/jam/gmtk-2023/rate/2155249) or the
+[itch.io](https://krobbizoid.itch.io/afrogalypse) or the
 [GitHub releases page](https://github.com/krobbi/afrogalypse/releases).
 
 # Controls
@@ -60,15 +61,15 @@ I have participated in two GMTK game jams before with
 [Ruxaroh](https://github.com/ruxaroh).
 
 * 2022 - Roll of the Dice:
-[The House Always Wins](https://github.com/krobbi/gmtk-2022).
+[The House Always Wins](https://ruxaroh.itch.io/the-house-always-wins)
 * 2021 - Joined Together:
-[Pandemonium](https://ruxaroh.itch.io/pandemonium).
+[Pandemonium](https://ruxaroh.itch.io/pandemonium)
 
 # Credits
 * Font: [m6x11](https://managore.itch.io/m6x11) by
-[Daniel Linssen (Managore)](https://twitter.com/managore).
+[Daniel Linssen (Managore)](https://twitter.com/managore)
 * Color palette: [Faraway48](https://lospec.com/palette-list/faraway48) by
-[Igor Ferreira (Diemorth)](https://twitter.com/diemorth).
+[Igor Ferreira (Diemorth)](https://twitter.com/diemorth)
 
 # License
 Afrogalypse is released under the Krobbizoid Game License (KGL):  
