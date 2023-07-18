@@ -60,12 +60,12 @@ together with an aesthetic.
 Afrogalypse received the following
 [results](https://itch.io/jam/gmtk-2023/rate/2155249) from 14 ratings:
 
-| Criteria     | Rank / 6,839      | Score | Raw Score |
-| :----------- | :---------------- | :---- | :-------- |
-| Presentation | #1702 (top 24.9%) | 3.474 | 3.714     |
-| Enjoyment    | #1784 (top 26.1%) | 3.140 | 3.357     |
-| Overall      | #2432 (top 35.6%) | 3.118 | 3.333     |
-| Creativity   | #3904 (top 57.1%) | 2.739 | 2.929     |
+| Criteria     | Rank / 6,839 | Score | Raw Score |
+| :----------- | :----------- | :---- | :-------- |
+| Presentation | #1702        | 3.474 | 3.714     |
+| Enjoyment    | #1784        | 3.140 | 3.357     |
+| Overall      | #2432        | 3.118 | 3.333     |
+| Creativity   | #3904        | 2.739 | 2.929     |
 
 Rankings may include joint placements. The score is adjusted from the raw score
 based on the number of ratings compared to other entries in the jam. The exact
