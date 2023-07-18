@@ -9,9 +9,10 @@ _All rights reserved._
 1. [Afrogalypse](#afrogalypse)
 2. [Controls](#controls)
 3. [Development](#development)
-4. [Previous Jams](#previous-jams)
-5. [Credits](#credits)
-6. [License](#license)
+4. [Jam Results](#jam-results)
+5. [Previous Jams](#previous-jams)
+6. [Credits](#credits)
+7. [License](#license)
 
 # Afrogalypse
 Afrogalypse is a bullet hell-esque score attack game where you are driving to
@@ -54,6 +55,32 @@ where you play as a car and have to avoid frogs.
 Crashing into frogs felt a little cruel, so I replaced them with harmful
 robotic frogs. This increased the sense of danger, and helped tie the game
 together with an aesthetic.
+
+# Jam Results
+Afrogalypse received the following
+[results](https://itch.io/jam/gmtk-2023/rate/2155249) from 14 ratings:
+
+| Criteria     | Rank / 6,839      | Score | Raw Score |
+| :----------- | :---------------- | :---- | :-------- |
+| Presentation | #1702 (top 24.9%) | 3.474 | 3.714     |
+| Enjoyment    | #1784 (top 26.1%) | 3.140 | 3.357     |
+| Overall      | #2432 (top 35.6%) | 3.118 | 3.333     |
+| Creativity   | #3904 (top 57.1%) | 2.739 | 2.929     |
+
+Rankings may include joint placements. The score is adjusted from the raw score
+based on the number of ratings compared to other entries in the jam. The exact
+method used is not known.
+
+For each rating, enjoyment, creativity, and presentation were rated from 1 to 5
+stars:
+
+| Rating | Distribution |
+| -----: | -----------: |
+| 5 star | 19%          |
+| 4 star | 33.3%        |
+| 3 star | 23.8%        |
+| 2 star | 9.5%         |
+| 1 star | 14.3%        |
 
 # Previous Jams
 I have participated in two GMTK game jams before with
