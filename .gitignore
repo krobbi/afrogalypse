@@ -1,6 +1,9 @@
 # Godot Engine:
 .godot/*
 
+# Ignore:
+etc/ignore/*
+
 # Builds:
 builds/linux/*
 builds/mac/*

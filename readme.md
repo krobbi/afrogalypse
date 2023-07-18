@@ -1,5 +1,4 @@
-[![Afrogalypse logo.](etc/logos/logo_512x128.png)](
-https://krobbizoid.itch.io/afrogalypse)  
+[![Afrogalypse logo.](/etc/images/logo.png)](/readme.md)  
 _Welcome to ribbit hell!_  
 __Version__ `1.0.0-jam`  
 __Godot Engine__ `4.0.3`  
@@ -19,7 +18,7 @@ Afrogalypse is a bullet hell-esque score attack game where you are driving to
 avoid an apocalypse of robotic frogs. You gain hit points when you pass road
 signs, which can be exchanged for a boost and a brief period of invincibility.
 
-[![Afrogalypse gameplay.](etc/screenshots/screenshot_gameplay.png)](
+[![Afrogalypse gameplay.](/etc/images/gameplay.png)](
 https://krobbizoid.itch.io/afrogalypse)
 
 You can download Afrogalypse or play it online at
@@ -75,4 +74,4 @@ I have participated in two GMTK game jams before with
 Afrogalypse is released under the Krobbizoid Game License (KGL):  
 https://krobbi.github.io/license/2023/kgl.txt
 
-See [license.txt](license.txt) for a full copy of the license text.
+See [license.txt](/license.txt) for a full copy of the license text.
