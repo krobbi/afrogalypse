@@ -1,7 +1,7 @@
 [![Afrogalypse logo.](/etc/images/logo.png)](/readme.md)  
 _Welcome to ribbit hell!_  
-__Version__ `1.0.0-jam`  
-__Godot Engine__ `4.0.3`  
+__Version__ `1.0.0`  
+__Godot Engine__ `4.1.1`  
 __Copyright &copy; 2023 Chris Roberts__ (Krobbizoid).  
 _All rights reserved._
 
@@ -29,7 +29,7 @@ You can download Afrogalypse or play it online at
 The controls are currently fixed and require a keyboard.
 
 | Input           | Action      |
-| :-------------- | :---------- |
+| --------------: | :---------- |
 | A / Left Arrow  | Steer Left  |
 | D / Right Arrow | Steer Right |
 | Shift / X       | Brake       |
