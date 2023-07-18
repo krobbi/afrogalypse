@@ -171,13 +171,13 @@ def export_channel(channel: str) -> bool:
             or not check_godot()
             or not clean_channel(channel)
             or not call_process(
-                    godot, "--path", "..", "--headless",
+                    godot, "--path", "../..", "--headless",
                     "--export-release", channel)):
         return False
     
     if channel not in PLAIN_CHANNELS:
         try:
-            shutil.copy(os.path.join("..", "license.txt"), channel)
+            shutil.copy("../../license.txt", channel)
         except shutil.Error:
             return err(f"Could not copy license text to channel '{channel}'.")
     

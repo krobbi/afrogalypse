@@ -1,5 +1,5 @@
 @echo off
 pushd %~dp0
-cd builds
+cd etc\builds
 call python build.py %*
 popd

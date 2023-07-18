@@ -5,15 +5,15 @@
 etc/ignore/*
 
 # Builds:
-builds/linux/*
-builds/mac/*
-builds/web/*
-builds/win/*
-builds/build.cfg
-!builds/linux/.itch
-!builds/mac/.itch
-!builds/web/.itch
-!builds/win/.itch
+etc/builds/linux/*
+etc/builds/mac/*
+etc/builds/web/*
+etc/builds/win/*
+etc/builds/build.cfg
+!etc/builds/linux/.itch
+!etc/builds/mac/.itch
+!etc/builds/web/.itch
+!etc/builds/win/.itch
 
 # Python:
 __pycache__/*
