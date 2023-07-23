@@ -7,7 +7,7 @@ import sys
 
 from collections.abc import Callable
 
-VERSION: str = "1.0.0-jam"
+VERSION: str = "1.0.0"
 """ The version number to publish with. Only update when ready. """
 
 PROJECT: str = "krobbizoid/afrogalypse"
