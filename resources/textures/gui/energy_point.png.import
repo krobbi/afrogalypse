@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bjspaaxg8wpuh"
-path="res://.godot/imported/energy_point.png-964684a77b22b31517f274bf19713a81.ctex"
+path="res://.godot/imported/energy_point.png-cf73be4532e66893964886e486b6daa1.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://gui/energy_counter/energy_point.png"
-dest_files=["res://.godot/imported/energy_point.png-964684a77b22b31517f274bf19713a81.ctex"]
+source_file="res://resources/textures/gui/energy_point.png"
+dest_files=["res://.godot/imported/energy_point.png-cf73be4532e66893964886e486b6daa1.ctex"]
 
 [params]
 
