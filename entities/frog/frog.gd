@@ -56,6 +56,7 @@ func _physics_process(delta: float) -> void:
 # Make the frog move right to left.
 func flip_left() -> void:
 	sprite.flip_h = true
+	sprite.offset.x = -sprite.offset.x
 	forward_force = -forward_force
 
 
