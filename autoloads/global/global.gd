@@ -82,7 +82,7 @@ func save_data() -> void:
 	
 	file.store_line(JSON.stringify({
 		"format": "krobbizoid.afrogalypse.save",
-		"version": "1.0.0",
+		"version": "1.0.1",
 		"high_score": high_score,
 		"sound_volume": sound_volume,
 		"music_volume": music_volume,

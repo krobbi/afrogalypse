@@ -1,6 +1,6 @@
 [![Afrogalypse logo.](/etc/images/logo.png)](/readme.md)  
 _Welcome to ribbit hell!_  
-__Version__ `1.0.0`  
+__Version__ `1.0.1`  
 __Godot Engine__ `4.1.1`  
 __Copyright &copy; 2023 Chris Roberts__ (Krobbizoid).  
 _All rights reserved._
