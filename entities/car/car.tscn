@@ -26,7 +26,6 @@ scale_min = 0.5
 texture = ExtResource("1_xurhx")
 offset = Vector2(0, -8)
 script = ExtResource("2_tig26")
-metadata/_edit_group_ = true
 
 [node name="Hitbox" type="Area2D" parent="."]
 position = Vector2(0, -8)
@@ -37,13 +36,15 @@ metadata/_edit_group_ = true
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
 shape = SubResource("CapsuleShape2D_2oq7k")
 
-[node name="BoostPlayer" type="AudioStreamPlayer2D" parent="."]
+[node name="Booster" type="Marker2D" parent="."]
+position = Vector2(152, -184)
+metadata/_edit_group_ = true
+
+[node name="BoostPlayer" type="AudioStreamPlayer2D" parent="Booster"]
 stream = ExtResource("3_tq5rk")
 bus = &"Sound"
 
-[node name="BoostParticles" type="GPUParticles2D" parent="."]
-position = Vector2(-3, 6)
-emitting = false
+[node name="BoostParticles" type="GPUParticles2D" parent="Booster"]
 amount = 16
 process_material = SubResource("ParticleProcessMaterial_gwiaw")
 texture = ExtResource("4_v0txi")
@@ -51,7 +52,6 @@ lifetime = 0.3
 visibility_rect = Rect2(-10, -10, 20, 50)
 local_coords = true
 
-[node name="BoostLight" type="PointLight2D" parent="."]
-visible = false
+[node name="BoostLight" type="PointLight2D" parent="Booster"]
+position = Vector2(0, 14)
 texture = ExtResource("5_vubd6")
-offset = Vector2(-3, 20)

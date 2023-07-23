@@ -25,9 +25,10 @@ var wheel_position: float = 0.0
 var brake_position: float = 0.0
 var boost_amount: float = 0.0
 
-@onready var boost_player: AudioStreamPlayer2D = $BoostPlayer
-@onready var boost_particles: GPUParticles2D = $BoostParticles
-@onready var boost_light: PointLight2D = $BoostLight
+@onready var booster: Marker2D = $Booster
+@onready var boost_player: AudioStreamPlayer2D = $Booster/BoostPlayer
+@onready var boost_particles: GPUParticles2D = $Booster/BoostParticles
+@onready var boost_light: PointLight2D = $Booster/BoostLight
 
 func _ready() -> void:
 	Global.new_game_started.connect(reset)
@@ -45,20 +46,20 @@ func _physics_process(delta: float) -> void:
 	
 	apply_speed()
 	boost_amount = maxf(boost_amount - 0.2 * delta, 0.0)
-	
-	if boost_amount <= 0.0:
-		Global.is_boosting = false
-		boost_particles.emitting = false
-		boost_light.hide()
 
 
 func reset() -> void:
 	boost_amount = 0.0
+	boost_particles.emitting = false
+	boost_particles.hide()
+	boost_light.hide()
+	booster.position = Vector2(-3.0, 6.0)
 
 
 func apply_boost() -> void:
 	boost_amount = 1.0
 	Global.is_boosting = true
+	boost_particles.show()
 	boost_particles.emitting = true
 	boost_light.show()
 	boost_player.play()
@@ -109,6 +110,11 @@ func game_state(delta: float) -> void:
 	
 	if Global.no_hit_time < 100.0:
 		Global.no_hit_time += delta
+	
+	if boost_amount <= 0.0:
+		Global.is_boosting = false
+		boost_particles.emitting = false
+		boost_light.hide()
 
 
 func stopping_state(delta: float) -> void:
