@@ -35,7 +35,7 @@ text = "Copyright © 2023 Chris Roberts (Krobbizoid)."
 
 [node name="VersionLabel" type="Label" parent="VBoxContainer" index="5"]
 layout_mode = 2
-text = "v1.0.1"
+text = "v1.1.0"
 
 [node name="BackButton" type="Button" parent="VBoxContainer" index="6" groups=["focus"]]
 layout_mode = 2
