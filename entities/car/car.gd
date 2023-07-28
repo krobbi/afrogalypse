@@ -33,6 +33,11 @@ var boost_amount: float = 0.0
 func _ready() -> void:
 	Global.new_game_started.connect(reset)
 	Global.boost_used.connect(apply_boost)
+	
+	# Cache boost particles and light to prevent lag spikes.
+	boost_particles.show()
+	boost_particles.emitting = true
+	boost_light.show()
 
 
 func _physics_process(delta: float) -> void:

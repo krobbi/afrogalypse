@@ -45,6 +45,8 @@ stream = ExtResource("3_tq5rk")
 bus = &"Sound"
 
 [node name="BoostParticles" type="GPUParticles2D" parent="Booster"]
+visible = false
+emitting = false
 amount = 16
 process_material = SubResource("ParticleProcessMaterial_gwiaw")
 texture = ExtResource("4_v0txi")
@@ -53,5 +55,6 @@ visibility_rect = Rect2(-10, -10, 20, 50)
 local_coords = true
 
 [node name="BoostLight" type="PointLight2D" parent="Booster"]
+visible = false
 position = Vector2(0, 14)
 texture = ExtResource("5_vubd6")
