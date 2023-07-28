@@ -39,6 +39,11 @@ func reset_rng() -> void:
 	rng.state = 0xf706
 
 
+## Return whether the game is a web build.
+func is_web() -> bool:
+	return OS.get_name() == "Web"
+
+
 func set_bus_volume(bus_name: String, value: float) -> void:
 	AudioServer.set_bus_volume_db(AudioServer.get_bus_index(bus_name), linear_to_db(value * 0.01))
 

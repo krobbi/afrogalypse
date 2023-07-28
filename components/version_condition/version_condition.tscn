@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://2wof4yi6nj5h"]
+
+[ext_resource type="Script" path="res://components/version_condition/version_condition.gd" id="1_l0ljp"]
+
+[node name="VersionCondition" type="Node"]
+script = ExtResource("1_l0ljp")
