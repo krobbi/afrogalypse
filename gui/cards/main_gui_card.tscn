@@ -15,15 +15,15 @@ stretch_mode = 3
 
 [node name="StartButton" type="Button" parent="VBoxContainer" index="1" groups=["focus"]]
 layout_mode = 2
-text = "Start"
+text = "button.start"
 
 [node name="OptionsButton" type="Button" parent="VBoxContainer" index="2"]
 layout_mode = 2
-text = "Options"
+text = "button.options"
 
 [node name="QuitButton" type="Button" parent="VBoxContainer" index="3"]
 layout_mode = 2
-text = "Quit"
+text = "button.quit"
 
 [node name="VersionCondition" parent="VBoxContainer/QuitButton" index="0" node_paths=PackedStringArray("_node") instance=ExtResource("4_vy3hm")]
 _node = NodePath("..")
