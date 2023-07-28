@@ -74,6 +74,12 @@ func on_game_over() -> void:
 	gui_card_changed.emit("game_over")
 
 
+## Make a request to quit the game.
+func request_quit() -> void:
+	save_data()
+	get_tree().quit()
+
+
 func save_data() -> void:
 	var file: FileAccess = FileAccess.open(SAVE_PATH, FileAccess.WRITE)
 	

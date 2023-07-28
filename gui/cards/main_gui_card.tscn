@@ -20,5 +20,10 @@ text = "Start"
 layout_mode = 2
 text = "Options"
 
+[node name="QuitButton" type="Button" parent="VBoxContainer" index="3"]
+layout_mode = 2
+text = "Quit"
+
 [connection signal="pressed" from="VBoxContainer/StartButton" to="." method="_on_start_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/OptionsButton" to="." method="change_card" binds= ["options"]]
+[connection signal="pressed" from="VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]
