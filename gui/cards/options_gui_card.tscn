@@ -43,9 +43,9 @@ text = "Controls"
 layout_mode = 2
 text = "Credits"
 
-[node name="Story" type="Button" parent="VBoxContainer" index="4"]
+[node name="TutorialButton" type="Button" parent="VBoxContainer" index="4"]
 layout_mode = 2
-text = "Tutorial"
+text = "button.tutorial"
 
 [node name="BackButton" type="Button" parent="VBoxContainer" index="5"]
 layout_mode = 2
@@ -57,5 +57,5 @@ bus = &"Sound"
 
 [connection signal="pressed" from="VBoxContainer/ControlsButton" to="." method="change_card" binds= ["controls"]]
 [connection signal="pressed" from="VBoxContainer/CreditsButton" to="." method="change_card" binds= ["credits"]]
-[connection signal="pressed" from="VBoxContainer/Story" to="." method="change_card" binds= ["story"]]
+[connection signal="pressed" from="VBoxContainer/TutorialButton" to="." method="change_card" binds= ["tutorial"]]
 [connection signal="pressed" from="VBoxContainer/BackButton" to="." method="change_card" binds= ["main"]]

@@ -1,0 +1,35 @@
+[gd_scene load_steps=5 format=3 uid="uid://cxtpgr80uq1ib"]
+
+[ext_resource type="PackedScene" uid="uid://deche81a76i5" path="res://gui/gui_card.tscn" id="1_w35es"]
+[ext_resource type="Script" path="res://gui/cards/tutorial_gui_card.gd" id="2_sno3i"]
+[ext_resource type="AudioStream" uid="uid://d2ssnljcftjpl" path="res://resources/audio/tutorial/continue.ogg" id="3_scgte"]
+[ext_resource type="AudioStream" uid="uid://by75rlp8d41ao" path="res://resources/audio/tutorial/finished.ogg" id="4_ud5pt"]
+
+[node name="TutorialGUICard" instance=ExtResource("1_w35es")]
+script = ExtResource("2_sno3i")
+
+[node name="HeadingLabel" type="Label" parent="VBoxContainer" index="0"]
+layout_mode = 2
+text = "heading.tutorial"
+horizontal_alignment = 1
+
+[node name="TutorialTexture" type="TextureRect" parent="VBoxContainer" index="1"]
+layout_mode = 2
+stretch_mode = 3
+
+[node name="TutorialLabel" type="Label" parent="VBoxContainer" index="2"]
+layout_mode = 2
+
+[node name="ContinueButton" type="Button" parent="VBoxContainer" index="3" groups=["focus"]]
+layout_mode = 2
+text = "button.continue"
+
+[node name="ContinuePlayer" type="AudioStreamPlayer" parent="." index="1"]
+stream = ExtResource("3_scgte")
+bus = &"Sound"
+
+[node name="FinishedPlayer" type="AudioStreamPlayer" parent="." index="2"]
+stream = ExtResource("4_ud5pt")
+bus = &"Sound"
+
+[connection signal="pressed" from="VBoxContainer/ContinueButton" to="." method="_on_continue_button_pressed"]
