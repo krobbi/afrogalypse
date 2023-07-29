@@ -1,3 +1,5 @@
+## The player controlled car entity.
+class_name Car
 extends Sprite2D
 
 @export var wheel_attack: float = 6.0
@@ -25,19 +27,11 @@ var wheel_position: float = 0.0
 var brake_position: float = 0.0
 var boost_amount: float = 0.0
 
-@onready var booster: Marker2D = $Booster
-@onready var boost_player: AudioStreamPlayer2D = $Booster/BoostPlayer
-@onready var boost_particles: GPUParticles2D = $Booster/BoostParticles
-@onready var boost_light: PointLight2D = $Booster/BoostLight
+@onready var _boost_player: AudioStreamPlayer2D = $BoostMarker/BoostPlayer
+@onready var _boost_effects: BoostEffects = $BoostMarker/BoostEffects
 
 func _ready() -> void:
-	Global.new_game_started.connect(reset)
 	Global.boost_used.connect(apply_boost)
-	
-	# Cache boost particles and light to prevent lag spikes.
-	boost_particles.show()
-	boost_particles.emitting = true
-	boost_light.show()
 
 
 func _physics_process(delta: float) -> void:
@@ -53,21 +47,11 @@ func _physics_process(delta: float) -> void:
 	boost_amount = maxf(boost_amount - 0.2 * delta, 0.0)
 
 
-func reset() -> void:
-	boost_amount = 0.0
-	boost_particles.emitting = false
-	boost_particles.hide()
-	boost_light.hide()
-	booster.position = Vector2(-3.0, 6.0)
-
-
 func apply_boost() -> void:
 	boost_amount = 1.0
 	Global.is_boosting = true
-	boost_particles.show()
-	boost_particles.emitting = true
-	boost_light.show()
-	boost_player.play()
+	_boost_effects.enable()
+	_boost_player.play()
 
 
 func apply_speed() -> void:
@@ -118,8 +102,7 @@ func game_state(delta: float) -> void:
 	
 	if boost_amount <= 0.0:
 		Global.is_boosting = false
-		boost_particles.emitting = false
-		boost_light.hide()
+		_boost_effects.disable()
 
 
 func stopping_state(delta: float) -> void:

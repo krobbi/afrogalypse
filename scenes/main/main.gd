@@ -1,26 +1,31 @@
-## The main scene. Contains all parts of the game.
+## Main scene. Displays a splash and initializes the game.
 extends Node2D
 
-## The [AudioStreamPlayer] that plays the background music.
-@onready var _music_player: AudioStreamPlayer = $MusicPlayer
+## The [BoostEffects] instance to initialize.
+@onready var _boost_effects: BoostEffects = $BoostEffects
 
-## Pre-loaded [AudioStream]s to avoid lag spikes from loading.
-var _cached_audio: Array[AudioStreamOggVorbis] = []
+## The [ColorRect] to fade in from.
+@onready var _fade_color: ColorRect = $SplashLayer/FadeColor
 
-## Run when the main scene is ready. Cache audio and initialize the background
-## music and menu.
+## Run when the main scene is ready. Display a splash and initialize the game.
 func _ready() -> void:
-	# Cache audio to reduce in-game lag spikes.
-	for audio_name in [
-		"boost",
-		"deplete",
-		"gain_energy",
-		"gui_navigate",
-		"nitro_refill",
-		"tutorial/finished",
-	]:
-		_cached_audio.append(load("res://resources/audio/%s.ogg" % audio_name))
+	await get_tree().process_frame
+	await get_tree().process_frame
+	await create_tween().tween_property(_fade_color, "modulate", Color.TRANSPARENT, 0.4).finished
 	
-	Global.gui_card_changed.emit("main")
-	# Avoid nasty loop point on startup.
-	_music_player.create_tween().tween_property(_music_player, "volume_db", 0.0, 1.0)
+	# Preload large in-game resources.
+	for resource_path in [
+		"res://resources/audio/boost.ogg",
+		"res://resources/audio/deplete.ogg",
+		"res://resources/audio/gain_energy.ogg",
+		"res://resources/audio/gui_navigate.ogg",
+		"res://resources/audio/nitro_refill.ogg",
+		"res://resources/audio/tutorial/finished.ogg",
+	]:
+		load(resource_path)
+	
+	# Initialize boost effects.
+	_boost_effects.enable()
+	
+	await get_tree().create_timer(1.0).timeout
+	SceneManager.change_scene_to_file("res://scenes/road/road.tscn")

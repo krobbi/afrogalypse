@@ -1,0 +1,36 @@
+[gd_scene load_steps=5 format=3 uid="uid://dln3hx74ugd0v"]
+
+[ext_resource type="Script" path="res://components/boost_effects/boost_effects.gd" id="1_c5r40"]
+[ext_resource type="Texture2D" uid="uid://c5j8u8vbr7gsc" path="res://resources/textures/entities/car/boost_particle.png" id="2_r147u"]
+[ext_resource type="Texture2D" uid="uid://c0dsl3hnor1gn" path="res://resources/textures/entities/car/boost_light.png" id="3_1epec"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_gwiaw"]
+particle_flag_disable_z = true
+direction = Vector3(0, 1, 0)
+spread = 4.85
+initial_velocity_min = 64.0
+initial_velocity_max = 128.0
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+angle_min = -720.0
+angle_max = 720.0
+scale_min = 0.5
+
+[node name="BoostEffects" type="Marker2D"]
+script = ExtResource("1_c5r40")
+metadata/_edit_group_ = true
+
+[node name="Particles" type="GPUParticles2D" parent="."]
+visible = false
+emitting = false
+amount = 16
+process_material = SubResource("ParticleProcessMaterial_gwiaw")
+texture = ExtResource("2_r147u")
+lifetime = 0.3
+visibility_rect = Rect2(-10, -10, 20, 50)
+local_coords = true
+
+[node name="Light" type="PointLight2D" parent="."]
+visible = false
+position = Vector2(0, 14)
+texture = ExtResource("3_1epec")
