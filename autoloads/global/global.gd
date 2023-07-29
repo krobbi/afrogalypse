@@ -28,12 +28,12 @@ var music_volume: float = 50.0
 var is_boosting: bool = false
 var no_hit_time: float = 0.0
 
+## Run when the global state is ready. Load the save data.
 func _ready() -> void:
-	set_sound_volume(75.0)
-	set_music_volume(50.0)
 	load_data()
 
 
+## Reset the gameplay [RandomNumberGenerator] to a known state.
 func reset_rng() -> void:
 	rng.seed = hash("Frog RNG.")
 	rng.state = 0xf706
@@ -44,20 +44,7 @@ func is_web() -> bool:
 	return OS.get_name() == "Web"
 
 
-func set_bus_volume(bus_name: String, value: float) -> void:
-	AudioServer.set_bus_volume_db(AudioServer.get_bus_index(bus_name), linear_to_db(value * 0.01))
-
-
-func set_sound_volume(value: float) -> void:
-	sound_volume = value
-	set_bus_volume("Sound", sound_volume)
-
-
-func set_music_volume(value: float) -> void:
-	music_volume = value
-	set_bus_volume("Music", music_volume)
-
-
+## Start a new game.
 func new_game() -> void:
 	state = GameState.STARTING
 	reset_rng()
@@ -123,14 +110,14 @@ func load_data() -> void:
 			var volume: Variant = result["sound_volume"]
 			
 			if volume is int and volume >= 0 and volume <= 100:
-				set_sound_volume(float(volume))
+				sound_volume = float(volume)
 			elif volume is float and is_finite(volume) and volume >= 0.0 and volume <= 100.0:
-				set_sound_volume(volume)
+				sound_volume = volume
 		
 		if "music_volume" in result:
 			var volume: Variant = result["music_volume"]
 			
 			if volume is int and volume >= 0 and volume <= 100:
-				set_music_volume(float(volume))
+				music_volume = float(volume)
 			elif volume is float and is_finite(volume) and volume >= 0.0 and volume <= 100.0:
-				set_music_volume(volume)
+				music_volume = volume

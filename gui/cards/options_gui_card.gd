@@ -23,11 +23,11 @@ func _exit_tree() -> void:
 
 
 func _on_sound_slider_value_changed(value: float) -> void:
-	Global.set_sound_volume(value)
+	AudioManager.set_bus_volume("Sound", value)
 	pip_player.play()
 	has_changed_options = true
 
 
 func _on_music_slider_value_changed(value: float) -> void:
-	Global.set_music_volume(value)
+	AudioManager.set_bus_volume("Music", value)
 	has_changed_options = true

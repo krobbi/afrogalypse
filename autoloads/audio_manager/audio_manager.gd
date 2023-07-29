@@ -1,7 +1,25 @@
 ## Manages audio options.
-extends AudioStreamPlayer
+extends Node
 
-## Run when the audio manager is ready. Play and fade in the background music.
+## The [AudioStreamPlayer] to play the background music with.
+@onready var _music_player: AudioStreamPlayer = $MusicPlayer
+
+## Run when the audio manager is ready. Apply the volume options and fade in the
+## background music.
 func _ready() -> void:
-	play()
-	create_tween().tween_property(self, "volume_db", 0.0, 1.0)
+	set_bus_volume("Sound", Global.sound_volume)
+	set_bus_volume("Music", Global.music_volume)
+	
+	_music_player.play()
+	create_tween().tween_property(_music_player, "volume_db", 0.0, 1.0)
+
+## Set the volume of an audio bus.
+func set_bus_volume(bus_name: String, value: float) -> void:
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index(bus_name), linear_to_db(value * 0.01))
+	
+	# TODO: Use a more robust configuration system. <krobbi>
+	match bus_name:
+		"Sound":
+			Global.sound_volume = value
+		"Music":
+			Global.music_volume = value
