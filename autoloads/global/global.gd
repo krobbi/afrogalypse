@@ -30,6 +30,7 @@ var no_hit_time: float = 0.0
 
 ## Run when the global state is ready. Load the save data.
 func _ready() -> void:
+	TranslationServer.set_locale("en")
 	load_data()
 
 

@@ -9,7 +9,7 @@ script = ExtResource("2_xv3dp")
 
 [node name="HeadingLabel" type="Label" parent="VBoxContainer" index="0"]
 layout_mode = 2
-text = "Options"
+text = "heading.options"
 horizontal_alignment = 1
 
 [node name="GridContainer" type="GridContainer" parent="VBoxContainer" index="1"]
@@ -18,7 +18,7 @@ columns = 2
 
 [node name="SoundLabel" type="Label" parent="VBoxContainer/GridContainer" index="0"]
 layout_mode = 2
-text = "Sound:"
+text = "slider.sound"
 
 [node name="SoundSlider" type="HSlider" parent="VBoxContainer/GridContainer" index="1" groups=["focus"]]
 layout_mode = 2
@@ -27,7 +27,7 @@ value = 75.0
 
 [node name="MusicLabel" type="Label" parent="VBoxContainer/GridContainer" index="2"]
 layout_mode = 2
-text = "Music:"
+text = "slider.music"
 
 [node name="MusicSlider" type="HSlider" parent="VBoxContainer/GridContainer" index="3"]
 layout_mode = 2
@@ -37,11 +37,11 @@ value = 50.0
 
 [node name="ControlsButton" type="Button" parent="VBoxContainer" index="2"]
 layout_mode = 2
-text = "Controls"
+text = "button.controls"
 
 [node name="CreditsButton" type="Button" parent="VBoxContainer" index="3"]
 layout_mode = 2
-text = "Credits"
+text = "button.credits"
 
 [node name="TutorialButton" type="Button" parent="VBoxContainer" index="4"]
 layout_mode = 2
@@ -49,7 +49,7 @@ text = "button.tutorial"
 
 [node name="BackButton" type="Button" parent="VBoxContainer" index="5"]
 layout_mode = 2
-text = "Back"
+text = "button.back"
 
 [node name="PipPlayer" type="AudioStreamPlayer" parent="." index="1"]
 stream = ExtResource("3_xcue6")

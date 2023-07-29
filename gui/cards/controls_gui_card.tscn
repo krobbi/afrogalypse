@@ -6,47 +6,47 @@
 
 [node name="HeadingLabel" type="Label" parent="VBoxContainer" index="0"]
 layout_mode = 2
-text = "Controls"
+text = "heading.controls"
 horizontal_alignment = 1
 
 [node name="GridContainer" type="GridContainer" parent="VBoxContainer" index="1"]
 layout_mode = 2
 columns = 2
 
-[node name="LeftControl" type="Label" parent="VBoxContainer/GridContainer" index="0"]
+[node name="SteerLeftAction" type="Label" parent="VBoxContainer/GridContainer" index="0"]
 layout_mode = 2
-text = "A/Left Arrow:"
+text = "action.steer_left"
 
-[node name="LeftAction" type="Label" parent="VBoxContainer/GridContainer" index="1"]
+[node name="SteerLeftControl" type="Label" parent="VBoxContainer/GridContainer" index="1"]
 layout_mode = 2
-text = "Steer Left"
+text = "control.steer_left"
 
-[node name="RightControl" type="Label" parent="VBoxContainer/GridContainer" index="2"]
+[node name="SteerRightAction" type="Label" parent="VBoxContainer/GridContainer" index="2"]
 layout_mode = 2
-text = "D/Right Arrow:"
+text = "action.steer_right"
 
-[node name="RightAction" type="Label" parent="VBoxContainer/GridContainer" index="3"]
+[node name="SteerRightControl" type="Label" parent="VBoxContainer/GridContainer" index="3"]
 layout_mode = 2
-text = "Steer Right"
+text = "control.steer_right"
 
-[node name="DriftControl" type="Label" parent="VBoxContainer/GridContainer" index="4"]
+[node name="BrakeAction" type="Label" parent="VBoxContainer/GridContainer" index="4"]
 layout_mode = 2
-text = "Shift/X:"
+text = "action.brake"
 
-[node name="DriftAction" type="Label" parent="VBoxContainer/GridContainer" index="5"]
+[node name="BrakeControl" type="Label" parent="VBoxContainer/GridContainer" index="5"]
 layout_mode = 2
-text = "Brake"
+text = "control.brake"
 
-[node name="BoostControl" type="Label" parent="VBoxContainer/GridContainer" index="6"]
+[node name="BoostAction" type="Label" parent="VBoxContainer/GridContainer" index="6"]
 layout_mode = 2
-text = "Space/Z:"
+text = "action.boost"
 
-[node name="BoostAction" type="Label" parent="VBoxContainer/GridContainer" index="7"]
+[node name="BoostControl" type="Label" parent="VBoxContainer/GridContainer" index="7"]
 layout_mode = 2
-text = "Boost"
+text = "control.boost"
 
 [node name="BackButton" type="Button" parent="VBoxContainer" index="2" groups=["focus"]]
 layout_mode = 2
-text = "Back"
+text = "button.back"
 
 [connection signal="pressed" from="VBoxContainer/BackButton" to="." method="change_card" binds= ["options"]]

@@ -8,11 +8,11 @@ script = ExtResource("2_yigms")
 
 [node name="HeadingLabel" type="Label" parent="VBoxContainer" index="0"]
 layout_mode = 2
-text = "Game Over"
+text = "heading.game_over"
 horizontal_alignment = 1
 
 [node name="RetryButton" type="Button" parent="VBoxContainer" index="1" groups=["focus"]]
 layout_mode = 2
-text = "Retry"
+text = "button.retry"
 
 [connection signal="pressed" from="VBoxContainer/RetryButton" to="." method="_on_retry_button_pressed"]
