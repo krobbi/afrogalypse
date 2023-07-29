@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://db84bo3f0lyqi"]
+[gd_scene load_steps=11 format=3 uid="uid://db84bo3f0lyqi"]
 
 [ext_resource type="Script" path="res://scenes/road/road.gd" id="1_xo0g1"]
 [ext_resource type="PackedScene" uid="uid://c61b2hft4p2fl" path="res://entities/road_section_spawner/road_section_spawner.tscn" id="2_mjkgn"]
@@ -10,7 +10,6 @@
 [ext_resource type="PackedScene" uid="uid://2bwnajs3a2yu" path="res://gui/energy_counter/energy_point.tscn" id="8_8dbo2"]
 [ext_resource type="PackedScene" uid="uid://sr272lnrwpkk" path="res://gui/gui_card_manager.tscn" id="9_binb4"]
 [ext_resource type="PackedScene" uid="uid://ix2m6stdmdjt" path="res://gui/score_counter/score_counter.tscn" id="10_2b1tk"]
-[ext_resource type="AudioStream" uid="uid://o46cvkf5ntio" path="res://resources/audio/frogrock.ogg" id="11_q05cv"]
 
 [node name="Road" type="Node2D"]
 process_mode = 3
@@ -77,9 +76,3 @@ point_scene = ExtResource("8_8dbo2")
 
 [node name="ScoreCounter" parent="GUICardManager" instance=ExtResource("10_2b1tk")]
 layout_mode = 1
-
-[node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("11_q05cv")
-volume_db = -80.0
-autoplay = true
-bus = &"Music"
