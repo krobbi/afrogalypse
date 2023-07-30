@@ -28,4 +28,4 @@ func _ready() -> void:
 	_boost_effects.enable()
 	
 	await get_tree().create_timer(1.0).timeout
-	SceneManager.change_scene_to_file("res://scenes/road/road.tscn")
+	SceneManager.change_scene("res://scenes/road/road.tscn")
