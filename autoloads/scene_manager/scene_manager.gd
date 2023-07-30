@@ -20,7 +20,6 @@ func request_quit() -> void:
 		return
 	
 	_is_quitting = true
-	Global.save_data()
 	get_tree().quit()
 
 

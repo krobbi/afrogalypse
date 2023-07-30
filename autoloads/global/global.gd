@@ -23,8 +23,6 @@ var speed: float = 0.0
 var rng: RandomNumberGenerator = RandomNumberGenerator.new()
 var high_score: int = 0
 var is_main_card: bool = true
-var sound_volume: float = 75.0
-var music_volume: float = 50.0
 var is_boosting: bool = false
 var no_hit_time: float = 0.0
 
@@ -74,11 +72,9 @@ func save_data() -> void:
 		return
 	
 	file.store_line(JSON.stringify({
-		"format": "krobbizoid.afrogalypse.save",
+		"format": "krobbizoid.afrogalypse.legacy-save",
 		"version": "1.1.0",
 		"high_score": high_score,
-		"sound_volume": sound_volume,
-		"music_volume": music_volume,
 	}))
 	file.close()
 
@@ -92,27 +88,12 @@ func load_data() -> void:
 	var result: Variant = JSON.parse_string(file.get_as_text())
 	file.close()
 	
-	if result is Dictionary:
-		if "high_score" in result:
-			var score: Variant = result["high_score"]
-			
-			if score is int and score > 0:
-				high_score = score
-			elif score is float and score > 0.0:
-				high_score = int(score)
-		
-		if "sound_volume" in result:
-			var volume: Variant = result["sound_volume"]
-			
-			if volume is int and volume >= 0 and volume <= 100:
-				sound_volume = float(volume)
-			elif volume is float and is_finite(volume) and volume >= 0.0 and volume <= 100.0:
-				sound_volume = volume
-		
-		if "music_volume" in result:
-			var volume: Variant = result["music_volume"]
-			
-			if volume is int and volume >= 0 and volume <= 100:
-				music_volume = float(volume)
-			elif volume is float and is_finite(volume) and volume >= 0.0 and volume <= 100.0:
-				music_volume = volume
+	if not result is Dictionary:
+		return
+	
+	var score: Variant = result.get("high_score")
+	
+	if score is int and score > 0:
+		high_score = score
+	elif score is float and is_finite(score) and score > 0.0:
+		high_score = int(score)

@@ -4,30 +4,23 @@ extends GUICard
 @onready var music_slider: HSlider = $VBoxContainer/GridContainer/MusicSlider
 @onready var pip_player: AudioStreamPlayer = $PipPlayer
 
-var has_changed_options: bool = false
-
 func _ready() -> void:
 	Global.is_main_card = false
-	sound_slider.value = Global.sound_volume
+	sound_slider.value = Config.get_float("volume/sound")
 	sound_slider.value_changed.connect(_on_sound_slider_value_changed)
-	music_slider.value = Global.music_volume
+	music_slider.value = Config.get_float("volume/music")
 	music_slider.value_changed.connect(_on_music_slider_value_changed)
 
 
 func _exit_tree() -> void:
 	sound_slider.value_changed.disconnect(_on_sound_slider_value_changed)
 	music_slider.value_changed.disconnect(_on_music_slider_value_changed)
-	
-	if has_changed_options:
-		Global.save_data()
 
 
 func _on_sound_slider_value_changed(value: float) -> void:
 	AudioManager.set_bus_volume("Sound", value)
 	pip_player.play()
-	has_changed_options = true
 
 
 func _on_music_slider_value_changed(value: float) -> void:
 	AudioManager.set_bus_volume("Music", value)
-	has_changed_options = true

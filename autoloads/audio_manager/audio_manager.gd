@@ -7,8 +7,8 @@ extends Node
 ## Run when the audio manager is ready. Apply the volume options and fade in the
 ## background music.
 func _ready() -> void:
-	set_bus_volume("Sound", Global.sound_volume)
-	set_bus_volume("Music", Global.music_volume)
+	set_bus_volume("Sound", Config.get_float("volume/sound"))
+	set_bus_volume("Music", Config.get_float("volume/music"))
 	
 	_music_player.play()
 	create_tween().tween_property(_music_player, "volume_db", 0.0, 1.0)
@@ -20,6 +20,6 @@ func set_bus_volume(bus_name: String, value: float) -> void:
 	# TODO: Use a more robust configuration system. <krobbi>
 	match bus_name:
 		"Sound":
-			Global.sound_volume = value
+			Config.set_float("volume/sound", value)
 		"Music":
-			Global.music_volume = value
+			Config.set_float("volume/music", value)
