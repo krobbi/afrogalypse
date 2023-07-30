@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://b5r1g6iyimwkw"]
+
+[ext_resource type="Script" path="res://components/frame_stepper/frame_stepper.gd" id="1_cgxmi"]
+[ext_resource type="PackedScene" uid="uid://2wof4yi6nj5h" path="res://components/edition_predicate/edition_predicate.tscn" id="2_c0vra"]
+
+[node name="FrameStepper" type="Node"]
+process_mode = 3
+script = ExtResource("1_cgxmi")
+
+[node name="EditionPredicate" parent="." node_paths=PackedStringArray("_node") instance=ExtResource("2_c0vra")]
+_node = NodePath("..")
+_debug_mode = 1
