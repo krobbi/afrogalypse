@@ -5,7 +5,6 @@
 
 [node name="RoadSection" type="Sprite2D"]
 texture = ExtResource("1_ldylj")
-metadata/_edit_group_ = true
 
 [node name="Mover" parent="." node_paths=PackedStringArray("node") instance=ExtResource("2_egimy")]
 node = NodePath("..")

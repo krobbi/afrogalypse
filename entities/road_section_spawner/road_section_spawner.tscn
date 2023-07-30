@@ -7,7 +7,6 @@
 [node name="RoadSectionSpawner" type="Marker2D"]
 script = ExtResource("1_1nfcr")
 road_section_scene = ExtResource("2_iixqk")
-metadata/_edit_group_ = true
 
 [node name="DistanceClock" parent="." instance=ExtResource("2_8l37g")]
 distance = 270.0

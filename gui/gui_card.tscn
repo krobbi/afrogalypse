@@ -4,13 +4,14 @@
 [ext_resource type="Script" path="res://gui/gui_card.gd" id="2_1qjjs"]
 
 [node name="GUICard" type="PanelContainer"]
+custom_minimum_size = Vector2(204, 48)
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -96.0
-offset_top = 8.0
+offset_top = 6.0
 offset_right = 96.0
-offset_bottom = 48.0
+offset_bottom = 46.0
 grow_horizontal = 2
 size_flags_horizontal = 4
 size_flags_vertical = 0

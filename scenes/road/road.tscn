@@ -68,11 +68,14 @@ position = Vector2(160, 160)
 [node name="SignSpawner" parent="Entities" instance=ExtResource("6_gsg2f")]
 position = Vector2(24, -16)
 
-[node name="EnergyCounter" parent="." instance=ExtResource("7_doxxe")]
+[node name="GUILayer" type="CanvasLayer" parent="."]
+
+[node name="EnergyCounter" parent="GUILayer" instance=ExtResource("7_doxxe")]
 position = Vector2(296, 164)
 point_scene = ExtResource("8_8dbo2")
 
-[node name="GUICardManager" parent="." instance=ExtResource("9_binb4")]
+[node name="GUICardManager" parent="GUILayer" instance=ExtResource("9_binb4")]
 
-[node name="ScoreCounter" parent="GUICardManager" instance=ExtResource("10_2b1tk")]
-layout_mode = 1
+[node name="ScoreCounter" parent="GUILayer" instance=ExtResource("10_2b1tk")]
+offset_left = -20.0
+offset_bottom = 20.0
