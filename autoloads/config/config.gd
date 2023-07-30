@@ -9,8 +9,8 @@ var _should_save: bool = false
 
 ## The game's raw config data.
 var _data: Dictionary = {
-	"volume/sound": 75.0,
-	"volume/music": 50.0,
+	"volume/sound": 75,
+	"volume/music": 50,
 	"progress/has_seen_tutorial": false,
 	"progress/high_score": 0,
 }
@@ -57,11 +57,6 @@ func set_int(key: String, value: int) -> void:
 	set_value(key, value)
 
 
-## Set a config [float] from its key.
-func set_float(key: String, value: float) -> void:
-	set_value(key, value)
-
-
 ## Get a config [Variant] from its key.
 func get_value(key: String) -> Variant:
 	return _data.get(key)
@@ -75,11 +70,6 @@ func get_bool(key: String) -> bool:
 ## Get a config [int] from its key.
 func get_int(key: String) -> int:
 	return ConfigConnection.cast_int(get_value(key))
-
-
-## Get a config [float] from its key.
-func get_float(key: String) -> float:
-	return ConfigConnection.cast_float(get_value(key))
 
 
 ## Connect a [Node]'s [Callable] to a [Variant].
@@ -106,11 +96,6 @@ func on_bool(key: String, callable: Callable) -> void:
 ## Connect a [Node]'s [Callable] to an [int].
 func on_int(key: String, callable: Callable) -> void:
 	on_value(key, callable, TYPE_INT)
-
-
-## Connect a [Node]'s [Callable] to a [float].
-func on_float(key: String, callable: Callable) -> void:
-	on_value(key, callable, TYPE_FLOAT)
 
 
 ## Save the config data to its file if it needs to be saved.

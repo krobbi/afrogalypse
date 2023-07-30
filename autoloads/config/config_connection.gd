@@ -15,8 +15,6 @@ static func cast_value(value: Variant, type: Variant.Type) -> Variant:
 			return cast_bool(value)
 		TYPE_INT:
 			return cast_int(value)
-		TYPE_FLOAT:
-			return cast_float(value)
 		_:
 			return value
 
@@ -41,18 +39,6 @@ static func cast_int(value: Variant) -> int:
 				return int(value)
 	
 	return 0
-
-
-## Cast a [Variant] to a [float].
-static func cast_float(value: Variant) -> float:
-	match typeof(value):
-		TYPE_BOOL, TYPE_INT, TYPE_STRING:
-			return float(value)
-		TYPE_FLOAT:
-			if is_finite(value) and value != -0.0:
-				return value
-	
-	return 0.0
 
 
 ## Initialize the connection's target [Callable] and [enum Variant.Type].

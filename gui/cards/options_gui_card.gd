@@ -1,26 +1,41 @@
+## A [GUICard] containing the options.
+class_name OptionsGUICard
 extends GUICard
 
-@onready var sound_slider: HSlider = $VBoxContainer/GridContainer/SoundSlider
-@onready var music_slider: HSlider = $VBoxContainer/GridContainer/MusicSlider
-@onready var pip_player: AudioStreamPlayer = $PipPlayer
+## The [HSlider] to control the sound volume with.
+@onready var _sound_slider: HSlider = $VBoxContainer/GridContainer/SoundSlider
 
+## The [HSlider] to control the music volume with.
+@onready var _music_slider: HSlider = $VBoxContainer/GridContainer/MusicSlider
+
+## The [AudioStreamPlayer] to play when the sound 
+@onready var _pip_player: AudioStreamPlayer = $PipPlayer
+
+## Run when the options GUI card is ready. Notify the game that the main menu is
+## not active and connect the volume [HSlider]s to updating the volume config.
 func _ready() -> void:
 	Global.is_main_card = false
-	sound_slider.value = Config.get_float("volume/sound")
-	sound_slider.value_changed.connect(_on_sound_slider_value_changed)
-	music_slider.value = Config.get_float("volume/music")
-	music_slider.value_changed.connect(_on_music_slider_value_changed)
+	_sound_slider.value = float(Config.get_int("volume/sound"))
+	_sound_slider.value_changed.connect(_on_sound_slider_value_changed)
+	_music_slider.value = float(Config.get_int("volume/music"))
+	_music_slider.value_changed.connect(_on_music_slider_value_changed)
 
 
+## Run when the options GUI card exits the scene tree. Disconnect the volume
+## [HSlider]s from updating the volume config.
 func _exit_tree() -> void:
-	sound_slider.value_changed.disconnect(_on_sound_slider_value_changed)
-	music_slider.value_changed.disconnect(_on_music_slider_value_changed)
+	_sound_slider.value_changed.disconnect(_on_sound_slider_value_changed)
+	_music_slider.value_changed.disconnect(_on_music_slider_value_changed)
 
 
+## Run when the sound volume [HSlider] is changed. Update the sound volume
+## config and play a pip sound.
 func _on_sound_slider_value_changed(value: float) -> void:
-	Config.set_float("volume/sound", value)
-	pip_player.play()
+	Config.set_int("volume/sound", int(value))
+	_pip_player.play()
 
 
+## Run when the music volume [HSlider] is changed. Update the music volume
+## config.
 func _on_music_slider_value_changed(value: float) -> void:
-	Config.set_float("volume/music", value)
+	Config.set_int("volume/music", int(value))
