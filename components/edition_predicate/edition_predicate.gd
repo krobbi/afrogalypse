@@ -16,6 +16,9 @@ enum BoolCondition {
 ## The [enum BoolCondition] for whether the game is a web build.
 @export var _web_build: BoolCondition = BoolCondition.EITHER
 
+## The [enum BoolCondition] for whether the game is in debug mode.
+@export var _debug_mode: BoolCondition = BoolCondition.EITHER
+
 ## Run when the edition predicate is ready. Free the [Node] if the game's
 ## edition does not match the conditions, and free the edition predicate.
 func _ready() -> void:
@@ -27,7 +30,9 @@ func _ready() -> void:
 
 ## Evaluate the edition predicate.
 func _eval() -> bool:
-	return _eval_bool(OS.get_name() == "Web", _web_build)
+	return (
+			_eval_bool(OS.get_name() == "Web", _web_build)
+			and _eval_bool(OS.is_debug_build(), _debug_mode))
 
 
 ## Evaluate a [bool] against a [enum BoolCondition].
