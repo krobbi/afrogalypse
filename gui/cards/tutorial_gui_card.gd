@@ -4,7 +4,7 @@ class_name TutorialGUICard
 extends GUICard
 
 ## The images and text to display for the tutorial.
-const TUTORIAL: Array[String] = [
+const _TUTORIAL: Array[String] = [
 	"!story",
 	"tutorial.story.premise",
 	"tutorial.story.goal",
@@ -44,12 +44,12 @@ func _ready() -> void:
 
 ## Display the current line of the tutorial.
 func _display_tutorial() -> void:
-	if TUTORIAL[_tutorial_line].begins_with("!"):
+	if _TUTORIAL[_tutorial_line].begins_with("!"):
 		_tutorial_texture.texture = load(
-				"res://resources/textures/tutorial/%s.png" % TUTORIAL[_tutorial_line].substr(1))
+				"res://resources/textures/tutorial/%s.png" % _TUTORIAL[_tutorial_line].substr(1))
 		_tutorial_line += 1
 	
-	_tutorial_label.text = TUTORIAL[_tutorial_line]
+	_tutorial_label.text = _TUTORIAL[_tutorial_line]
 
 
 ## Run when the continue button is pressed. Continue to the next line of the
@@ -57,11 +57,12 @@ func _display_tutorial() -> void:
 func _on_continue_button_pressed() -> void:
 	_tutorial_line += 1
 	
-	if _tutorial_line >= len(TUTORIAL):
+	if _tutorial_line >= len(_TUTORIAL):
 		if not _finished_player.playing:
 			_finished_player.play()
 		
 		await _finished_player.finished
+		Config.set_bool("progress/has_seen_tutorial", true)
 		
 		if Global.is_main_card:
 			Global.new_game()

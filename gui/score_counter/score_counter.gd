@@ -2,9 +2,6 @@
 class_name ScoreCounter
 extends PanelContainer
 
-## The config key used to store the high score.
-const CONFIG_KEY: String = "progress/high_score"
-
 ## The current score.
 var _score: int = 0
 
@@ -20,7 +17,7 @@ var _high_score: int = 0
 ## Run when the score counter is ready. Get the high score and connect to event
 ## signals.
 func _ready() -> void:
-	_high_score = maxi(Config.get_int(CONFIG_KEY), 0)
+	_high_score = maxi(Config.get_int("progress/high_score"), 0)
 	_set_score(_high_score)
 	Global.new_game_started.connect(_on_new_game_started)
 	Global.game_over_cleared.connect(_on_game_over_cleared)
@@ -46,7 +43,7 @@ func _on_new_game_started() -> void:
 func _on_game_over_cleared() -> void:
 	if _score > _high_score:
 		_high_score = _score
-		Config.set_int(CONFIG_KEY, _high_score)
+		Config.set_int("progress/high_score", _high_score)
 	
 	_set_score(_high_score)
 

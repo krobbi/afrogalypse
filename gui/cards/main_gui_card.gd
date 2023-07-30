@@ -11,7 +11,7 @@ func _ready() -> void:
 ## Run when the start [Button] is pressed. Start a new game or display a
 ## tutorial if there is no high score.
 func _on_start_button_pressed() -> void:
-	if Config.get_int(ScoreCounter.CONFIG_KEY) > 0:
+	if Config.get_bool("progress/has_seen_tutorial"):
 		Global.new_game()
 		close_card()
 	else:

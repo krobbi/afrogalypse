@@ -11,6 +11,7 @@ var _should_save: bool = false
 var _data: Dictionary = {
 	"volume/sound": 75.0,
 	"volume/music": 50.0,
+	"progress/has_seen_tutorial": false,
 	"progress/high_score": 0,
 }
 
