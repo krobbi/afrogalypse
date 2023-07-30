@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://deche81a76i5" path="res://gui/gui_card.tscn" id="1_v3bub"]
 [ext_resource type="Texture2D" uid="uid://m5xe26mril8f" path="res://resources/textures/game/logo.png" id="2_4eh0t"]
 [ext_resource type="Script" path="res://gui/cards/main_gui_card.gd" id="2_okfnh"]
-[ext_resource type="PackedScene" uid="uid://2wof4yi6nj5h" path="res://components/version_condition/version_condition.tscn" id="4_vy3hm"]
+[ext_resource type="PackedScene" uid="uid://2wof4yi6nj5h" path="res://components/edition_predicate/edition_predicate.tscn" id="4_50m3r"]
 
 [node name="MainGUICard" instance=ExtResource("1_v3bub")]
 script = ExtResource("2_okfnh")
@@ -25,8 +25,9 @@ text = "button.options"
 layout_mode = 2
 text = "button.quit"
 
-[node name="VersionCondition" parent="VBoxContainer/QuitButton" index="0" node_paths=PackedStringArray("_node") instance=ExtResource("4_vy3hm")]
+[node name="EditionPredicate" parent="VBoxContainer/QuitButton" index="0" node_paths=PackedStringArray("_node") instance=ExtResource("4_50m3r")]
 _node = NodePath("..")
+_web_build = 2
 
 [connection signal="pressed" from="VBoxContainer/StartButton" to="." method="_on_start_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/OptionsButton" to="." method="change_card" binds= ["options"]]

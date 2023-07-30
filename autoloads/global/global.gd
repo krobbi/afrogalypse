@@ -36,11 +36,6 @@ func reset_rng() -> void:
 	rng.state = 0xf706
 
 
-## Return whether the game is a web build.
-func is_web() -> bool:
-	return OS.get_name() == "Web"
-
-
 ## Start a new game.
 func new_game() -> void:
 	state = GameState.STARTING
