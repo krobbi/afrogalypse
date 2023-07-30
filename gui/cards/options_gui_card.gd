@@ -18,9 +18,9 @@ func _exit_tree() -> void:
 
 
 func _on_sound_slider_value_changed(value: float) -> void:
-	AudioManager.set_bus_volume("Sound", value)
+	Config.set_float("volume/sound", value)
 	pip_player.play()
 
 
 func _on_music_slider_value_changed(value: float) -> void:
-	AudioManager.set_bus_volume("Music", value)
+	Config.set_float("volume/music", value)

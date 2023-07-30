@@ -13,8 +13,18 @@ var _data: Dictionary = {
 	"volume/music": 50.0,
 }
 
-## Run when the config data is ready. Load the config data.
+## The config data's [Array]s of [ConfigConnection]s by key.
+var _connections: Dictionary = {}
+
+## The number of active [ConfigConnections].
+var _connection_count: int = 0
+
+## Run when the config data is ready. Populate the config data's connections and
+## load the config data.
 func _ready() -> void:
+	for key in _data:
+		_connections[key] = [] as Array[ConfigConnection]
+	
 	load_file()
 
 
@@ -30,6 +40,9 @@ func set_value(key: String, value: Variant) -> void:
 	
 	_data[key] = value
 	_should_save = true # Save to update modified key.
+	
+	for connection in _connections[key] as Array[ConfigConnection]:
+		connection.notify(value)
 
 
 ## Set a config [float] from its key.
@@ -44,19 +57,28 @@ func get_value(key: String) -> Variant:
 
 ## Get a config [float] from its key.
 func get_float(key: String) -> float:
-	return cast_float(get_value(key))
+	return ConfigConnection.cast_float(get_value(key))
 
 
-## Cast a [Variant] to a [float].
-func cast_float(value: Variant) -> float:
-	match typeof(value):
-		TYPE_BOOL, TYPE_INT, TYPE_STRING:
-			return float(value)
-		TYPE_FLOAT:
-			if is_finite(value) and value != -0.0:
-				return value
+## Connect a [Node]'s [Callable] to a [Variant].
+func on_value(key: String, callable: Callable, type: Variant.Type = TYPE_NIL) -> void:
+	if not (key in _data and callable.is_valid()):
+		return
 	
-	return 0.0
+	var node: Node = callable.get_object()
+	
+	if not node.tree_exiting.is_connected(_disconnect_node):
+		node.tree_exiting.connect(_disconnect_node.bind(node), CONNECT_ONE_SHOT)
+	
+	var connection: ConfigConnection = ConfigConnection.new(callable, type)
+	_connections[key].push_back(connection)
+	_debug_connections(1)
+	connection.notify(get_value(key))
+
+
+## Connect a [Node]'s [Callable] to a [float].
+func on_float(key: String, callable: Callable) -> void:
+	on_value(key, callable, TYPE_FLOAT)
 
 
 ## Save the config data to its file if it needs to be saved.
@@ -106,3 +128,20 @@ func load_file() -> void:
 			_data[key] = file.get_value(key_section, key_key)
 		else:
 			_should_save = true # Save to replace missing key.
+
+
+## Debug the connection count.
+func _debug_connections(delta: int) -> void:
+	_connection_count += delta
+	print_debug("%d config connection(s)." % _connection_count)
+
+
+## Disconnect a [Node] from the [ConfigData].
+func _disconnect_node(node: Node) -> void:
+	for key in _data:
+		var connections: Array[ConfigConnection] = _connections[key]
+		
+		for i in range(connections.size() - 1, -1, -1):
+			if connections[i].get_node() == node:
+				connections.remove_at(i)
+				_debug_connections(-1)
