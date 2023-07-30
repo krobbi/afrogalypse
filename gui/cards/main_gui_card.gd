@@ -20,4 +20,4 @@ func _on_start_button_pressed() -> void:
 
 ## Run when the quit button is pressed. Quit the game.
 func _on_quit_button_pressed() -> void:
-	SceneManager.request_quit()
+	get_tree().quit()
