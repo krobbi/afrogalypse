@@ -11,10 +11,26 @@ var _type: Variant.Type
 ## Cast a [Variant] to a [enum Variant.Type].
 static func cast_value(value: Variant, type: Variant.Type) -> Variant:
 	match type:
+		TYPE_INT:
+			return cast_int(value)
 		TYPE_FLOAT:
 			return cast_float(value)
 		_:
 			return value
+
+
+## Cast a [Variant] to an [int].
+static func cast_int(value: Variant) -> int:
+	match typeof(value):
+		TYPE_BOOL, TYPE_STRING:
+			return int(value)
+		TYPE_INT:
+			return value
+		TYPE_FLOAT:
+			if is_finite(value):
+				return int(value)
+	
+	return 0
 
 
 ## Cast a [Variant] to a [float].

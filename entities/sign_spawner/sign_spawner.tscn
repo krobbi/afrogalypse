@@ -7,11 +7,10 @@
 [node name="SignSpawner" type="Marker2D"]
 y_sort_enabled = true
 script = ExtResource("1_mfihj")
-sign_scene = ExtResource("2_h0faa")
-metadata/_edit_group_ = true
+_sign_scene = ExtResource("2_h0faa")
 
 [node name="DistanceClock" parent="." instance=ExtResource("3_8mc8v")]
 distance = 1500.0
 instant = false
 
-[connection signal="distance_reached" from="DistanceClock" to="." method="spawn_sign"]
+[connection signal="distance_reached" from="DistanceClock" to="." method="_on_distance_clock_distance_reached"]

@@ -8,10 +8,10 @@ func _ready() -> void:
 	Global.is_main_card = true
 
 
-## Run when the start button is pressed. Start a new game or display a tutorial
-## if there is no high score.
+## Run when the start [Button] is pressed. Start a new game or display a
+## tutorial if there is no high score.
 func _on_start_button_pressed() -> void:
-	if Global.high_score > 0:
+	if Config.get_int(ScoreCounter.CONFIG_KEY) > 0:
 		Global.new_game()
 		close_card()
 	else:

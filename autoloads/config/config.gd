@@ -11,6 +11,7 @@ var _should_save: bool = false
 var _data: Dictionary = {
 	"volume/sound": 75.0,
 	"volume/music": 50.0,
+	"progress/high_score": 0,
 }
 
 ## The config data's [Array]s of [ConfigConnection]s by key.
@@ -45,6 +46,11 @@ func set_value(key: String, value: Variant) -> void:
 		connection.notify(value)
 
 
+## Set a config [int] from its key.
+func set_int(key: String, value: int) -> void:
+	set_value(key, value)
+
+
 ## Set a config [float] from its key.
 func set_float(key: String, value: float) -> void:
 	set_value(key, value)
@@ -53,6 +59,11 @@ func set_float(key: String, value: float) -> void:
 ## Get a config [Variant] from its key.
 func get_value(key: String) -> Variant:
 	return _data.get(key)
+
+
+## Get a config [int] from its key.
+func get_int(key: String) -> int:
+	return ConfigConnection.cast_int(get_value(key))
 
 
 ## Get a config [float] from its key.
@@ -74,6 +85,11 @@ func on_value(key: String, callable: Callable, type: Variant.Type = TYPE_NIL) ->
 	_connections[key].push_back(connection)
 	_debug_connections(1)
 	connection.notify(get_value(key))
+
+
+## Connect a [Node]'s [Callable] to an [int].
+func on_int(key: String, callable: Callable) -> void:
+	on_value(key, callable, TYPE_INT)
 
 
 ## Connect a [Node]'s [Callable] to a [float].

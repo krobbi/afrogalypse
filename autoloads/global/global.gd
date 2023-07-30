@@ -21,15 +21,13 @@ enum GameState {
 var state: GameState = GameState.IDLE
 var speed: float = 0.0
 var rng: RandomNumberGenerator = RandomNumberGenerator.new()
-var high_score: int = 0
 var is_main_card: bool = true
 var is_boosting: bool = false
 var no_hit_time: float = 0.0
 
-## Run when the global state is ready. Load the save data.
+## Run when the global state is ready. Set the locale.
 func _ready() -> void:
 	TranslationServer.set_locale("en")
-	load_data()
 
 
 ## Reset the gameplay [RandomNumberGenerator] to a known state.
@@ -51,49 +49,18 @@ func new_game() -> void:
 	new_game_started.emit()
 
 
+## Run when a frog is hit. Adjust the difficulty and remove energy.
 func on_frog_hit() -> void:
 	no_hit_time *= 0.6
 	energy_removed.emit()
 
 
+## Run when energy is removed with no spares. Stop the game for a game over.
 func on_energy_depleted() -> void:
 	state = GameState.STOPPING
 
 
+## Run when the car stops. Display the game over menu card.
 func on_game_over() -> void:
 	state = GameState.IDLE
 	gui_card_changed.emit("game_over")
-
-
-func save_data() -> void:
-	var file: FileAccess = FileAccess.open(SAVE_PATH, FileAccess.WRITE)
-	
-	if not file:
-		return
-	
-	file.store_line(JSON.stringify({
-		"format": "krobbizoid.afrogalypse.legacy-save",
-		"version": "1.1.0",
-		"high_score": high_score,
-	}))
-	file.close()
-
-
-func load_data() -> void:
-	var file: FileAccess = FileAccess.open(SAVE_PATH, FileAccess.READ)
-	
-	if not file:
-		return
-	
-	var result: Variant = JSON.parse_string(file.get_as_text())
-	file.close()
-	
-	if not result is Dictionary:
-		return
-	
-	var score: Variant = result.get("high_score")
-	
-	if score is int and score > 0:
-		high_score = score
-	elif score is float and is_finite(score) and score > 0.0:
-		high_score = int(score)
