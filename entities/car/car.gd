@@ -17,6 +17,9 @@ signal boost_used
 ## Emitted when a boost is available.
 signal boost_available
 
+## Emitted when the car stops.
+signal stopped
+
 @export var wheel_attack: float = 6.0
 @export var wheel_release: float = 6.0
 
@@ -150,12 +153,15 @@ func game_state(delta: float) -> void:
 		_boost_effects.disable()
 
 
+## Process the car's stopping state. Emit [signal stopped] when the car has
+## stopped.
 func stopping_state(delta: float) -> void:
 	target_speed = maxf(target_speed - stop_deceleration * delta, 0.0)
 	handle_input(delta, false)
 	
 	if Global.speed <= 0.0:
-		Global.on_game_over()
+		Global.state = Global.GameState.IDLE
+		stopped.emit()
 
 
 ## Set the score and emit [signal score_changed].

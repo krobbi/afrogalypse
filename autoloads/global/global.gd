@@ -37,9 +37,3 @@ func new_game() -> void:
 	reset_rng()
 	no_hit_time = 0.0
 	new_game_started.emit()
-
-
-## Run when the car stops. Display the game over menu card.
-func on_game_over() -> void:
-	state = GameState.IDLE
-	gui_card_changed.emit("game_over")

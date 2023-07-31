@@ -85,4 +85,5 @@ offset_bottom = 20.0
 [connection signal="energy_gained" from="Entities/Car" to="GUILayer/EnergyCounter" method="_on_energy_gained"]
 [connection signal="energy_lost" from="Entities/Car" to="GUILayer/EnergyCounter" method="_on_energy_lost"]
 [connection signal="score_changed" from="Entities/Car" to="GUILayer/ScoreCounter" method="_on_score_changed"]
+[connection signal="stopped" from="Entities/Car" to="." method="_on_car_stopped"]
 [connection signal="sign_passed" from="Entities/SignSpawner" to="Entities/Car" method="_on_sign_passed"]
