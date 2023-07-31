@@ -30,10 +30,10 @@ var _tutorial_line: int = 0
 ## The [Label] to display tutorial text on.
 @onready var _tutorial_label: Label = $VBoxContainer/TutorialLabel
 
-## The [AudioStreamPlayer] that is played when the tutorial is continued.
+## The [AudioStreamPlayer] to play when the tutorial is continued.
 @onready var _continue_player: AudioStreamPlayer = $ContinuePlayer
 
-## The [AudioStreamPlayer] that is played when the tutorial is finished.
+## The [AudioStreamPlayer] to play when the tutorial is finished.
 @onready var _finished_player: AudioStreamPlayer = $FinishedPlayer
 
 ## Run when the tutorial GUI card is ready. Display the first line of the
@@ -57,7 +57,10 @@ func _display_tutorial() -> void:
 func _on_continue_button_pressed() -> void:
 	_tutorial_line += 1
 	
-	if _tutorial_line >= len(_TUTORIAL):
+	if _tutorial_line < len(_TUTORIAL):
+		_continue_player.play()
+		_display_tutorial()
+	else:
 		if not _finished_player.playing:
 			_finished_player.play()
 		
@@ -69,6 +72,3 @@ func _on_continue_button_pressed() -> void:
 			close_card()
 		else:
 			change_card("options")
-	else:
-		_continue_player.play()
-		_display_tutorial()

@@ -2,8 +2,8 @@
 
 [ext_resource type="PackedScene" uid="uid://deche81a76i5" path="res://gui/gui_card.tscn" id="1_w35es"]
 [ext_resource type="Script" path="res://gui/cards/tutorial_gui_card.gd" id="2_sno3i"]
-[ext_resource type="AudioStream" uid="uid://d2ssnljcftjpl" path="res://resources/audio/tutorial/continue.ogg" id="3_scgte"]
-[ext_resource type="AudioStream" uid="uid://by75rlp8d41ao" path="res://resources/audio/tutorial/finished.ogg" id="4_ud5pt"]
+[ext_resource type="AudioStream" uid="uid://d2ssnljcftjpl" path="res://resources/audio/gui/card/continue.ogg" id="3_scgte"]
+[ext_resource type="AudioStream" uid="uid://by75rlp8d41ao" path="res://resources/audio/gui/card/finished.ogg" id="4_ud5pt"]
 
 [node name="TutorialGUICard" instance=ExtResource("1_w35es")]
 script = ExtResource("2_sno3i")
