@@ -18,8 +18,8 @@ metadata/_edit_group_ = true
 
 [node name="Hitbox" type="Area2D" parent="."]
 position = Vector2(0, -8)
-collision_mask = 0
-monitoring = false
+collision_layer = 0
+monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
 shape = SubResource("CapsuleShape2D_2oq7k")
@@ -37,4 +37,5 @@ bus = &"Sound"
 distance = 8.0
 instant = false
 
+[connection signal="area_entered" from="Hitbox" to="." method="_on_frog_hit"]
 [connection signal="distance_reached" from="DistanceClock" to="." method="_on_distance_clock_distance_reached"]

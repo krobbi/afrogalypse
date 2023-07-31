@@ -19,7 +19,6 @@ var state: GameState = GameState.IDLE
 var speed: float = 0.0
 var rng: RandomNumberGenerator = RandomNumberGenerator.new()
 var is_main_card: bool = true
-var is_boosting: bool = false
 var no_hit_time: float = 0.0
 
 ## Run when the global state is ready. Unpause the game and set the locale.

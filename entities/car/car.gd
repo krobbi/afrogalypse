@@ -63,7 +63,6 @@ func _physics_process(delta: float) -> void:
 
 func apply_boost() -> void:
 	boost_amount = 1.0
-	Global.is_boosting = true
 	_boost_effects.enable()
 	_boost_player.play()
 
@@ -115,7 +114,6 @@ func game_state(delta: float) -> void:
 		Global.no_hit_time += delta
 	
 	if boost_amount <= 0.0:
-		Global.is_boosting = false
 		_boost_effects.disable()
 
 
@@ -151,3 +149,12 @@ func _on_distance_clock_distance_reached() -> void:
 		energy_gained.emit() # Gain energy at 10, 20, and 30 points.
 	
 	_set_score(_score + 1)
+
+
+## Run when a [Frog] is hit. Hit the [Frog] and remove an energy point if
+## vulnerable.
+func _on_frog_hit(frog: Frog) -> void:
+	frog.hit(Global.speed * 0.25)
+	
+	if boost_amount <= 0.0 and Global.state == Global.GameState.GAME:
+		Global.on_frog_hit()

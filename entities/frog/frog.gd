@@ -16,10 +16,11 @@ var horizontal_velocity: float = 0.0
 var vertical_velocity: float = 0.0
 var is_hit: bool = false
 
+## The frog's [CollisionShape2D].
+@onready var _collision_shape: CollisionShape2D = $CollisionShape
+
 func _physics_process(delta: float) -> void:
 	if is_hit:
-		sprite.flip_v = true
-		
 		if sprite.position.y < 4.0:
 			sprite.position.y += vertical_velocity * delta
 			vertical_velocity += _GRAVITY * delta
@@ -62,13 +63,9 @@ func flip_left() -> void:
 	forward_force = -forward_force
 
 
-# Hit by car.
-func _on_hitbox_area_entered(_area: Area2D) -> void:
-	if not is_hit and Global.state == Global.GameState.GAME:
-		is_hit = true
-		
-		if Global.is_boosting:
-			vertical_velocity = -100.0
-		else:
-			vertical_velocity = -50.0
-			Global.on_frog_hit()
+## Hit the frog with a force.
+func hit(force: float) -> void:
+	is_hit = true
+	_collision_shape.set_deferred("disabled", true)
+	vertical_velocity = -force
+	sprite.flip_v = true
