@@ -1,8 +1,0 @@
-[gd_resource type="StyleBoxTexture" load_steps=2 format=3 uid="uid://b3gkks7we23s0"]
-
-[ext_resource type="Texture2D" uid="uid://bxgg680qisi5d" path="res://resources/textures/gui/separator.png" id="1_g0ynv"]
-
-[resource]
-texture = ExtResource("1_g0ynv")
-expand_margin_top = 1.0
-expand_margin_bottom = 1.0

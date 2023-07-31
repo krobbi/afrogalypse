@@ -1,35 +1,21 @@
-[gd_scene load_steps=2 format=3 uid="uid://bkciko41efmse"]
+[gd_scene load_steps=3 format=3 uid="uid://bkciko41efmse"]
 
 [ext_resource type="PackedScene" uid="uid://deche81a76i5" path="res://gui/gui_card.tscn" id="1_tilm0"]
+[ext_resource type="Script" path="res://gui/cards/credits_gui_card.gd" id="2_r7tjm"]
 
 [node name="CreditsGUICard" instance=ExtResource("1_tilm0")]
+script = ExtResource("2_r7tjm")
 
 [node name="HeadingLabel" type="Label" parent="VBoxContainer" index="0"]
 layout_mode = 2
 text = "heading.credits"
 horizontal_alignment = 1
 
-[node name="FontLabel" type="Label" parent="VBoxContainer" index="1"]
-layout_mode = 2
-text = "credits.font"
-
-[node name="HSeparator" type="HSeparator" parent="VBoxContainer" index="2"]
+[node name="CreditsLabel" type="Label" parent="VBoxContainer" index="1"]
 layout_mode = 2
 
-[node name="LicenseLabel" type="Label" parent="VBoxContainer" index="3"]
+[node name="ContinueButton" type="Button" parent="VBoxContainer" index="2" groups=["focus"]]
 layout_mode = 2
-text = "credits.license"
+text = "button.continue"
 
-[node name="CopyrightLabel" type="Label" parent="VBoxContainer" index="4"]
-layout_mode = 2
-text = "credits.copyright"
-
-[node name="VersionLabel" type="Label" parent="VBoxContainer" index="5"]
-layout_mode = 2
-text = "credits.version"
-
-[node name="BackButton" type="Button" parent="VBoxContainer" index="6" groups=["focus"]]
-layout_mode = 2
-text = "button.back"
-
-[connection signal="pressed" from="VBoxContainer/BackButton" to="." method="change_card" binds= ["options"]]
+[connection signal="pressed" from="VBoxContainer/ContinueButton" to="." method="_on_continue_button_pressed"]
