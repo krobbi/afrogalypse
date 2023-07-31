@@ -6,6 +6,7 @@ extends GUICard
 const _CREDIT_SCREENS: Array = [
 	["credits.game", "credits.game.copyright", "credits.game.license"],
 	["credits.font", "credits.font.author", "credits.font.link"],
+	["credits.palette", "credits.palette.author", "credits.palette.link"],
 	["credits.godot"],
 ]
 
