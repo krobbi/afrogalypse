@@ -155,6 +155,7 @@ locale/translations=PackedStringArray("res://resources/translations/text.en.tran
 [layer_names]
 
 2d_physics/layer_1="Car"
+2d_physics/layer_2="Obstacle"
 
 [rendering]
 

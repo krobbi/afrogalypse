@@ -1,9 +1,11 @@
 class_name Frog
-extends Node2D
+extends Area2D
+
+## The frog's virtual gravity.
+const _GRAVITY: float = 200.0
 
 @export var sprite: Sprite2D
 @export var jump_force: float = 40.0
-@export var gravity: float = 200.0
 @export var ground_wait_min: float = 0.3
 @export var ground_wait_max: float = 0.9
 @export var forward_force: float = 160.0
@@ -20,7 +22,7 @@ func _physics_process(delta: float) -> void:
 		
 		if sprite.position.y < 4.0:
 			sprite.position.y += vertical_velocity * delta
-			vertical_velocity += gravity * delta
+			vertical_velocity += _GRAVITY * delta
 		else:
 			sprite.position.y = 4.0
 		
@@ -37,7 +39,7 @@ func _physics_process(delta: float) -> void:
 	else:
 		sprite.frame = 1
 		sprite.position.y += vertical_velocity * delta
-		vertical_velocity += gravity * delta
+		vertical_velocity += _GRAVITY * delta
 		position.x += horizontal_velocity * delta
 		
 		var horizontal_velocity_sign: float = signf(horizontal_velocity)

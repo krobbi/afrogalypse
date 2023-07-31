@@ -9,13 +9,11 @@
 radius = 2.0
 height = 10.0
 
-[node name="Frog" type="Node2D" node_paths=PackedStringArray("sprite") groups=["frogs"]]
+[node name="Frog" type="Area2D" node_paths=PackedStringArray("sprite") groups=["frogs"]]
+collision_layer = 2
 script = ExtResource("1_6saia")
 sprite = NodePath("Sprite2D")
 metadata/_edit_group_ = true
-
-[node name="Mover" parent="." node_paths=PackedStringArray("node") instance=ExtResource("2_5n6ao")]
-node = NodePath("..")
 
 [node name="Shadow" type="Sprite2D" parent="."]
 texture = ExtResource("3_1gjve")
@@ -25,13 +23,11 @@ texture = ExtResource("4_b5i86")
 offset = Vector2(4, -6)
 hframes = 2
 
-[node name="Hitbox" type="Area2D" parent="."]
-collision_layer = 0
-monitorable = false
-metadata/_edit_group_ = true
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_lgslm")
 
-[connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]
+[node name="Mover" parent="." node_paths=PackedStringArray("node") instance=ExtResource("2_5n6ao")]
+node = NodePath("..")
+
+[connection signal="area_entered" from="." to="." method="_on_hitbox_area_entered"]
