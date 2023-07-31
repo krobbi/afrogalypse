@@ -1,8 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://ix2m6stdmdjt"]
+[gd_scene load_steps=3 format=3 uid="uid://ix2m6stdmdjt"]
 
 [ext_resource type="Theme" uid="uid://bw3woedwm4qrh" path="res://resources/theme/score_theme.tres" id="1_d6grb"]
 [ext_resource type="Script" path="res://gui/score_counter/score_counter.gd" id="2_oxw0d"]
-[ext_resource type="PackedScene" uid="uid://wrsulnlolt62" path="res://components/distance_clock/distance_clock.tscn" id="3_f6pvt"]
 
 [node name="ScoreCounter" type="PanelContainer"]
 anchors_preset = 1
@@ -22,9 +21,3 @@ layout_direction = 3
 layout_mode = 2
 text = "0m"
 vertical_alignment = 2
-
-[node name="DistanceClock" parent="." instance=ExtResource("3_f6pvt")]
-distance = 8.0
-instant = false
-
-[connection signal="distance_reached" from="DistanceClock" to="." method="_on_distance_clock_distance_reached"]

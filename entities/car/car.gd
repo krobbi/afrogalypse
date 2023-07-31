@@ -2,6 +2,9 @@
 class_name Car
 extends Sprite2D
 
+## Emitted when the score changes.
+signal score_changed(score: int)
+
 @export var wheel_attack: float = 6.0
 @export var wheel_release: float = 6.0
 
@@ -27,10 +30,18 @@ var wheel_position: float = 0.0
 var brake_position: float = 0.0
 var boost_amount: float = 0.0
 
+## The player's current score.
+var _score: int = 0
+
 @onready var _boost_player: AudioStreamPlayer2D = $BoostMarker/BoostPlayer
 @onready var _boost_effects: BoostEffects = $BoostMarker/BoostEffects
 
+## The [DistanceClock] to count the score with.
+@onready var _distance_clock: DistanceClock = $DistanceClock
+
+## Run when the car is ready. Connect to event signals.
 func _ready() -> void:
+	Global.new_game_started.connect(_on_new_game_started)
 	Global.boost_used.connect(apply_boost)
 
 
@@ -113,7 +124,27 @@ func stopping_state(delta: float) -> void:
 		Global.on_game_over()
 
 
+## Set the score and emit [signal score_changed].
+func _set_score(value: int) -> void:
+	_score = value
+	score_changed.emit(_score)
+
+
+## Run when a new game starts. Reset the score.
+func _on_new_game_started() -> void:
+	_distance_clock.reset()
+	_set_score(0)
+
+
 ## Run when the car passes a sign. Add an energy point.
 func _on_sign_passed() -> void:
 	if Global.state == Global.GameState.GAME or Global.state == Global.GameState.STARTING:
 		Global.energy_added.emit()
+
+
+## Run when the [DistanceClock] reaches a distance. Increment the current score.
+func _on_distance_clock_distance_reached() -> void:
+	if _score % 10 == 9 and _score < 30:
+		Global.energy_added.emit()
+	
+	_set_score(_score + 1)
