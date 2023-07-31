@@ -5,6 +5,9 @@ extends Sprite2D
 ## Emitted when the score changes.
 signal score_changed(score: int)
 
+## Emitted when energy is gained.
+signal energy_gained
+
 @export var wheel_attack: float = 6.0
 @export var wheel_release: float = 6.0
 
@@ -139,12 +142,12 @@ func _on_new_game_started() -> void:
 ## Run when the car passes a sign. Add an energy point.
 func _on_sign_passed() -> void:
 	if Global.state == Global.GameState.GAME or Global.state == Global.GameState.STARTING:
-		Global.energy_added.emit()
+		energy_gained.emit()
 
 
 ## Run when the [DistanceClock] reaches a distance. Increment the current score.
 func _on_distance_clock_distance_reached() -> void:
 	if _score % 10 == 9 and _score < 30:
-		Global.energy_added.emit()
+		energy_gained.emit() # Gain energy at 10, 20, and 30 points.
 	
 	_set_score(_score + 1)

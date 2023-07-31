@@ -5,7 +5,6 @@ extends Node
 signal gui_card_changed(card_name: String)
 signal new_game_started
 signal game_over_cleared
-signal energy_added
 signal energy_removed
 signal boost_used
 

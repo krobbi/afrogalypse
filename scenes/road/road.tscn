@@ -80,5 +80,6 @@ offset_bottom = 20.0
 
 [node name="FrameStepper" parent="." instance=ExtResource("11_ulwx1")]
 
+[connection signal="energy_gained" from="Entities/Car" to="GUILayer/EnergyCounter" method="_on_energy_gained"]
 [connection signal="score_changed" from="Entities/Car" to="GUILayer/ScoreCounter" method="_on_score_changed"]
 [connection signal="sign_passed" from="Entities/SignSpawner" to="Entities/Car" method="_on_sign_passed"]

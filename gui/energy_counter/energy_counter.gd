@@ -27,7 +27,6 @@ var _boost_cooldown: float = 0.0
 ## signals.
 func _ready() -> void:
 	Global.new_game_started.connect(_reset)
-	Global.energy_added.connect(_add_point)
 	Global.energy_removed.connect(_remove_point.bind(true))
 
 
@@ -64,25 +63,6 @@ func _reset() -> void:
 	modulate = Color.WHITE
 
 
-## Add an [EnergyPoint] if there are less than 5 spare [EnergyPoint]s.
-func _add_point() -> void:
-	if len(_points) >= 5:
-		return
-	
-	var point: EnergyPoint = _point_scene.instantiate()
-	point.position.y = len(_points) * -16.0
-	randomize()
-	point.position.x = randf_range(-2.0, 2.0)
-	point.position.y += randf_range(-1.0, 1.0)
-	add_child(point)
-	_points.push_back(point)
-	_gain_player.pitch_scale = 0.5 + 0.1 * len(_points)
-	_gain_player.play()
-	
-	if _remove_cooldown < 0.5:
-		_remove_cooldown = 0.5
-
-
 ## Remove an [EnergyPoint] and play a sound if [param play_sound] is
 ## [code]true[/code].
 func _remove_point(play_sound: bool) -> void:
@@ -103,3 +83,22 @@ func _remove_point(play_sound: bool) -> void:
 		_lose_player.play()
 	
 	_remove_cooldown = 1.5
+
+
+## Run when energy is gained. Add an [EnergyPoint].
+func _on_energy_gained() -> void:
+	if len(_points) >= 5:
+		return
+	
+	var point: EnergyPoint = _point_scene.instantiate()
+	point.position.y = len(_points) * -16.0
+	randomize()
+	point.position.x = randf_range(-2.0, 2.0)
+	point.position.y += randf_range(-1.0, 1.0)
+	add_child(point)
+	_points.push_back(point)
+	_gain_player.pitch_scale = 0.5 + 0.1 * len(_points)
+	_gain_player.play()
+	
+	if _remove_cooldown < 0.5:
+		_remove_cooldown = 0.5
