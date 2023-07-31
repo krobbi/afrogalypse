@@ -36,7 +36,7 @@ var _tutorial_line: int = 0
 ## The [AudioStreamPlayer] that is played when the tutorial is finished.
 @onready var _finished_player: AudioStreamPlayer = $FinishedPlayer
 
-## Run when the tutorial GUI card is ready. Display the current line of the
+## Run when the tutorial GUI card is ready. Display the first line of the
 ## tutorial.
 func _ready() -> void:
 	_display_tutorial()
@@ -52,7 +52,7 @@ func _display_tutorial() -> void:
 	_tutorial_label.text = _TUTORIAL[_tutorial_line]
 
 
-## Run when the continue button is pressed. Continue to the next line of the
+## Run when the continue [Button] is pressed. Continue to the next line of the
 ## tutorial or close the tutorial if it is finished.
 func _on_continue_button_pressed() -> void:
 	_tutorial_line += 1
