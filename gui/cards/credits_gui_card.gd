@@ -4,8 +4,8 @@ extends GUICard
 
 ## The screens of credits to display.
 const _CREDIT_SCREENS: Array = [
-	["credits.license", "credits.copyright", "credits.version"],
-	["credits.font"],
+	["credits.game", "credits.game.copyright", "credits.game.license"],
+	["credits.font", "credits.font.author", "credits.font.link"],
 ]
 
 ## The current screen in the credits.
