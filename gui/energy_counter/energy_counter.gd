@@ -27,7 +27,6 @@ var _boost_cooldown: float = 0.0
 ## signals.
 func _ready() -> void:
 	Global.new_game_started.connect(_reset)
-	Global.energy_removed.connect(_remove_point.bind(true))
 
 
 ## Run on every physics frame. Update the energy counter's cooldown timers and
@@ -50,7 +49,7 @@ func _physics_process(delta: float) -> void:
 			and _boost_cooldown <= 0.0
 			and Input.is_action_just_pressed("boost")
 			and len(_points) > 0):
-		_remove_point(false)
+		_on_energy_lost(false)
 		create_tween().tween_property(self, "modulate", Color(0.5, 0.25, 0.25, 1.0), 0.1)
 		_boost_cooldown = 12.0
 		Global.boost_used.emit()
@@ -61,28 +60,6 @@ func _reset() -> void:
 	_remove_cooldown = 2.0
 	_boost_cooldown = 0.0
 	modulate = Color.WHITE
-
-
-## Remove an [EnergyPoint] and play a sound if [param play_sound] is
-## [code]true[/code].
-func _remove_point(play_sound: bool) -> void:
-	if _remove_cooldown > 0.0:
-		return
-	
-	if len(_points) < 1:
-		_lose_player.pitch_scale = 0.75
-		_lose_player.play()
-		Global.on_energy_depleted()
-		return
-	
-	var point: EnergyPoint = _points.pop_back()
-	point.deplete()
-	
-	if play_sound:
-		_lose_player.pitch_scale = 1.0
-		_lose_player.play()
-	
-	_remove_cooldown = 1.5
 
 
 ## Run when energy is gained. Add an [EnergyPoint].
@@ -102,3 +79,24 @@ func _on_energy_gained() -> void:
 	
 	if _remove_cooldown < 0.5:
 		_remove_cooldown = 0.5
+
+
+## Run when energy is lost. Remove an [EnergyPoint].
+func _on_energy_lost(play_sound: bool) -> void:
+	if _remove_cooldown > 0.0:
+		return
+	
+	if len(_points) < 1:
+		_lose_player.pitch_scale = 0.75
+		_lose_player.play()
+		Global.on_energy_depleted()
+		return
+	
+	var point: EnergyPoint = _points.pop_back()
+	point.deplete()
+	
+	if play_sound:
+		_lose_player.pitch_scale = 1.0
+		_lose_player.play()
+	
+	_remove_cooldown = 1.5

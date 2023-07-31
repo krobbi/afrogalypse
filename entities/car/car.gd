@@ -8,6 +8,9 @@ signal score_changed(score: int)
 ## Emitted when energy is gained.
 signal energy_gained
 
+## Emitted when energy is lost.
+signal energy_lost
+
 @export var wheel_attack: float = 6.0
 @export var wheel_release: float = 6.0
 
@@ -151,10 +154,11 @@ func _on_distance_clock_distance_reached() -> void:
 	_set_score(_score + 1)
 
 
-## Run when a [Frog] is hit. Hit the [Frog] and remove an energy point if
-## vulnerable.
+## Run when a [Frog] is hit. Hit the [Frog] and adjust the difficult and remove
+## an energy point if vulnerable.
 func _on_frog_hit(frog: Frog) -> void:
 	frog.hit(Global.speed * 0.25)
 	
 	if boost_amount <= 0.0 and Global.state == Global.GameState.GAME:
-		Global.on_frog_hit()
+		Global.no_hit_time *= 0.6 # Reduce the difficulty a little.
+		energy_lost.emit()

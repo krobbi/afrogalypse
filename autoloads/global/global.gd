@@ -5,7 +5,6 @@ extends Node
 signal gui_card_changed(card_name: String)
 signal new_game_started
 signal game_over_cleared
-signal energy_removed
 signal boost_used
 
 enum GameState {
@@ -39,12 +38,6 @@ func new_game() -> void:
 	reset_rng()
 	no_hit_time = 0.0
 	new_game_started.emit()
-
-
-## Run when a frog is hit. Adjust the difficulty and remove energy.
-func on_frog_hit() -> void:
-	no_hit_time *= 0.6
-	energy_removed.emit()
 
 
 ## Run when energy is removed with no spares. Stop the game for a game over.
