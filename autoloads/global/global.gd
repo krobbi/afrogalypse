@@ -5,7 +5,6 @@ extends Node
 signal gui_card_changed(card_name: String)
 signal new_game_started
 signal game_over_cleared
-signal boost_used
 
 enum GameState {
 	IDLE,
@@ -38,11 +37,6 @@ func new_game() -> void:
 	reset_rng()
 	no_hit_time = 0.0
 	new_game_started.emit()
-
-
-## Run when energy is removed with no spares. Stop the game for a game over.
-func on_energy_depleted() -> void:
-	state = GameState.STOPPING
 
 
 ## Run when the car stops. Display the game over menu card.

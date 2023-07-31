@@ -1,10 +1,12 @@
-[gd_scene load_steps=7 format=3 uid="uid://ce26bmikob7bk"]
+[gd_scene load_steps=9 format=3 uid="uid://ce26bmikob7bk"]
 
 [ext_resource type="Texture2D" uid="uid://x21oliy31kwa" path="res://resources/textures/entities/car/car.png" id="1_xurhx"]
 [ext_resource type="Script" path="res://entities/car/car.gd" id="2_tig26"]
 [ext_resource type="AudioStream" uid="uid://ccm5jtxnh3ujh" path="res://resources/audio/car/boost.ogg" id="3_tq5rk"]
 [ext_resource type="PackedScene" uid="uid://dln3hx74ugd0v" path="res://components/boost_effects/boost_effects.tscn" id="3_v4wme"]
 [ext_resource type="PackedScene" uid="uid://wrsulnlolt62" path="res://components/distance_clock/distance_clock.tscn" id="5_82x3d"]
+[ext_resource type="AudioStream" uid="uid://kmfj4on6gys" path="res://resources/audio/car/hit.ogg" id="5_wxq8r"]
+[ext_resource type="AudioStream" uid="uid://dl5krhlb3vfwi" path="res://resources/audio/car/boost_cooldown.ogg" id="6_gggac"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_2oq7k"]
 radius = 5.0
@@ -31,6 +33,15 @@ position = Vector2(-3, 6)
 
 [node name="BoostPlayer" type="AudioStreamPlayer2D" parent="BoostMarker"]
 stream = ExtResource("3_tq5rk")
+bus = &"Sound"
+
+[node name="HitPlayer" type="AudioStreamPlayer2D" parent="."]
+position = Vector2(0, -21)
+stream = ExtResource("5_wxq8r")
+bus = &"Sound"
+
+[node name="BoostCooldownPlayer" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_gggac")
 bus = &"Sound"
 
 [node name="DistanceClock" parent="." instance=ExtResource("5_82x3d")]

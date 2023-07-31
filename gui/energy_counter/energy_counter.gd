@@ -1,4 +1,4 @@
-## A GUI element representing a stack of the player's spare [EnergyPoint]s.
+## A GUI element containing a stack of [EnergyPoint]s.
 class_name EnergyCounter
 extends Marker2D
 
@@ -8,65 +8,17 @@ extends Marker2D
 ## The energy counter's stack of [EnergyPoint]s.
 var _points: Array[EnergyPoint] = []
 
-## The time in seconds until an [EnergyPoint] may be lost again.
-var _remove_cooldown: float = 0.0
-
-## The time in seconds until the player may boost again.
-var _boost_cooldown: float = 0.0
-
 ## The [AudioStreamPlayer] to play when energy is gained.
 @onready var _gain_player: AudioStreamPlayer = $GainPlayer
-
-## The [AudioStreamPlayer] to play when energy is lost.
-@onready var _lose_player: AudioStreamPlayer = $LosePlayer
-
-## The [AudioStreamPlayer] to play when the boost cooldown ends.
-@onready var _cooldown_player: AudioStreamPlayer = $CooldownPlayer
 
 ## Run when the energy counter is ready. Connect the energy counter to event
 ## signals.
 func _ready() -> void:
-	Global.new_game_started.connect(_reset)
-
-
-## Run on every physics frame. Update the energy counter's cooldown timers and
-## tint the energy counter if the player boosted.
-func _physics_process(delta: float) -> void:
-	if _remove_cooldown > 0.0:
-		_remove_cooldown -= delta
-	
-	if _boost_cooldown > 0.0:
-		_boost_cooldown -= delta
-		
-		if _boost_cooldown <= 0.0:
-			create_tween().tween_property(self, "modulate", Color.WHITE, 0.1)
-			
-			if len(_points) > 0:
-				_cooldown_player.play()
-	
-	if (
-			Global.state == Global.GameState.GAME
-			and _boost_cooldown <= 0.0
-			and Input.is_action_just_pressed("boost")
-			and len(_points) > 0):
-		_on_energy_lost(false)
-		create_tween().tween_property(self, "modulate", Color(0.5, 0.25, 0.25, 1.0), 0.1)
-		_boost_cooldown = 12.0
-		Global.boost_used.emit()
-
-
-## Reset the energy counter's cooldowns timers and tint.
-func _reset() -> void:
-	_remove_cooldown = 2.0
-	_boost_cooldown = 0.0
-	modulate = Color.WHITE
+	Global.new_game_started.connect(_on_boost_used)
 
 
 ## Run when energy is gained. Add an [EnergyPoint].
 func _on_energy_gained() -> void:
-	if len(_points) >= 5:
-		return
-	
 	var point: EnergyPoint = _point_scene.instantiate()
 	point.position.y = len(_points) * -16.0
 	randomize()
@@ -76,27 +28,18 @@ func _on_energy_gained() -> void:
 	_points.push_back(point)
 	_gain_player.pitch_scale = 0.5 + 0.1 * len(_points)
 	_gain_player.play()
-	
-	if _remove_cooldown < 0.5:
-		_remove_cooldown = 0.5
 
 
 ## Run when energy is lost. Remove an [EnergyPoint].
-func _on_energy_lost(play_sound: bool) -> void:
-	if _remove_cooldown > 0.0:
-		return
-	
-	if len(_points) < 1:
-		_lose_player.pitch_scale = 0.75
-		_lose_player.play()
-		Global.on_energy_depleted()
-		return
-	
-	var point: EnergyPoint = _points.pop_back()
-	point.deplete()
-	
-	if play_sound:
-		_lose_player.pitch_scale = 1.0
-		_lose_player.play()
-	
-	_remove_cooldown = 1.5
+func _on_energy_lost() -> void:
+	_points.pop_back().deplete()
+
+
+## Run when a boost is used. Tint the display.
+func _on_boost_used() -> void:
+	create_tween().tween_property(self, "modulate", Color(0.5, 0.25, 0.25, 1.0), 0.1)
+
+
+## Run when a boost is available. Untint the display.
+func _on_boost_available() -> void:
+	create_tween().tween_property(self, "modulate", Color.WHITE, 0.1)

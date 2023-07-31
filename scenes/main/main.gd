@@ -16,11 +16,11 @@ func _ready() -> void:
 	# Preload large in-game resources.
 	for resource_path in [
 		"res://resources/audio/car/boost.ogg",
+		"res://resources/audio/car/boost_cooldown.ogg",
+		"res://resources/audio/car/hit.ogg",
 		"res://resources/audio/gui/card/finished.ogg",
 		"res://resources/audio/gui/card/navigate.ogg",
-		"res://resources/audio/gui/energy_counter/cooldown.ogg",
 		"res://resources/audio/gui/energy_counter/gain.ogg",
-		"res://resources/audio/gui/energy_counter/lose.ogg",
 	]:
 		load(resource_path)
 	
