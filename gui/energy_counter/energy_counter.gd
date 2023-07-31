@@ -3,7 +3,7 @@ class_name EnergyCounter
 extends Marker2D
 
 ## The [PackedScene] to instantiate [EnergyPoint]s from.
-@export var point_scene: PackedScene
+@export var _point_scene: PackedScene
 
 ## The energy counter's stack of [EnergyPoint]s.
 var _points: Array[EnergyPoint] = []
@@ -69,7 +69,7 @@ func _add_point() -> void:
 	if len(_points) >= 5:
 		return
 	
-	var point: EnergyPoint = point_scene.instantiate()
+	var point: EnergyPoint = _point_scene.instantiate()
 	point.position.y = len(_points) * -16.0
 	randomize()
 	point.position.x = randf_range(-2.0, 2.0)

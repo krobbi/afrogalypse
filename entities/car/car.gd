@@ -111,3 +111,9 @@ func stopping_state(delta: float) -> void:
 	
 	if Global.speed <= 0.0:
 		Global.on_game_over()
+
+
+## Run when the car passes a sign. Add an energy point.
+func _on_sign_passed() -> void:
+	if Global.state == Global.GameState.GAME or Global.state == Global.GameState.STARTING:
+		Global.energy_added.emit()

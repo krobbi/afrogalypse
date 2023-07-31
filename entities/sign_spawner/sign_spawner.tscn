@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://e48x6rmcjgy7"]
 
 [ext_resource type="Script" path="res://entities/sign_spawner/sign_spawner.gd" id="1_mfihj"]
-[ext_resource type="PackedScene" uid="uid://bmeflkttin1ks" path="res://entities/sign/sign.tscn" id="2_h0faa"]
+[ext_resource type="PackedScene" uid="uid://bmeflkttin1ks" path="res://entities/sign_spawner/sign.tscn" id="2_h0faa"]
 [ext_resource type="PackedScene" uid="uid://wrsulnlolt62" path="res://components/distance_clock/distance_clock.tscn" id="3_8mc8v"]
 
 [node name="SignSpawner" type="Marker2D"]

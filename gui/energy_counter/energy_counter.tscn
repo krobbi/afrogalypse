@@ -1,12 +1,14 @@
-[gd_scene load_steps=5 format=3 uid="uid://bauw6w8ags5vv"]
+[gd_scene load_steps=6 format=3 uid="uid://bauw6w8ags5vv"]
 
 [ext_resource type="Script" path="res://gui/energy_counter/energy_counter.gd" id="1_ekfxp"]
+[ext_resource type="PackedScene" uid="uid://2bwnajs3a2yu" path="res://gui/energy_counter/energy_point.tscn" id="2_dopic"]
 [ext_resource type="AudioStream" uid="uid://bdyicyi7olsk7" path="res://resources/audio/gui/energy_counter/gain.ogg" id="2_kqq20"]
 [ext_resource type="AudioStream" uid="uid://kmfj4on6gys" path="res://resources/audio/gui/energy_counter/lose.ogg" id="3_6dfv4"]
 [ext_resource type="AudioStream" uid="uid://dl5krhlb3vfwi" path="res://resources/audio/gui/energy_counter/cooldown.ogg" id="4_xmdxw"]
 
 [node name="EnergyCounter" type="Marker2D"]
 script = ExtResource("1_ekfxp")
+_point_scene = ExtResource("2_dopic")
 metadata/_edit_group_ = true
 
 [node name="GainPlayer" type="AudioStreamPlayer" parent="."]

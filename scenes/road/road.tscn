@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://db84bo3f0lyqi"]
+[gd_scene load_steps=11 format=3 uid="uid://db84bo3f0lyqi"]
 
 [ext_resource type="Script" path="res://scenes/road/road.gd" id="1_xo0g1"]
 [ext_resource type="PackedScene" uid="uid://c61b2hft4p2fl" path="res://entities/road_section_spawner/road_section_spawner.tscn" id="2_mjkgn"]
@@ -7,7 +7,6 @@
 [ext_resource type="PackedScene" uid="uid://ce26bmikob7bk" path="res://entities/car/car.tscn" id="5_xexis"]
 [ext_resource type="PackedScene" uid="uid://e48x6rmcjgy7" path="res://entities/sign_spawner/sign_spawner.tscn" id="6_gsg2f"]
 [ext_resource type="PackedScene" uid="uid://bauw6w8ags5vv" path="res://gui/energy_counter/energy_counter.tscn" id="7_doxxe"]
-[ext_resource type="PackedScene" uid="uid://2bwnajs3a2yu" path="res://gui/energy_counter/energy_point.tscn" id="8_8dbo2"]
 [ext_resource type="PackedScene" uid="uid://sr272lnrwpkk" path="res://gui/gui_card_manager.tscn" id="9_binb4"]
 [ext_resource type="PackedScene" uid="uid://ix2m6stdmdjt" path="res://gui/score_counter/score_counter.tscn" id="10_2b1tk"]
 [ext_resource type="PackedScene" uid="uid://b5r1g6iyimwkw" path="res://components/frame_stepper/frame_stepper.tscn" id="11_ulwx1"]
@@ -72,7 +71,6 @@ position = Vector2(24, -16)
 
 [node name="EnergyCounter" parent="GUILayer" instance=ExtResource("7_doxxe")]
 position = Vector2(296, 164)
-point_scene = ExtResource("8_8dbo2")
 
 [node name="GUICardManager" parent="GUILayer" instance=ExtResource("9_binb4")]
 
@@ -81,3 +79,5 @@ offset_left = -20.0
 offset_bottom = 20.0
 
 [node name="FrameStepper" parent="." instance=ExtResource("11_ulwx1")]
+
+[connection signal="sign_passed" from="Entities/SignSpawner" to="Entities/Car" method="_on_sign_passed"]

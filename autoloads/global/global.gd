@@ -9,8 +9,6 @@ signal energy_added
 signal energy_removed
 signal boost_used
 
-const SAVE_PATH: String = "user://save.json"
-
 enum GameState {
 	IDLE,
 	STARTING,
