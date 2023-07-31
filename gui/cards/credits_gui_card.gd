@@ -3,7 +3,7 @@ class_name CreditsGUICard
 extends GUICard
 
 ## The screens of credits to display.
-const _CREDIT_SCREENS: Array = [
+const _CREDIT_SCREENS: Array[Array] = [
 	["credits.game", "credits.game.copyright", "credits.game.license"],
 	["credits.font", "credits.font.author", "credits.font.link"],
 	["credits.palette", "credits.palette.author", "credits.palette.link"],
