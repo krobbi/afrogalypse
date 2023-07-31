@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://c7dppj0r510e0"]
 
-[ext_resource type="AudioStream" uid="uid://o46cvkf5ntio" path="res://resources/audio/frogrock.ogg" id="1_womns"]
+[ext_resource type="AudioStream" uid="uid://o46cvkf5ntio" path="res://resources/audio/music/frog_rock.ogg" id="1_womns"]
 [ext_resource type="Script" path="res://autoloads/audio_manager/audio_manager.gd" id="1_xoy54"]
 
 [node name="AudioManager" type="Node"]

@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://sr272lnrwpkk"]
 
 [ext_resource type="Script" path="res://gui/gui_card_manager.gd" id="1_dogyq"]
-[ext_resource type="AudioStream" uid="uid://bhia2mib2fwjs" path="res://resources/audio/gui_navigate.ogg" id="2_ok4tf"]
+[ext_resource type="AudioStream" uid="uid://bhia2mib2fwjs" path="res://resources/audio/gui/card/navigate.ogg" id="2_ok4tf"]
 
 [node name="GUICardManager" type="Control"]
 custom_minimum_size = Vector2(320, 180)

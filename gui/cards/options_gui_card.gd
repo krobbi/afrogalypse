@@ -8,8 +8,8 @@ extends GUICard
 ## The [HSlider] to control the music volume with.
 @onready var _music_slider: HSlider = $VBoxContainer/GridContainer/MusicSlider
 
-## The [AudioStreamPlayer] to play when the sound 
-@onready var _pip_player: AudioStreamPlayer = $PipPlayer
+## The [AudioStreamPlayer] to play when the sound volume changes.
+@onready var _blip_player: AudioStreamPlayer = $BlipPlayer
 
 ## Run when the options GUI card is ready. Notify the game that the main menu is
 ## not active and connect the volume [HSlider]s to updating the volume config.
@@ -29,10 +29,10 @@ func _exit_tree() -> void:
 
 
 ## Run when the sound volume [HSlider] is changed. Update the sound volume
-## config and play a pip sound.
+## config and play a blip sound.
 func _on_sound_slider_value_changed(value: float) -> void:
 	Config.set_int("volume/sound", int(value))
-	_pip_player.play()
+	_blip_player.play()
 
 
 ## Run when the music volume [HSlider] is changed. Update the music volume

@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://deche81a76i5" path="res://gui/gui_card.tscn" id="1_kqotr"]
 [ext_resource type="Script" path="res://gui/cards/options_gui_card.gd" id="2_xv3dp"]
-[ext_resource type="AudioStream" uid="uid://ck8yg1glcuwmk" path="res://resources/audio/volume_pip.ogg" id="3_xcue6"]
+[ext_resource type="AudioStream" uid="uid://ck8yg1glcuwmk" path="res://resources/audio/gui/card/blip.ogg" id="3_bi6us"]
 
 [node name="OptionsGUICard" instance=ExtResource("1_kqotr")]
 script = ExtResource("2_xv3dp")
@@ -51,8 +51,8 @@ text = "button.tutorial"
 layout_mode = 2
 text = "button.back"
 
-[node name="PipPlayer" type="AudioStreamPlayer" parent="." index="1"]
-stream = ExtResource("3_xcue6")
+[node name="BlipPlayer" type="AudioStreamPlayer" parent="." index="1"]
+stream = ExtResource("3_bi6us")
 bus = &"Sound"
 
 [connection signal="pressed" from="VBoxContainer/ControlsButton" to="." method="change_card" binds= ["controls"]]

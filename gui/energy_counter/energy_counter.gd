@@ -1,89 +1,105 @@
+## A GUI element representing a stack of the player's spare [EnergyPoint]s.
 class_name EnergyCounter
 extends Marker2D
 
+## The [PackedScene] to instantiate [EnergyPoint]s from.
 @export var point_scene: PackedScene
 
-var points: Array[EnergyPoint] = []
-var remove_cooldown: float = 0.0
-var boost_cooldown: float = 0.0
+## The energy counter's stack of [EnergyPoint]s.
+var _points: Array[EnergyPoint] = []
 
-@onready var gain_player: AudioStreamPlayer = $GainPlayer
-@onready var deplete_player: AudioStreamPlayer = $DepletePlayer
-@onready var refill_player: AudioStreamPlayer = $RefillPlayer
+## The time in seconds until an [EnergyPoint] may be lost again.
+var _remove_cooldown: float = 0.0
 
+## The time in seconds until the player may boost again.
+var _boost_cooldown: float = 0.0
+
+## The [AudioStreamPlayer] to play when energy is gained.
+@onready var _gain_player: AudioStreamPlayer = $GainPlayer
+
+## The [AudioStreamPlayer] to play when energy is lost.
+@onready var _lose_player: AudioStreamPlayer = $LosePlayer
+
+## The [AudioStreamPlayer] to play when the boost cooldown ends.
+@onready var _cooldown_player: AudioStreamPlayer = $CooldownPlayer
+
+## Run when the energy counter is ready. Connect the energy counter to event
+## signals.
 func _ready() -> void:
-	Global.new_game_started.connect(reset)
-	Global.energy_added.connect(add_point)
-	Global.energy_removed.connect(remove_energy)
+	Global.new_game_started.connect(_reset)
+	Global.energy_added.connect(_add_point)
+	Global.energy_removed.connect(_remove_point.bind(true))
 
 
-func remove_energy() -> void:
-	remove_point(true)
-
-
+## Run on every physics frame. Update the energy counter's cooldown timers and
+## tint the energy counter if the player boosted.
 func _physics_process(delta: float) -> void:
-	if remove_cooldown > 0.0:
-		remove_cooldown -= delta
+	if _remove_cooldown > 0.0:
+		_remove_cooldown -= delta
 	
-	if boost_cooldown > 0.0:
-		boost_cooldown -= delta
+	if _boost_cooldown > 0.0:
+		_boost_cooldown -= delta
 		
-		if boost_cooldown <= 0.0:
+		if _boost_cooldown <= 0.0:
 			create_tween().tween_property(self, "modulate", Color.WHITE, 0.1)
 			
-			if len(points) > 0:
-				refill_player.play()
+			if len(_points) > 0:
+				_cooldown_player.play()
 	
 	if (
 			Global.state == Global.GameState.GAME
-			and boost_cooldown <= 0.0
+			and _boost_cooldown <= 0.0
 			and Input.is_action_just_pressed("boost")
-			and len(points) > 0):
-		remove_point(false)
+			and len(_points) > 0):
+		_remove_point(false)
 		create_tween().tween_property(self, "modulate", Color(0.5, 0.25, 0.25, 1.0), 0.1)
-		boost_cooldown = 12.0
+		_boost_cooldown = 12.0
 		Global.boost_used.emit()
 
 
-func reset() -> void:
-	remove_cooldown = 2.0
-	boost_cooldown = 0.0
+## Reset the energy counter's cooldowns timers and tint.
+func _reset() -> void:
+	_remove_cooldown = 2.0
+	_boost_cooldown = 0.0
 	modulate = Color.WHITE
 
 
-func add_point() -> void:
-	if len(points) >= 5:
+## Add an [EnergyPoint] if there are less than 5 spare [EnergyPoint]s.
+func _add_point() -> void:
+	if len(_points) >= 5:
 		return
 	
 	var point: EnergyPoint = point_scene.instantiate()
-	point.position.y = len(points) * -16.0
+	point.position.y = len(_points) * -16.0
 	randomize()
 	point.position.x = randf_range(-2.0, 2.0)
 	point.position.y += randf_range(-1.0, 1.0)
 	add_child(point)
-	points.push_back(point)
-	gain_player.pitch_scale = 0.5 + 0.1 * len(points)
-	gain_player.play()
+	_points.push_back(point)
+	_gain_player.pitch_scale = 0.5 + 0.1 * len(_points)
+	_gain_player.play()
 	
-	if remove_cooldown < 0.5:
-		remove_cooldown = 0.5
+	if _remove_cooldown < 0.5:
+		_remove_cooldown = 0.5
 
 
-func remove_point(play_sound: bool) -> void:
-	if remove_cooldown > 0.0:
+## Remove an [EnergyPoint] and play a sound if [param play_sound] is
+## [code]true[/code].
+func _remove_point(play_sound: bool) -> void:
+	if _remove_cooldown > 0.0:
 		return
 	
-	if len(points) < 1:
-		deplete_player.pitch_scale = 0.75
-		deplete_player.play()
+	if len(_points) < 1:
+		_lose_player.pitch_scale = 0.75
+		_lose_player.play()
 		Global.on_energy_depleted()
 		return
 	
-	var point: EnergyPoint = points.pop_back()
+	var point: EnergyPoint = _points.pop_back()
 	point.deplete()
 	
 	if play_sound:
-		deplete_player.pitch_scale = 1.0
-		deplete_player.play()
+		_lose_player.pitch_scale = 1.0
+		_lose_player.play()
 	
-	remove_cooldown = 1.5
+	_remove_cooldown = 1.5

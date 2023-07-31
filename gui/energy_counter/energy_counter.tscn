@@ -1,22 +1,22 @@
 [gd_scene load_steps=5 format=3 uid="uid://bauw6w8ags5vv"]
 
 [ext_resource type="Script" path="res://gui/energy_counter/energy_counter.gd" id="1_ekfxp"]
-[ext_resource type="AudioStream" uid="uid://bdyicyi7olsk7" path="res://resources/audio/gain_energy.ogg" id="2_bjo58"]
-[ext_resource type="AudioStream" uid="uid://kmfj4on6gys" path="res://resources/audio/deplete.ogg" id="3_76ian"]
-[ext_resource type="AudioStream" uid="uid://dl5krhlb3vfwi" path="res://resources/audio/nitro_refill.ogg" id="4_2eiuj"]
+[ext_resource type="AudioStream" uid="uid://bdyicyi7olsk7" path="res://resources/audio/gui/energy_counter/gain.ogg" id="2_kqq20"]
+[ext_resource type="AudioStream" uid="uid://kmfj4on6gys" path="res://resources/audio/gui/energy_counter/lose.ogg" id="3_6dfv4"]
+[ext_resource type="AudioStream" uid="uid://dl5krhlb3vfwi" path="res://resources/audio/gui/energy_counter/cooldown.ogg" id="4_xmdxw"]
 
 [node name="EnergyCounter" type="Marker2D"]
 script = ExtResource("1_ekfxp")
 metadata/_edit_group_ = true
 
 [node name="GainPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("2_bjo58")
+stream = ExtResource("2_kqq20")
 bus = &"Sound"
 
-[node name="DepletePlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("3_76ian")
+[node name="LosePlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_6dfv4")
 bus = &"Sound"
 
-[node name="RefillPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("4_2eiuj")
+[node name="CooldownPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_xmdxw")
 bus = &"Sound"

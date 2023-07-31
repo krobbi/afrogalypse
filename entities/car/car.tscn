@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://x21oliy31kwa" path="res://resources/textures/entities/car/car.png" id="1_xurhx"]
 [ext_resource type="Script" path="res://entities/car/car.gd" id="2_tig26"]
-[ext_resource type="AudioStream" uid="uid://ccm5jtxnh3ujh" path="res://resources/audio/boost.ogg" id="3_tq5rk"]
+[ext_resource type="AudioStream" uid="uid://ccm5jtxnh3ujh" path="res://resources/audio/car/boost.ogg" id="3_tq5rk"]
 [ext_resource type="PackedScene" uid="uid://dln3hx74ugd0v" path="res://components/boost_effects/boost_effects.tscn" id="3_v4wme"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_2oq7k"]
