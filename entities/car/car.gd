@@ -182,6 +182,14 @@ func _lose_energy() -> void:
 		energy_lost.emit()
 
 
+## Play a hit sound with an intensity.
+func _play_hit(intensity: float) -> void:
+	_hit_player.volume_db = (1.0 - intensity) * -10.0
+	randomize()
+	_hit_player.pitch_scale = 1.0 + (1.0 - intensity) + randf_range(-0.05, 0.05)
+	_hit_player.play()
+
+
 ## Update the car's real speed from its target speed.
 func _apply_speed() -> void:
 	var boosted_speed: float = lerpf(_target_speed, _BOOST_SPEED, _boost_amount)
@@ -301,11 +309,11 @@ func _on_frog_hit(frog: Frog) -> void:
 		_difficulty *= _DIFFICULTY_DROP
 		
 		if _energy > 0:
-			_hit_player.pitch_scale = 1.0
-			_hit_player.play()
+			_play_hit(1.0)
 			_lose_energy()
 		else:
-			_hit_player.pitch_scale = 0.75
-			_hit_player.play()
+			_play_hit(1.4)
 			_state = State.STOPPING
 			stopping.emit()
+	else:
+		_play_hit(0.2)
