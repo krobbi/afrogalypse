@@ -1,5 +1,6 @@
-[gd_scene load_steps=9 format=3 uid="uid://ce26bmikob7bk"]
+[gd_scene load_steps=11 format=3 uid="uid://ce26bmikob7bk"]
 
+[ext_resource type="Shader" path="res://resources/shaders/flash.gdshader" id="1_6sagg"]
 [ext_resource type="Texture2D" uid="uid://x21oliy31kwa" path="res://resources/textures/entities/car/car.png" id="1_xurhx"]
 [ext_resource type="Script" path="res://entities/car/car.gd" id="2_tig26"]
 [ext_resource type="AudioStream" uid="uid://ccm5jtxnh3ujh" path="res://resources/audio/car/boost.ogg" id="3_tq5rk"]
@@ -8,11 +9,17 @@
 [ext_resource type="AudioStream" uid="uid://kmfj4on6gys" path="res://resources/audio/car/hit.ogg" id="5_wxq8r"]
 [ext_resource type="AudioStream" uid="uid://dl5krhlb3vfwi" path="res://resources/audio/car/boost_cooldown.ogg" id="6_gggac"]
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mmvq5"]
+shader = ExtResource("1_6sagg")
+shader_parameter/flash_color = Color(0.945098, 0.94902, 0.945098, 1)
+shader_parameter/flash_amount = 0.0
+
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_2oq7k"]
 radius = 5.0
 height = 26.0
 
 [node name="Car" type="Sprite2D"]
+material = SubResource("ShaderMaterial_mmvq5")
 texture = ExtResource("1_xurhx")
 offset = Vector2(0, -8)
 script = ExtResource("2_tig26")

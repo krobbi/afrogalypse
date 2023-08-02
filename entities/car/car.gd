@@ -166,12 +166,17 @@ func _set_score(value: int) -> void:
 	score_changed.emit(_score)
 
 
+## Gain a duration of invincibility.
+func _gain_invincibility(duration: float) -> void:
+	_hit_cooldown = maxf(duration, _hit_cooldown)
+
+
 ## Gain an energy point if the maximum has not been reached and emit
 ## [signal energy_gained].
 func _gain_energy() -> void:
 	if _energy < 5:
 		_energy += 1
-		_hit_cooldown = maxf(_hit_cooldown, 0.5)
+		_gain_invincibility(0.5)
 		energy_gained.emit()
 
 
@@ -257,7 +262,10 @@ func _process_game_state(delta: float) -> void:
 	_handle_input(delta, true)
 	
 	_difficulty = minf(_difficulty + _DIFFICULTY_GAIN * delta, 1.0)
-	_hit_cooldown = maxf(_hit_cooldown - delta, 0.0)
+	
+	if _hit_cooldown > 0.0:
+		_hit_cooldown = maxf(_hit_cooldown - delta, 0.0)
+		material.set_shader_parameter("flash_amount", minf(_hit_cooldown, 1.0))
 	
 	if _boost_amount <= 0.0:
 		_boost_effects.disable()
@@ -305,10 +313,10 @@ func _on_frog_hit(frog: Frog) -> void:
 	frog.hit(Global.speed * 0.25)
 	
 	if _hit_cooldown <= 0.0 and _boost_amount <= 0.0 and _state == State.GAME:
-		_hit_cooldown = 1.5
 		_difficulty *= _DIFFICULTY_DROP
 		
 		if _energy > 0:
+			_gain_invincibility(1.5)
 			_play_hit(1.0)
 			_lose_energy()
 		else:
