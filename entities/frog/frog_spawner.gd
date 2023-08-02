@@ -58,6 +58,7 @@ func _physics_process(delta: float) -> void:
 			var frog: Frog = _frog_scene.instantiate()
 			frog.position.x = Global.rng.randf_range(0.0, _bottom_right.position.x)
 			frog.position.y = Global.rng.randf_range(0.0, _bottom_right.position.y)
+			add_child(frog)
 			
 			match _direction:
 				Direction.LEFT:
@@ -65,8 +66,6 @@ func _physics_process(delta: float) -> void:
 				Direction.BOTH:
 					if Global.rng.randi() & 1:
 						frog.flip_left()
-			
-			add_child(frog)
 
 
 ## Run when the [Car] has started. Start spawning [Frog]s.

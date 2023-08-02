@@ -6,5 +6,5 @@
 [node name="RoadSection" type="Sprite2D"]
 texture = ExtResource("1_ldylj")
 
-[node name="Mover" parent="." node_paths=PackedStringArray("node") instance=ExtResource("2_egimy")]
-node = NodePath("..")
+[node name="Mover" parent="." node_paths=PackedStringArray("_node") instance=ExtResource("2_egimy")]
+_node = NodePath("..")

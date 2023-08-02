@@ -7,5 +7,5 @@
 texture = ExtResource("1_a32a0")
 offset = Vector2(0, -24)
 
-[node name="Mover" parent="." node_paths=PackedStringArray("node") instance=ExtResource("2_cbxmy")]
-node = NodePath("..")
+[node name="Mover" parent="." node_paths=PackedStringArray("_node") instance=ExtResource("2_cbxmy")]
+_node = NodePath("..")

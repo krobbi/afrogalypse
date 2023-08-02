@@ -1,14 +1,18 @@
+## Moves a [Node2D] downwards to simulate player movement and frees the [Node2D]
+## once its global position reaches a limit.
+class_name Mover
 extends Node
 
-# Mover
-# Moves a 2D node downwards to simulate player movement and despawns the node at
-# a given point.
+## The global Y coordinate to free the [Node2D] at.
+const _FREE_PLANE: float = 300.0
 
-@export var node: Node2D
-@export var despawn_position: float = 300.0
+## The [Node2D] to move.
+@export var _node: Node2D
 
+## Run on every physics frame. Move the [Node2D] downwards and free it if its
+## global position has reached the limit.
 func _physics_process(delta: float) -> void:
-	node.position.y += Global.speed * delta
+	_node.position.y += Global.speed * delta
 	
-	if node.global_position.y >= despawn_position:
-		node.queue_free()
+	if _node.global_position.y >= _FREE_PLANE:
+		_node.queue_free()
