@@ -6,4 +6,4 @@
 [node name="FrogSpawner" type="Marker2D"]
 y_sort_enabled = true
 script = ExtResource("1_ltngl")
-frog_scene = ExtResource("2_13ygi")
+_frog_scene = ExtResource("2_13ygi")

@@ -26,37 +26,40 @@ position = Vector2(0, 270)
 y_sort_enabled = true
 metadata/_edit_lock_ = true
 
-[node name="LeftFrogSpawner" parent="Entities" node_paths=PackedStringArray("bottom_right") instance=ExtResource("4_5bc3n")]
+[node name="LeftFrogSpawner" parent="Entities" node_paths=PackedStringArray("_car", "_bottom_right") instance=ExtResource("4_5bc3n")]
 position = Vector2(-48, -4)
-bottom_right = NodePath("BottomRight")
-delay = 1.1
-min_count = 1
-max_count = 2
-difficulty_curve = 0.04
+_car = NodePath("../Car")
+_bottom_right = NodePath("BottomRight")
+_delay = 1.1
+_min_count = 1
+_max_count = 2
+_difficulty_curve = 4.0
 
 [node name="BottomRight" type="Marker2D" parent="Entities/LeftFrogSpawner"]
 position = Vector2(44, 180)
 
-[node name="RightFrogSpawner" parent="Entities" node_paths=PackedStringArray("bottom_right") instance=ExtResource("4_5bc3n")]
+[node name="RightFrogSpawner" parent="Entities" node_paths=PackedStringArray("_car", "_bottom_right") instance=ExtResource("4_5bc3n")]
 position = Vector2(324, -4)
-bottom_right = NodePath("BottomRight")
-delay = 1.1
-min_count = 1
-max_count = 2
-spawn_facing = 0
-difficulty_curve = 0.04
+_car = NodePath("../Car")
+_bottom_right = NodePath("BottomRight")
+_direction = 0
+_delay = 1.1
+_min_count = 1
+_max_count = 2
+_difficulty_curve = 4.0
 
 [node name="BottomRight" type="Marker2D" parent="Entities/RightFrogSpawner"]
 position = Vector2(44, 180)
 
-[node name="TopFrogSpawner" parent="Entities" node_paths=PackedStringArray("bottom_right") instance=ExtResource("4_5bc3n")]
+[node name="TopFrogSpawner" parent="Entities" node_paths=PackedStringArray("_car", "_bottom_right") instance=ExtResource("4_5bc3n")]
 position = Vector2(-48, -64)
-bottom_right = NodePath("BottomRight")
-delay = 0.7
-min_count = 2
-max_count = 3
-spawn_facing = 2
-difficulty_curve = 0.06
+_car = NodePath("../Car")
+_bottom_right = NodePath("BottomRight")
+_direction = 2
+_delay = 0.7
+_min_count = 2
+_max_count = 3
+_difficulty_curve = 6.0
 
 [node name="BottomRight" type="Marker2D" parent="Entities/TopFrogSpawner"]
 position = Vector2(416, 60)

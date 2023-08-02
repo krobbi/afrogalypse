@@ -17,39 +17,103 @@ signal boost_used
 ## Emitted when a boost is available.
 signal boost_available
 
+## Emitted when the car has started.
+signal started
+
+## Emitted when the car is stopping.
+signal stopping
+
 ## Emitted when the car stops.
 signal stopped
 
-@export var wheel_attack: float = 6.0
-@export var wheel_release: float = 6.0
+## A state of the car.
+enum State {
+	IDLE, ## The car is not in an in-game state.
+	STARTING, ## The car is accelerating for the game state.
+	GAME, ## The car is in an in-game state.
+	STOPPING, ## The car is stopping for a game over.
+}
 
-@export var brake_attack: float = 5.0
-@export var brake_release: float = 2.0
+## The rate to gain difficulty per second.
+const _DIFFICULTY_GAIN: float = 0.01
 
-@export var pivot_amount: float = 0.6
-@export var brake_pivot_amount: float = -0.4
+## The amount to multiply difficulty by after getting hit.
+const _DIFFICULTY_DROP: float = 0.6
 
-@export var turn_amount: float = 150.0
-@export var brake_turn_amount: float = -240.0
+## The rate from neutral to full steering per second.
+const _WHEEL_ATTACK: float = 6.0
 
-@export var start_speed: float = 200.0
-@export var max_speed: float = 250.0
-@export var boost_speed: float = 600.0
-@export var start_acceleration: float = 50.0
-@export var game_acceleration: float = 1.0
-@export var stop_deceleration: float = 200.0
-@export var brake_speed_mul: float = 0.8
+## The rate from full to neutral steering per second.
+const _WHEEL_RELEASE: float = 6.0
 
-var target_speed: float = 0.0
-var wheel_position: float = 0.0
-var brake_position: float = 0.0
-var boost_amount: float = 0.0
+## The rate from no to full braking per second.
+const _BRAKE_ATTACK: float = 5.0
 
-## The player's energy points.
+## The rate from full to no braking per second.
+const _BRAKE_RELEASE: float = 2.0
+
+## The amount to rotate the car in radians.
+const _PIVOT_AMOUNT: float = 0.6
+
+## The amount to rotate the car in radians from braking.
+const _BRAKE_PIVOT_AMOUNT: float = -0.4
+
+## The amount to move the car sideways in pixels per second.
+const _TURN_SPEED: float = 150.0
+
+## The amount to move the car sideways in pixels per second from braking.
+const _BRAKE_TURN_SPEED: float = -240.0
+
+## The minimum time between boosts in seconds.
+const _BOOST_PERIOD: float = 12.0
+
+## The rate to lose boosting per second.
+const _BOOST_DECAY: float = 0.2
+
+## The target speed to start the car at.
+const _START_SPEED: float = 200.0
+
+## The maximum target speed to accelerate to.
+const _MAX_SPEED: float = 250.0
+
+## The speed to accelerate to at the start of a boost.
+const _BOOST_SPEED: float = 600.0
+
+## The amount to multiply the car's speed by when braking.
+const _BRAKE_SPEED_MULTIPLIER: float = 0.8
+
+## The car's acceleration in pixels per second per second when starting.
+const _START_ACCELERATION: float = 50.0
+
+## The car's acceleration in pixels per second per second during gameplay.
+const _GAME_ACCELERATION: float = 1.0
+
+## The car's deceleration in pixels per second per second when stopping.
+const _STOP_DECELERATION: float = 200.0
+
+## The car's [enum State].
+var _state: State = State.IDLE
+
+## The car's score.
+var _score: int = 0
+
+## The car's energy points.
 var _energy: int = 0
 
-## The player's current score.
-var _score: int = 0
+## The car's difficulty from [code]0.0[/code] to [code]1.0[/code].
+var _difficulty: float = 0.0
+
+## The car's steering wheel position from [code]-1.0[/code] to [code]1.0[/code].
+var _wheel_position: float = 0.0
+
+## The car's brake pedal position from [code]0.KEY_0[/code] to [code]1.0[/code].
+var _brake_position: float = 0.0
+
+## The amount the car is boosting from [code]0.0[/code] to [code]1.0[/code].
+var _boost_amount: float = 0.0
+
+## The car's ideal speed without braking or boosting.
+var _target_speed: float = 0.0
 
 ## The time in seconds until hitting a frog loses energy.
 var _hit_cooldown: float = 0.0
@@ -57,14 +121,17 @@ var _hit_cooldown: float = 0.0
 ## The time in seconds until the player can boost.
 var _boost_cooldown: float = 0.0
 
-@onready var _boost_player: AudioStreamPlayer2D = $BoostMarker/BoostPlayer
+## The [BoostEffects] to enable when the car is boosting.
 @onready var _boost_effects: BoostEffects = $BoostMarker/BoostEffects
 
-## The [AudioStreamPlayer2D] to play when the car hits something.
-@onready var _hit_player: AudioStreamPlayer2D = $HitPlayer
+## The [AudioStreamPlayer2D] to play when a boost is used.
+@onready var _boost_player: AudioStreamPlayer2D = $BoostMarker/BoostPlayer
 
 ## The [AudioStreamPlayer2D] to play when boosting becomes available.
 @onready var _boost_cooldown_player: AudioStreamPlayer2D = $BoostCooldownPlayer
+
+## The [AudioStreamPlayer2D] to play when the car hits a [Frog].
+@onready var _hit_player: AudioStreamPlayer2D = $HitPlayer
 
 ## The [DistanceClock] to count the score with.
 @onready var _distance_clock: DistanceClock = $DistanceClock
@@ -74,97 +141,26 @@ func _ready() -> void:
 	Global.new_game_started.connect(_on_new_game_started)
 
 
+## Run on every physics frame. Process the car's state.
 func _physics_process(delta: float) -> void:
-	match Global.state:
-		Global.GameState.STARTING:
-			starting_state(delta)
-		Global.GameState.GAME:
-			game_state(delta)
-		Global.GameState.STOPPING:
-			stopping_state(delta)
+	match _state:
+		State.STARTING:
+			_process_starting_state(delta)
+		State.GAME:
+			_process_game_state(delta)
+		State.STOPPING:
+			_process_stopping_state(delta)
 	
-	apply_speed()
-	boost_amount = maxf(boost_amount - 0.2 * delta, 0.0)
+	_apply_speed()
+	_boost_amount = maxf(_boost_amount - _BOOST_DECAY * delta, 0.0)
 
 
-func apply_speed() -> void:
-	var boosted_speed: float = lerpf(target_speed, boost_speed, boost_amount)
-	var braked_speed: float = lerpf(boosted_speed, boosted_speed * brake_speed_mul, brake_position)
-	Global.speed = braked_speed
+## Get the car's difficulty.
+func get_difficulty() -> float:
+	return _difficulty
 
 
-func handle_input(delta: float, can_steer: bool) -> void:
-	var steer_axis: float = Input.get_axis("steer_left", "steer_right") if can_steer else 0.0
-	
-	if steer_axis:
-		wheel_position = clampf(wheel_position + steer_axis * wheel_attack * delta, -1.0, 1.0)
-	else:
-		var wheel_position_sign: float = signf(wheel_position)
-		wheel_position = wheel_position - wheel_release * wheel_position_sign * delta
-		
-		if signf(wheel_position) != wheel_position_sign:
-			wheel_position = 0.0
-	
-	if can_steer and Input.is_action_pressed("brake"):
-		brake_position = minf(brake_position + brake_attack * delta, 1.0)
-	else:
-		brake_position = maxf(brake_position - brake_release * delta, 0.0)
-	
-	rotation = wheel_position * (pivot_amount + brake_position * brake_pivot_amount)
-	position.x = clampf(
-			position.x
-			+ wheel_position * (turn_amount + brake_position * brake_turn_amount) * delta,
-			56.0, 264.0
-	)
-
-
-func starting_state(delta: float) -> void:
-	target_speed = minf(target_speed + start_acceleration * delta, start_speed)
-	handle_input(delta, true)
-	
-	if target_speed >= start_speed and not get_tree().get_first_node_in_group("frogs"):
-		Global.state = Global.GameState.GAME
-
-
-func game_state(delta: float) -> void:
-	target_speed = minf(target_speed + game_acceleration * delta, max_speed)
-	
-	if _boost_cooldown > 0.0:
-		_boost_cooldown -= delta
-		
-		if _boost_cooldown <= 0.0:
-			_boost_cooldown_player.play()
-			boost_available.emit()
-	
-	if _energy > 0 and _boost_cooldown <= 0.0 and Input.is_action_just_pressed("boost"):
-		_boost_cooldown = 12.0
-		boost_amount = 1.0
-		_lose_energy()
-		_boost_effects.enable()
-		_boost_player.play()
-		boost_used.emit()
-	
-	handle_input(delta, true)
-	
-	Global.no_hit_time = minf(Global.no_hit_time + delta, 100.0)
-	_hit_cooldown = maxf(_hit_cooldown - delta, 0.0)
-	
-	if boost_amount <= 0.0:
-		_boost_effects.disable()
-
-
-## Process the car's stopping state. Emit [signal stopped] when the car has
-## stopped.
-func stopping_state(delta: float) -> void:
-	target_speed = maxf(target_speed - stop_deceleration * delta, 0.0)
-	handle_input(delta, false)
-	
-	if Global.speed <= 0.0:
-		Global.state = Global.GameState.IDLE
-		stopped.emit()
-
-
-## Set the score and emit [signal score_changed].
+## Set the car's score and emit [signal score_changed].
 func _set_score(value: int) -> void:
 	_score = value
 	score_changed.emit(_score)
@@ -186,19 +182,99 @@ func _lose_energy() -> void:
 		energy_lost.emit()
 
 
+## Update the car's real speed from its target speed.
+func _apply_speed() -> void:
+	var boosted_speed: float = lerpf(_target_speed, _BOOST_SPEED, _boost_amount)
+	var braked_speed: float = lerpf(
+			boosted_speed, boosted_speed * _BRAKE_SPEED_MULTIPLIER, _brake_position)
+	Global.speed = braked_speed
+
+
+## Update the car's steering, braking, position, and rotation.
+func _handle_input(delta: float, can_steer: bool) -> void:
+	var steer_axis: float = Input.get_axis("steer_left", "steer_right") if can_steer else 0.0
+	
+	if steer_axis:
+		_wheel_position = clampf(_wheel_position + steer_axis * _WHEEL_ATTACK * delta, -1.0, 1.0)
+	else:
+		var wheel_position_sign: float = signf(_wheel_position)
+		_wheel_position = _wheel_position - _WHEEL_RELEASE * wheel_position_sign * delta
+		
+		if signf(_wheel_position) != wheel_position_sign:
+			_wheel_position = 0.0
+	
+	if can_steer and Input.is_action_pressed("brake"):
+		_brake_position = minf(_brake_position + _BRAKE_ATTACK * delta, 1.0)
+	else:
+		_brake_position = maxf(_brake_position - _BRAKE_RELEASE * delta, 0.0)
+	
+	rotation = _wheel_position * (_PIVOT_AMOUNT + _brake_position * _BRAKE_PIVOT_AMOUNT)
+	position.x = clampf(
+			position.x
+			+ _wheel_position * (_TURN_SPEED + _brake_position * _BRAKE_TURN_SPEED) * delta,
+			56.0, 264.0
+	)
+
+
+## Process the car's starting [enum State]. Emit [signal started] when the car
+## has started.
+func _process_starting_state(delta: float) -> void:
+	_target_speed = minf(_target_speed + _START_ACCELERATION * delta, _START_SPEED)
+	_handle_input(delta, true)
+	
+	if _target_speed >= _START_SPEED and not get_tree().get_first_node_in_group("frogs"):
+		_state = State.GAME
+		started.emit()
+
+
+## Process the car's game [enum State].
+func _process_game_state(delta: float) -> void:
+	_target_speed = minf(_target_speed + _GAME_ACCELERATION * delta, _MAX_SPEED)
+	
+	if _boost_cooldown > 0.0:
+		_boost_cooldown -= delta
+		
+		if _boost_cooldown <= 0.0:
+			_boost_cooldown_player.play()
+			boost_available.emit()
+	
+	if _energy > 0 and _boost_cooldown <= 0.0 and Input.is_action_just_pressed("boost"):
+		_boost_cooldown = _BOOST_PERIOD
+		_boost_amount = 1.0
+		_lose_energy()
+		_boost_effects.enable()
+		_boost_player.play()
+		boost_used.emit()
+	
+	_handle_input(delta, true)
+	
+	_difficulty = minf(_difficulty + _DIFFICULTY_GAIN * delta, 1.0)
+	_hit_cooldown = maxf(_hit_cooldown - delta, 0.0)
+	
+	if _boost_amount <= 0.0:
+		_boost_effects.disable()
+
+
+## Process the car's stopping [enum State]. Emit [signal stopped] when the car
+## has stopped.
+func _process_stopping_state(delta: float) -> void:
+	_target_speed = maxf(_target_speed - _STOP_DECELERATION * delta, 0.0)
+	_handle_input(delta, false)
+	
+	if Global.speed <= 0.0:
+		_state = State.IDLE
+		stopped.emit()
+
+
 ## Run when a new game starts. Reset the stats.
 func _on_new_game_started() -> void:
+	_state = State.STARTING
+	_difficulty = 0.0
 	_energy = 0
 	_distance_clock.reset()
 	_set_score(0)
 	_hit_cooldown = 2.0
 	_boost_cooldown = 0.01
-
-
-## Run when the car passes a sign. Gain an energy point.
-func _on_sign_passed() -> void:
-	if Global.state == Global.GameState.GAME or Global.state == Global.GameState.STARTING:
-		_gain_energy()
 
 
 ## Run when the [DistanceClock] reaches a distance. Increment the current score.
@@ -209,14 +285,20 @@ func _on_distance_clock_distance_reached() -> void:
 	_set_score(_score + 1)
 
 
+## Run when the car passes a sign. Gain an energy point.
+func _on_sign_passed() -> void:
+	if _state == State.GAME or _state == State.STARTING:
+		_gain_energy()
+
+
 ## Run when a [Frog] is hit. Hit the [Frog], adjust the difficulty and lose an
 ## energy point if vulnerable.
 func _on_frog_hit(frog: Frog) -> void:
 	frog.hit(Global.speed * 0.25)
 	
-	if _hit_cooldown <= 0.0 and boost_amount <= 0.0 and Global.state == Global.GameState.GAME:
+	if _hit_cooldown <= 0.0 and _boost_amount <= 0.0 and _state == State.GAME:
 		_hit_cooldown = 1.5
-		Global.no_hit_time *= 0.6 # Reduce the difficulty a little.
+		_difficulty *= _DIFFICULTY_DROP
 		
 		if _energy > 0:
 			_hit_player.pitch_scale = 1.0
@@ -225,4 +307,5 @@ func _on_frog_hit(frog: Frog) -> void:
 		else:
 			_hit_player.pitch_scale = 0.75
 			_hit_player.play()
-			Global.state = Global.GameState.STOPPING
+			_state = State.STOPPING
+			stopping.emit()

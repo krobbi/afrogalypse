@@ -35,13 +35,13 @@ position = Vector2(-3, 6)
 stream = ExtResource("3_tq5rk")
 bus = &"Sound"
 
+[node name="BoostCooldownPlayer" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_gggac")
+bus = &"Sound"
+
 [node name="HitPlayer" type="AudioStreamPlayer2D" parent="."]
 position = Vector2(0, -21)
 stream = ExtResource("5_wxq8r")
-bus = &"Sound"
-
-[node name="BoostCooldownPlayer" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("6_gggac")
 bus = &"Sound"
 
 [node name="DistanceClock" parent="." instance=ExtResource("5_82x3d")]
