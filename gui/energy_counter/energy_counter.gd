@@ -2,6 +2,9 @@
 class_name EnergyCounter
 extends Marker2D
 
+## The [Color] to tint the display when boosts are unavailable.
+const _TINT_COLOR: Color = Color("#ad1818")
+
 ## The [PackedScene] to instantiate [EnergyPoint]s from.
 @export var _point_scene: PackedScene
 
@@ -37,7 +40,7 @@ func _on_energy_lost() -> void:
 
 ## Run when a boost is used. Tint the display.
 func _on_boost_used() -> void:
-	create_tween().tween_property(self, "modulate", Color(0.5, 0.25, 0.25, 1.0), 0.1)
+	create_tween().tween_property(self, "modulate", _TINT_COLOR, 0.1)
 
 
 ## Run when a boost is available. Untint the display.
