@@ -1,11 +1,14 @@
 ## Road scene. Contains the core gameplay.
 extends Node2D
 
-## Run when the road scene is ready. Display the main menu.
+## The [GUICardManager] to display [GUICard]s with.
+@onready var _gui_card_manager: GUICardManager = $GUILayer/GUICardManager
+
+## Run when the road scene is ready. Display the [MainGUICard].
 func _ready() -> void:
-	Global.gui_card_changed.emit("main")
+	_gui_card_manager.change_card("main")
 
 
-## Run when the car stops. Display the game over menu.
+## Run when the [Car] stops. Display the [GameOverGUICard].
 func _on_car_stopped() -> void:
-	Global.gui_card_changed.emit("game_over")
+	_gui_card_manager.change_card("game_over")

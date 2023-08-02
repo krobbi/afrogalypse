@@ -2,7 +2,6 @@ extends Node
 
 # Global State
 
-signal gui_card_changed(card_name: String)
 signal new_game_started
 signal game_over_cleared
 
