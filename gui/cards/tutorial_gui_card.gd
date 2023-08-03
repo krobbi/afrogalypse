@@ -49,7 +49,7 @@ func _display_tutorial() -> void:
 				"res://resources/textures/tutorial/%s.png" % _TUTORIAL[_tutorial_line].substr(1))
 		_tutorial_line += 1
 	
-	_tutorial_label.text = _TUTORIAL[_tutorial_line]
+	_tutorial_label.text = InputManager.translate(tr(_TUTORIAL[_tutorial_line]))
 
 
 ## Run when the continue [Button] is pressed. Continue to the next line of the

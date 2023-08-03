@@ -31,6 +31,7 @@ buses/default_bus_layout="res://resources/audio_bus_layouts/default_bus_layout.t
 Config="*res://autoloads/config/config.tscn"
 Global="*res://autoloads/global/global.tscn"
 AudioManager="*res://autoloads/audio_manager/audio_manager.tscn"
+InputManager="*res://autoloads/input_manager/input_manager.tscn"
 SceneManager="*res://autoloads/scene_manager/scene_manager.tscn"
 
 [debug]

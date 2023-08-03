@@ -7,7 +7,7 @@ _All rights reserved._
 
 # Contents
 1. [Afrogalypse](#afrogalypse)
-2. [Controls](#controls)
+2. [Default Controls](#default-controls)
 3. [Development](#development)
 4. [Jam Results](#jam-results)
 5. [Previous Jams](#previous-jams)
@@ -26,15 +26,16 @@ You can download Afrogalypse or play it online at
 [itch.io](https://krobbizoid.itch.io/afrogalypse) or the
 [GitHub releases page](https://github.com/krobbi/afrogalypse/releases).
 
-# Controls
-The controls are currently fixed and require a keyboard.
+# Default Controls
+The controls are in the process of being made mappable. Currently, only
+keyboard input is supported.
 
-| Input           | Action      |
-| --------------: | :---------- |
-| A / Left Arrow  | Steer Left  |
-| D / Right Arrow | Steer Right |
-| Shift / X       | Brake       |
-| Space / Z       | Boost       |
+| Input           | Action      | Mappable |
+| --------------: | :---------- | :------- |
+| A / Left Arrow  | Steer Left  | No       |
+| D / Right Arrow | Steer Right | No       |
+| Shift / X       | Brake       | No       |
+| Space / Z       | Boost       | Yes      |
 
 # Development
 Afrogalypse was created as my first solo game jam project and an entry to the

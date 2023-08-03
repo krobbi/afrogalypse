@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://c6an3tg3xs4d8"]
+[gd_scene load_steps=3 format=3 uid="uid://c6an3tg3xs4d8"]
 
 [ext_resource type="PackedScene" uid="uid://deche81a76i5" path="res://gui/gui_card.tscn" id="1_f6ori"]
+[ext_resource type="PackedScene" uid="uid://cubuf3byc5tko" path="res://gui/widgets/action_button.tscn" id="2_6th8t"]
 
 [node name="ControlsGUICard" instance=ExtResource("1_f6ori")]
 
@@ -37,15 +38,11 @@ text = "action.brake"
 layout_mode = 2
 text = "control.brake"
 
-[node name="BoostAction" type="Label" parent="VBoxContainer/GridContainer" index="6"]
+[node name="BoostAction" parent="VBoxContainer" index="2" instance=ExtResource("2_6th8t")]
 layout_mode = 2
-text = "action.boost"
+_action = "boost"
 
-[node name="BoostControl" type="Label" parent="VBoxContainer/GridContainer" index="7"]
-layout_mode = 2
-text = "control.boost"
-
-[node name="BackButton" type="Button" parent="VBoxContainer" index="2" groups=["focus"]]
+[node name="BackButton" type="Button" parent="VBoxContainer" index="3" groups=["focus"]]
 layout_mode = 2
 text = "button.back"
 

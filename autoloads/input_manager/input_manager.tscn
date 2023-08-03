@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://dhqg3d2delmva"]
+
+[ext_resource type="Script" path="res://autoloads/input_manager/input_manager.gd" id="1_7c21k"]
+
+[node name="InputManager" type="Node"]
+process_mode = 3
+script = ExtResource("1_7c21k")

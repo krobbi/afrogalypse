@@ -15,7 +15,7 @@ extends HBoxContainer
 @onready var _blip_player: AudioStreamPlayer = $BlipPlayer
 
 ## Run when the volume slider is ready. Initialize the volume slider's
-## [Control]s and subscribe the volume slider to the config data.
+## [Control]s.
 func _ready() -> void:
 	$Label.text = "slider.volume.%s" % _key
 	
