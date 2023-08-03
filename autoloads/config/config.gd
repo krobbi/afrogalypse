@@ -52,6 +52,11 @@ func set_float(key: String, value: float) -> void:
 	_set_value(key, value)
 
 
+## Set a config [String] from its key.
+func set_string(key: String, value: String) -> void:
+	_set_value(key, value)
+
+
 ## Get a config [bool] from its key.
 func get_bool(key: String) -> bool:
 	return ConfigConnection.cast_bool(_get_value(key))
@@ -67,6 +72,11 @@ func get_float(key: String) -> float:
 	return ConfigConnection.cast_float(_get_value(key))
 
 
+## Get a config [String] from its key.
+func get_string(key: String) -> String:
+	return ConfigConnection.cast_string(_get_value(key))
+
+
 ## Subscribe a [Node]'s [Callable] to a config [bool].
 func subscribe_bool(key: String, callable: Callable) -> void:
 	_subscribe_value(key, callable, TYPE_BOOL)
@@ -80,6 +90,11 @@ func subscribe_int(key: String, callable: Callable) -> void:
 ## Subscribe a [Node]'s [Callable] to a config [float].
 func subscribe_float(key: String, callable: Callable) -> void:
 	_subscribe_value(key, callable, TYPE_FLOAT)
+
+
+## Subscribe a [Node]'s [Callable] to a config [String].
+func subscribe_string(key: String, callable: Callable) -> void:
+	_subscribe_value(key, callable, TYPE_STRING)
 
 
 ## Save the config data to its file if it needs to be saved.

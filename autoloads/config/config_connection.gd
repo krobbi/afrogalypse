@@ -11,6 +11,8 @@ static func cast_value(value: Variant, type: Variant.Type) -> Variant:
 			return cast_int(value)
 		TYPE_FLOAT:
 			return cast_float(value)
+		TYPE_STRING:
+			return cast_string(value)
 		_:
 			return value
 
@@ -37,6 +39,11 @@ static func cast_float(value: Variant) -> float:
 			return casted if is_finite(casted) and casted != -0.0 else 0.0
 		_:
 			return 0.0
+
+
+## Cast a [Variant] to a [String].
+static func cast_string(value: Variant) -> String:
+	return str(value)
 
 
 ## The connection's target [Callable].
