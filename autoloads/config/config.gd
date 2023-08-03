@@ -22,9 +22,6 @@ var _data: Dictionary = {
 ## The config data's [Array]s of [ConfigConnection]s by key.
 var _connections: Dictionary = {}
 
-## The number of active [ConfigConnection]s.
-var _connection_count: int = 0
-
 ## Run when the config data is ready. Populate the config data's connections and
 ## load the config data.
 func _ready() -> void:
@@ -36,8 +33,6 @@ func _ready() -> void:
 
 ## Run when the config data exits the scene tree. Save the config data.
 func _exit_tree() -> void:
-	assert(_connection_count == 0, "Leaked %d config connection(s) at exit." % _connection_count)
-	
 	save_file()
 
 
@@ -183,7 +178,6 @@ func _subscribe_value(key: String, callable: Callable, type: Variant.Type) -> vo
 	
 	var connection: ConfigConnection = ConfigConnection.new(callable, type)
 	_connections[key].push_back(connection)
-	_update_connection_count(1)
 	connection.send(_get_value(key))
 
 
@@ -195,14 +189,3 @@ func _unsubscribe_node(node: Node) -> void:
 		for i in range(connections.size() - 1, -1, -1):
 			if connections[i].get_node() == node:
 				connections.remove_at(i)
-				_update_connection_count(-1)
-
-
-## Update the number of active [ConfigConnection]s.
-func _update_connection_count(change: int) -> void:
-	_connection_count += change
-	
-	assert(_connection_count >= 0, "Counted less than 0 config connections.")
-	
-	if OS.is_debug_build():
-		print("%d config connection(s)." % _connection_count)
