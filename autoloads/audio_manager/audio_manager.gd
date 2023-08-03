@@ -22,6 +22,13 @@ func _ready() -> void:
 	create_tween().tween_property(_music_player, "volume_db", 0.0, 1.0)
 
 
+## Get an audio bus' name from its key.
+func get_bus_name(key: String) -> String:
+	assert(key in _buses, "Audio bus '%s' does not exist." % key)
+	
+	return AudioServer.get_bus_name(_buses[key])
+
+
 ## Set an audio bus' volume from its key.
 func _set_bus_volume(value: float, key: String) -> void:
 	if value >= 0.0 and value <= 100.0:
