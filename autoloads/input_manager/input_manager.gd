@@ -3,7 +3,10 @@ extends Node
 
 ## A map of actions to their default input mapping code [String]s.
 const _DEFAULT_MAPPINGS: Dictionary = {
-	"boost": "key/%s" % KEY_SPACE,
+	"steer_left": "key/#%d" % KEY_A,
+	"steer_right": "key/#%d" % KEY_D,
+	"brake": "key/#%d" % KEY_SHIFT,
+	"boost": "key/#%d" % KEY_SPACE,
 }
 
 ## Run when the input manager is ready. Subscribe the input manager to the
@@ -35,7 +38,7 @@ func can_map(event: InputEvent) -> bool:
 func encode(event: InputEvent) -> String:
 	assert(event is InputEventKey, "Only keyboard input can be mapped.")
 	
-	return "key/%d" % event.physical_keycode
+	return "key/#%d" % event.physical_keycode
 
 
 ## Decode an [InputEvent] from an input mapping code [String]. Return

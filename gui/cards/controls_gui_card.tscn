@@ -10,39 +10,23 @@ layout_mode = 2
 text = "heading.controls"
 horizontal_alignment = 1
 
-[node name="GridContainer" type="GridContainer" parent="VBoxContainer" index="1"]
+[node name="SteerLeftAction" parent="VBoxContainer" index="1" instance=ExtResource("2_6th8t")]
 layout_mode = 2
-columns = 2
+_action = "steer_left"
 
-[node name="SteerLeftAction" type="Label" parent="VBoxContainer/GridContainer" index="0"]
+[node name="SteerRightAction" parent="VBoxContainer" index="2" instance=ExtResource("2_6th8t")]
 layout_mode = 2
-text = "action.steer_left"
+_action = "steer_right"
 
-[node name="SteerLeftControl" type="Label" parent="VBoxContainer/GridContainer" index="1"]
+[node name="BrakeAction" parent="VBoxContainer" index="3" instance=ExtResource("2_6th8t")]
 layout_mode = 2
-text = "control.steer_left"
+_action = "brake"
 
-[node name="SteerRightAction" type="Label" parent="VBoxContainer/GridContainer" index="2"]
-layout_mode = 2
-text = "action.steer_right"
-
-[node name="SteerRightControl" type="Label" parent="VBoxContainer/GridContainer" index="3"]
-layout_mode = 2
-text = "control.steer_right"
-
-[node name="BrakeAction" type="Label" parent="VBoxContainer/GridContainer" index="4"]
-layout_mode = 2
-text = "action.brake"
-
-[node name="BrakeControl" type="Label" parent="VBoxContainer/GridContainer" index="5"]
-layout_mode = 2
-text = "control.brake"
-
-[node name="BoostAction" parent="VBoxContainer" index="2" instance=ExtResource("2_6th8t")]
+[node name="BoostAction" parent="VBoxContainer" index="4" instance=ExtResource("2_6th8t")]
 layout_mode = 2
 _action = "boost"
 
-[node name="BackButton" type="Button" parent="VBoxContainer" index="3" groups=["focus"]]
+[node name="BackButton" type="Button" parent="VBoxContainer" index="5" groups=["focus"]]
 layout_mode = 2
 text = "button.back"
 

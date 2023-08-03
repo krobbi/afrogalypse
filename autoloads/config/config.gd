@@ -11,7 +11,10 @@ var _should_save: bool = false
 var _data: Dictionary = {
 	"volume/sound": 75,
 	"volume/music": 50,
-	"controls/boost": "auto",
+	"controls/steer_left": "default",
+	"controls/steer_right": "default",
+	"controls/brake": "default",
+	"controls/boost": "default",
 	"progress/has_seen_tutorial": false,
 	"progress/high_score": 0,
 }

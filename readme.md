@@ -27,15 +27,14 @@ You can download Afrogalypse or play it online at
 [GitHub releases page](https://github.com/krobbi/afrogalypse/releases).
 
 # Default Controls
-The controls are in the process of being made mappable. Currently, only
-keyboard input is supported.
+All controls are mappable, however only keyboard input is currently supported.
 
-| Input           | Action      | Mappable |
-| --------------: | :---------- | :------- |
-| A / Left Arrow  | Steer Left  | No       |
-| D / Right Arrow | Steer Right | No       |
-| Shift / X       | Brake       | No       |
-| Space / Z       | Boost       | Yes      |
+| Action      | Input |
+| :---------- | :---- |
+| Steer Left  | A     |
+| Steer Right | D     |
+| Brake       | Shift |
+| Boost       | Space |
 
 # Development
 Afrogalypse was created as my first solo game jam project and an entry to the
