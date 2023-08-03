@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://ix2m6stdmdjt"]
 
-[ext_resource type="Theme" uid="uid://bw3woedwm4qrh" path="res://resources/theme/score_theme.tres" id="1_d6grb"]
+[ext_resource type="Theme" uid="uid://bw3woedwm4qrh" path="res://resources/themes/score_theme.tres" id="1_d6grb"]
 [ext_resource type="Script" path="res://gui/score_counter/score_counter.gd" id="2_oxw0d"]
 
 [node name="ScoreCounter" type="PanelContainer"]

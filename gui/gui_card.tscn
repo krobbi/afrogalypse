@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://deche81a76i5"]
 
-[ext_resource type="Theme" uid="uid://4g6q0qitk4oc" path="res://resources/theme/default_theme.tres" id="1_hq5o7"]
+[ext_resource type="Theme" uid="uid://4g6q0qitk4oc" path="res://resources/themes/default_theme.tres" id="1_mfyo5"]
 [ext_resource type="Script" path="res://gui/gui_card.gd" id="2_1qjjs"]
 
 [node name="GUICard" type="PanelContainer"]
@@ -15,7 +15,7 @@ offset_bottom = 46.0
 grow_horizontal = 2
 size_flags_horizontal = 4
 size_flags_vertical = 0
-theme = ExtResource("1_hq5o7")
+theme = ExtResource("1_mfyo5")
 script = ExtResource("2_1qjjs")
 metadata/_edit_lock_ = true
 
