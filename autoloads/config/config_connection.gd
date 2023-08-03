@@ -21,24 +21,16 @@ static func cast_value(value: Variant, type: Variant.Type) -> Variant:
 
 ## Cast a [Variant] to a [bool].
 static func cast_bool(value: Variant) -> bool:
-	if value is float:
-		return is_finite(value) and (value > 0.0 or value < -0.0)
-	else:
-		return true if value else false
+	return true if value else false
 
 
 ## Cast a [Variant] to an [int].
 static func cast_int(value: Variant) -> int:
 	match typeof(value):
-		TYPE_BOOL, TYPE_STRING:
+		TYPE_BOOL, TYPE_INT, TYPE_FLOAT, TYPE_STRING:
 			return int(value)
-		TYPE_INT:
-			return value
-		TYPE_FLOAT:
-			if is_finite(value):
-				return int(value)
-	
-	return 0
+		_:
+			return 0
 
 
 ## Initialize the connection's target [Callable] and [enum Variant.Type].
