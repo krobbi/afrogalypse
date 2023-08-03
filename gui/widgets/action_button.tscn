@@ -3,7 +3,7 @@
 [ext_resource type="Theme" uid="uid://4g6q0qitk4oc" path="res://resources/themes/default_theme.tres" id="1_7eacg"]
 [ext_resource type="Script" path="res://gui/widgets/action_button.gd" id="1_jjpje"]
 
-[node name="ActionButton" type="HBoxContainer"]
+[node name="ActionButton" type="HBoxContainer" groups=["action_buttons"]]
 anchors_preset = 10
 anchor_right = 1.0
 grow_horizontal = 2
@@ -23,4 +23,9 @@ size_flags_horizontal = 3
 toggle_mode = true
 text = "Input"
 
+[node name="Timer" type="Timer" parent="."]
+wait_time = 8.0
+one_shot = true
+
 [connection signal="toggled" from="Button" to="." method="_on_button_toggled"]
+[connection signal="timeout" from="Timer" to="." method="deactivate"]
