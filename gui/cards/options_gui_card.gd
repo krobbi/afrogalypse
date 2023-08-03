@@ -15,9 +15,9 @@ extends GUICard
 ## not active and connect the volume [HSlider]s to updating the volume config.
 func _ready() -> void:
 	Global.is_main_card = false
-	_sound_slider.value = float(Config.get_int("volume/sound"))
+	_sound_slider.value = Config.get_float("volume/sound")
 	_sound_slider.value_changed.connect(_on_sound_slider_value_changed)
-	_music_slider.value = float(Config.get_int("volume/music"))
+	_music_slider.value = Config.get_float("volume/music")
 	_music_slider.value_changed.connect(_on_music_slider_value_changed)
 
 

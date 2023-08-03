@@ -18,7 +18,7 @@ var _data: Dictionary = {
 ## The config data's [Array]s of [ConfigConnection]s by key.
 var _connections: Dictionary = {}
 
-## The number of active [ConfigConnections].
+## The number of active [ConfigConnection]s.
 var _connection_count: int = 0
 
 ## Run when the config data is ready. Populate the config data's connections and
@@ -32,70 +32,54 @@ func _ready() -> void:
 
 ## Run when the config data exits the scene tree. Save the config data.
 func _exit_tree() -> void:
+	assert(_connection_count == 0, "Leaked %d config connection(s) at exit." % _connection_count)
+	
 	save_file()
-
-
-## Set a config [Variant] from its key.
-func set_value(key: String, value: Variant) -> void:
-	if not key in _data or is_same(_data[key], value):
-		return
-	
-	_data[key] = value
-	_should_save = true # Save to update modified key.
-	
-	for connection in _connections[key] as Array[ConfigConnection]:
-		connection.notify(value)
 
 
 ## Set a config [bool] from its key.
 func set_bool(key: String, value: bool) -> void:
-	set_value(key, value)
+	_set_value(key, value)
 
 
 ## Set a config [int] from its key.
 func set_int(key: String, value: int) -> void:
-	set_value(key, value)
+	_set_value(key, value)
 
 
-## Get a config [Variant] from its key.
-func get_value(key: String) -> Variant:
-	return _data.get(key)
+## Set a config [float] from its key.
+func set_float(key: String, value: float) -> void:
+	_set_value(key, value)
 
 
 ## Get a config [bool] from its key.
 func get_bool(key: String) -> bool:
-	return ConfigConnection.cast_bool(get_value(key))
+	return ConfigConnection.cast_bool(_get_value(key))
 
 
 ## Get a config [int] from its key.
 func get_int(key: String) -> int:
-	return ConfigConnection.cast_int(get_value(key))
+	return ConfigConnection.cast_int(_get_value(key))
 
 
-## Connect a [Node]'s [Callable] to a [Variant].
-func on_value(key: String, callable: Callable, type: Variant.Type = TYPE_NIL) -> void:
-	if not (key in _data and callable.is_valid()):
-		return
-	
-	var node: Node = callable.get_object()
-	
-	if not node.tree_exiting.is_connected(_disconnect_node):
-		node.tree_exiting.connect(_disconnect_node.bind(node), CONNECT_ONE_SHOT)
-	
-	var connection: ConfigConnection = ConfigConnection.new(callable, type)
-	_connections[key].push_back(connection)
-	_debug_connections(1)
-	connection.notify(get_value(key))
+## Get a config [float] from its key.
+func get_float(key: String) -> float:
+	return ConfigConnection.cast_float(_get_value(key))
 
 
-## Connect a [Node]'s [Callable] to a [bool].
-func on_bool(key: String, callable: Callable) -> void:
-	on_value(key, callable, TYPE_BOOL)
+## Subscribe a [Node]'s [Callable] to a config [bool].
+func subscribe_bool(key: String, callable: Callable) -> void:
+	_subscribe_value(key, callable, TYPE_BOOL)
 
 
-## Connect a [Node]'s [Callable] to an [int].
-func on_int(key: String, callable: Callable) -> void:
-	on_value(key, callable, TYPE_INT)
+## Subscribe a [Node]'s [Callable] to a config [int].
+func subscribe_int(key: String, callable: Callable) -> void:
+	_subscribe_value(key, callable, TYPE_INT)
+
+
+## Subscribe a [Node]'s [Callable] to a config [float].
+func subscribe_float(key: String, callable: Callable) -> void:
+	_subscribe_value(key, callable, TYPE_FLOAT)
 
 
 ## Save the config data to its file if it needs to be saved.
@@ -108,9 +92,9 @@ func save_file() -> void:
 	for key in _data:
 		var key_parts: PackedStringArray = key.split("/", true, 1)
 		
-		assert(key_parts.size() == 2, "Key '%s' does not have 2 parts." % key)
-		assert(not key_parts[0].is_empty(), "Key '%s' has an empty section." % key)
-		assert(not key_parts[1].is_empty(), "Key '%s' has an empty key." % key)
+		assert(key_parts.size() == 2, "Config key '%s' does not have 2 parts." % key)
+		assert(not key_parts[0].is_empty(), "Config key '%s' has an empty section." % key)
+		assert(not key_parts[1].is_empty(), "Config key '%s' has an empty key." % key)
 		
 		file.set_value(key_parts[0], key_parts[1], _data[key])
 	
@@ -134,9 +118,9 @@ func load_file() -> void:
 	for key in _data:
 		var key_parts: PackedStringArray = key.split("/", true, 1)
 		
-		assert(key_parts.size() == 2, "Key '%s' does not have 2 parts." % key)
-		assert(not key_parts[0].is_empty(), "Key '%s' has an empty section." % key)
-		assert(not key_parts[1].is_empty(), "Key '%s' has an empty key." % key)
+		assert(key_parts.size() == 2, "Config key '%s' does not have 2 parts." % key)
+		assert(not key_parts[0].is_empty(), "Config key '%s' has an empty section." % key)
+		assert(not key_parts[1].is_empty(), "Config key '%s' has an empty key." % key)
 		
 		var key_section: String = key_parts[0]
 		var key_key: String = key_parts[1]
@@ -147,18 +131,59 @@ func load_file() -> void:
 			_should_save = true # Save to replace missing key.
 
 
-## Debug the connection count.
-func _debug_connections(delta: int) -> void:
-	_connection_count += delta
-	print_debug("%d config connection(s)." % _connection_count)
+## Set a config [Variant] from its key.
+func _set_value(key: String, value: Variant) -> void:
+	assert(key in _data, "Cannot set config key '%s' as it does not exist." % key)
+	
+	if not is_same(_data[key], value):
+		_data[key] = value
+		_should_save = true # Save to update modified key.
+		
+		for connection in _connections[key] as Array[ConfigConnection]:
+			connection.send(value)
 
 
-## Disconnect a [Node] from the [ConfigData].
-func _disconnect_node(node: Node) -> void:
+## Get a config [Variant] from its key.
+func _get_value(key: String) -> Variant:
+	assert(key in _data, "Cannot get config key '%s' as it does not exist." % key)
+	
+	return _data[key]
+
+
+## Subscribe a [Node]'s [Callable] to a config [Variant] with a
+## [enum Variant.Type].
+func _subscribe_value(key: String, callable: Callable, type: Variant.Type) -> void:
+	assert(key in _data, "Cannot subscribe to config key '%s' as it does not exist." % key)
+	assert(callable.is_valid(), "Cannot subscribe to config data with an invalid callable.")
+	assert(callable.get_object() is Node, "Only nodes may subscribe to config data.")
+	
+	var node: Node = callable.get_object()
+	
+	if not node.tree_exiting.is_connected(_unsubscribe_node):
+		node.tree_exiting.connect(_unsubscribe_node.bind(node), CONNECT_ONE_SHOT)
+	
+	var connection: ConfigConnection = ConfigConnection.new(callable, type)
+	_connections[key].push_back(connection)
+	_update_connection_count(1)
+	connection.send(_get_value(key))
+
+
+## Unsubscribe a [Node] from all of its [ConfigConnection]s.
+func _unsubscribe_node(node: Node) -> void:
 	for key in _data:
 		var connections: Array[ConfigConnection] = _connections[key]
 		
 		for i in range(connections.size() - 1, -1, -1):
 			if connections[i].get_node() == node:
 				connections.remove_at(i)
-				_debug_connections(-1)
+				_update_connection_count(-1)
+
+
+## Update the number of active [ConfigConnection]s.
+func _update_connection_count(change: int) -> void:
+	_connection_count += change
+	
+	assert(_connection_count >= 0, "Counted less than 0 config connections.")
+	
+	if OS.is_debug_build():
+		print("%d config connection(s)." % _connection_count)

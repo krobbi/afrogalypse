@@ -1,7 +1,7 @@
 ## Manages audio options.
 extends Node
 
-## A map of audio bus names to audio bus indices.
+## A map of keys to audio bus indices.
 var _buses: Dictionary = {}
 
 ## The [AudioStreamPlayer] to play the background music with.
@@ -10,21 +10,21 @@ var _buses: Dictionary = {}
 ## Run when the audio manager is ready. Apply the volume options and fade in the
 ## background music.
 func _ready() -> void:
-	for bus_name in ["Sound", "Music"] as Array[String]:
-		var bus_index: int = AudioServer.get_bus_index(bus_name)
+	for key in ["Sound", "Music"] as Array[String]:
+		var bus_index: int = AudioServer.get_bus_index(key)
 		
 		if bus_index >= 0:
-			bus_name = bus_name.to_lower()
-			_buses[bus_name] = bus_index
-			Config.on_int("volume/%s" % bus_name, _set_bus_volume.bind(bus_name))
+			key = key.to_lower()
+			_buses[key] = bus_index
+			Config.subscribe_float("volume/%s" % key, _set_bus_volume.bind(key))
 	
 	_music_player.play()
 	create_tween().tween_property(_music_player, "volume_db", 0.0, 1.0)
 
 
-## Set an audio bus' volume from the config data.
-func _set_bus_volume(value: int, bus_name: String) -> void:
-	if value >= 0 and value <= 100:
-		AudioServer.set_bus_volume_db(_buses[bus_name], linear_to_db(float(value) * 0.01))
+## Set an audio bus' volume from its key.
+func _set_bus_volume(value: float, key: String) -> void:
+	if value >= 0.0 and value <= 100.0:
+		AudioServer.set_bus_volume_db(_buses[key], linear_to_db(value * 0.01))
 	else:
-		Config.set_int("volume/%s" % bus_name, clampi(value, 0, 100))
+		Config.set_int("volume/%s" % key, clampi(int(value), 0, 100))

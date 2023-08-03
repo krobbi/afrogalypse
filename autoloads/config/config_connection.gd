@@ -2,12 +2,6 @@
 class_name ConfigConnection
 extends RefCounted
 
-## The connection's target [Callable].
-var _callable: Callable
-
-## The connection's target [enum Variant.Type].
-var _type: Variant.Type
-
 ## Cast a [Variant] to a [enum Variant.Type].
 static func cast_value(value: Variant, type: Variant.Type) -> Variant:
 	match type:
@@ -15,6 +9,8 @@ static func cast_value(value: Variant, type: Variant.Type) -> Variant:
 			return cast_bool(value)
 		TYPE_INT:
 			return cast_int(value)
+		TYPE_FLOAT:
+			return cast_float(value)
 		_:
 			return value
 
@@ -33,6 +29,22 @@ static func cast_int(value: Variant) -> int:
 			return 0
 
 
+## Cast a [Variant] to a [float].
+static func cast_float(value: Variant) -> float:
+	match typeof(value):
+		TYPE_BOOL, TYPE_INT, TYPE_FLOAT, TYPE_STRING:
+			var casted: float = float(value)
+			return casted if is_finite(casted) and casted != -0.0 else 0.0
+		_:
+			return 0.0
+
+
+## The connection's target [Callable].
+var _callable: Callable
+
+## The connection's target [enum Variant.Type].
+var _type: Variant.Type
+
 ## Initialize the connection's target [Callable] and [enum Variant.Type].
 func _init(callable: Callable, type: Variant.Type) -> void:
 	_callable = callable
@@ -44,6 +56,6 @@ func get_node() -> Node:
 	return _callable.get_object()
 
 
-## Notify the connection's target with a [Variant].
-func notify(value: Variant) -> void:
+## Send a [Variant] to the connection's target [Callable].
+func send(value: Variant) -> void:
 	_callable.call(ConfigConnection.cast_value(value, _type))
