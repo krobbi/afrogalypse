@@ -22,7 +22,7 @@ func _ready() -> void:
 ## Run on every physics frame. Update the remaining distance from the current
 ## speed and emit[signal distance_reached] if the distance is reached.
 func _physics_process(delta: float) -> void:
-	_remaining -= Global.speed * delta
+	_remaining -= Car.speed * delta
 	
 	if _remaining <= 0.0:
 		_remaining += distance

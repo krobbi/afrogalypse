@@ -2,6 +2,9 @@
 class_name Car
 extends Sprite2D
 
+## The car's speed in pixels per second.
+static var speed: float = 0.0
+
 ## Emitted when the score changes.
 signal score_changed(score: int)
 
@@ -200,7 +203,7 @@ func _apply_speed() -> void:
 	var boosted_speed: float = lerpf(_target_speed, _BOOST_SPEED, _boost_amount)
 	var braked_speed: float = lerpf(
 			boosted_speed, boosted_speed * _BRAKE_SPEED_MULTIPLIER, _brake_position)
-	Global.speed = braked_speed
+	speed = braked_speed
 
 
 ## Update the car's steering, braking, position, and rotation.
@@ -277,7 +280,7 @@ func _process_stopping_state(delta: float) -> void:
 	_target_speed = maxf(_target_speed - _STOP_DECELERATION * delta, 0.0)
 	_handle_input(delta, false)
 	
-	if Global.speed <= 0.0:
+	if speed <= 0.0:
 		_state = State.IDLE
 		stopped.emit()
 
@@ -310,7 +313,7 @@ func _on_sign_passed() -> void:
 ## Run when a [Frog] is hit. Hit the [Frog], adjust the difficulty and lose an
 ## energy point if vulnerable.
 func _on_frog_hit(frog: Frog) -> void:
-	frog.hit(Global.speed * 0.25)
+	frog.hit(speed * 0.25)
 	
 	if _hit_cooldown <= 0.0 and _boost_amount <= 0.0 and _state == State.GAME:
 		_difficulty *= _DIFFICULTY_DROP

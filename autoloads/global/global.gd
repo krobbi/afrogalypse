@@ -5,7 +5,6 @@ extends Node
 signal new_game_started
 signal game_over_cleared
 
-var speed: float = 0.0
 var rng: RandomNumberGenerator = RandomNumberGenerator.new()
 var is_main_card: bool = true
 
