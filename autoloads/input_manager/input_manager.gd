@@ -1,67 +1,78 @@
 ## Manages input mapping.
 extends Node
 
-## A map of actions to their default input mapping code [String]s.
+## The map of action [String]s to their default mapping code [String]s.
 const _DEFAULT_MAPPINGS: Dictionary = {
-	"steer_left": "key/#%d" % KEY_A,
-	"steer_right": "key/#%d" % KEY_D,
-	"brake": "key/#%d" % KEY_SHIFT,
-	"boost": "key/#%d" % KEY_SPACE,
+	"steer_left": "key/%d" % KEY_A,
+	"steer_right": "key/%d" % KEY_D,
+	"brake": "key/%d" % KEY_SHIFT,
+	"boost": "key/%d" % KEY_SPACE,
 }
 
-## Run when the input manager is ready. Subscribe the input manager to the
-## config data.
+## The map of action [String]s to their current mapping code [String]s.
+var _mappings: Dictionary = _DEFAULT_MAPPINGS.duplicate()
+
+## Run when the input manager is ready. Apply the mappings from the config data.
 func _ready() -> void:
 	for action in _DEFAULT_MAPPINGS:
-		Config.subscribe_string("controls/%s" % action, map.bind(action))
+		_map_action_code(action, Config.get_string("controls/%s" % action))
+	
+	_apply_mappings()
 
 
-## Get an action's input as a human-readable [String].
+## Get an action [String]'s mapped input as a human-readable [String].
 func get_mapping_name(action: String) -> String:
-	return OS.get_keycode_string(decode(Config.get_string("controls/%s" % action)).physical_keycode)
+	return OS.get_keycode_string(int(_mappings[action].split("/")[1]))
 
 
-## Translate a message with input substitutions.
+## Translate a message [String] with input substitution [String]s.
 func translate(message: String) -> String:
 	for action in _DEFAULT_MAPPINGS:
-		message = message.replace("{input/%s}" % action, get_mapping_name(action))
+		message = message.replace("{input.%s}" % action, get_mapping_name(action))
 	
 	return message
 
 
-## Return whether an [InputEvent] can be used for input mapping.
-func can_map(event: InputEvent) -> bool:
-	return event is InputEventKey
+## Attempt to map an action [String] to an [InputEvent] and return whether it
+## was successful.
+func map_action_event(action: String, event: InputEvent) -> bool:
+	if action in _DEFAULT_MAPPINGS and event is InputEventKey:
+		_map_action_code(action, "key/%d" % event.physical_keycode)
+		_apply_mappings()
+		return true
+	else:
+		return false
 
 
-## Encode an [InputEvent] to an input mapping code [String].
-func encode(event: InputEvent) -> String:
-	assert(event is InputEventKey, "Only keyboard input can be mapped.")
-	
-	return "key/#%d" % event.physical_keycode
-
-
-## Decode an [InputEvent] from an input mapping code [String]. Return
-## [code]null[/code] if [param code] is invalid.
-func decode(code: String) -> InputEvent:
+## Normalize a mapping code [String]. Return [param default] if [param code] is
+## not a valid mapping code.
+func _normalize_code(code: String, default: String) -> String:
 	var code_parts: PackedStringArray = code.split("/")
 	
-	if code_parts[0] == "key" and len(code_parts) == 2:
-		var event: InputEventKey = InputEventKey.new()
-		event.physical_keycode = int(code_parts[1]) as Key
-		return event
+	if code_parts[0] == "key" and code_parts.size() == 2:
+		return "key/%d" % int(code_parts[1])
 	else:
-		return null
+		return default
 
 
-## Map an input mapping code [String] to an action.
-func map(code: String, action: String) -> void:
-	assert(action in _DEFAULT_MAPPINGS, "Action '%s' does not exist." % action)
+## Map an action [String] to a mapping code [String].
+func _map_action_code(action: String, code: String) -> void:
+	code = _normalize_code(code, _DEFAULT_MAPPINGS[action])
 	
-	var event: InputEvent = decode(code)
+	for other_action in _DEFAULT_MAPPINGS:
+		if other_action != action and _mappings[other_action] == code:
+			_mappings[other_action] = _mappings[action]
+			break
 	
-	if event:
+	_mappings[action] = code
+
+
+## Apply the current mappings.
+func _apply_mappings() -> void:
+	for action in _DEFAULT_MAPPINGS:
+		var code: String = _mappings[action]
+		var event: InputEventKey = InputEventKey.new()
+		event.physical_keycode = int(code.split("/")[1]) as Key
 		InputMap.action_erase_events(action)
 		InputMap.action_add_event(action, event)
-	else:
-		Config.set_string("controls/%s" % action, _DEFAULT_MAPPINGS[action])
+		Config.set_string("controls/%s" % action, code)

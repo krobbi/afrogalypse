@@ -1,14 +1,14 @@
 [gd_scene load_steps=3 format=3 uid="uid://cubuf3byc5tko"]
 
 [ext_resource type="Theme" uid="uid://4g6q0qitk4oc" path="res://resources/themes/default_theme.tres" id="1_7eacg"]
-[ext_resource type="Script" path="res://gui/widgets/action_button.gd" id="1_jjpje"]
+[ext_resource type="Script" path="res://gui/widgets/mapping_button.gd" id="2_5q080"]
 
-[node name="ActionButton" type="HBoxContainer" groups=["action_buttons"]]
+[node name="MappingButton" type="HBoxContainer" groups=["mapping_buttons"]]
 anchors_preset = 10
 anchor_right = 1.0
 grow_horizontal = 2
 theme = ExtResource("1_7eacg")
-script = ExtResource("1_jjpje")
+script = ExtResource("2_5q080")
 metadata/_edit_lock_ = true
 
 [node name="Label" type="Label" parent="."]
@@ -27,5 +27,5 @@ text = "Input"
 wait_time = 8.0
 one_shot = true
 
-[connection signal="toggled" from="Button" to="." method="_on_button_toggled"]
-[connection signal="timeout" from="Timer" to="." method="deactivate"]
+[connection signal="toggled" from="Button" to="." method="set_active"]
+[connection signal="timeout" from="Timer" to="." method="set_active" binds= [false]]

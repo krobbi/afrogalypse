@@ -9,15 +9,15 @@ const _TUTORIAL: Array[String] = [
 	"tutorial.story.premise",
 	"tutorial.story.goal",
 	"tutorial.dodging.avoid_frogs",
-	"tutorial.dodging.control.steer",
-	"tutorial.dodging.control.brake",
+	"tutorial.dodging.input.steer",
+	"tutorial.dodging.input.brake",
 	"tutorial.dodging.drift",
 	"!signs",
 	"tutorial.signs.gain_energy",
 	"tutorial.signs.protect_car",
 	"!boosting",
 	"tutorial.boosting.use_energy",
-	"tutorial.boosting.control",
+	"tutorial.boosting.input",
 	"tutorial.end",
 ]
 

@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://c6an3tg3xs4d8"]
 
 [ext_resource type="PackedScene" uid="uid://deche81a76i5" path="res://gui/gui_card.tscn" id="1_f6ori"]
-[ext_resource type="PackedScene" uid="uid://cubuf3byc5tko" path="res://gui/widgets/action_button.tscn" id="2_6th8t"]
+[ext_resource type="PackedScene" uid="uid://cubuf3byc5tko" path="res://gui/widgets/mapping_button.tscn" id="2_6th8t"]
 
 [node name="ControlsGUICard" instance=ExtResource("1_f6ori")]
 
