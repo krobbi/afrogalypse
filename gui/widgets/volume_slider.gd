@@ -23,11 +23,11 @@ func _ready() -> void:
 		_slider.add_to_group("focus")
 	
 	_blip_player.bus = AudioManager.get_bus_name(_key)
-	_slider.set_value_no_signal(Config.get_float("volume/%s" % _key))
+	_slider.set_value_no_signal(AudioManager.get_bus_volume(_key))
 
 
 ## Emitted when the volume sliders [HSlider] changes. Set the configured audio
 ## bus' volume and play a blip sound.
 func _on_slider_value_changed(value: float) -> void:
-	Config.set_int("volume/%s" % _key, int(value))
+	AudioManager.set_bus_volume(_key, value)
 	_blip_player.play()

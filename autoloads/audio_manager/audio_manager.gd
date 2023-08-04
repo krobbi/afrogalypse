@@ -7,8 +7,8 @@ var _buses: Dictionary = {}
 ## The [AudioStreamPlayer] to play the background music with.
 @onready var _music_player: AudioStreamPlayer = $MusicPlayer
 
-## Run when the audio manager is ready. Apply the volume options and fade in the
-## background music.
+## Run when the audio manager is ready. Apply the bus volumes from the config
+## data and fade in the background music.
 func _ready() -> void:
 	for key in ["Sound", "Music"] as Array[String]:
 		var bus_index: int = AudioServer.get_bus_index(key)
@@ -16,22 +16,24 @@ func _ready() -> void:
 		if bus_index >= 0:
 			key = key.to_lower()
 			_buses[key] = bus_index
-			Config.subscribe_float("volume/%s" % key, _set_bus_volume.bind(key))
+			set_bus_volume(key, Config.get_float("volume/%s" % key))
 	
 	_music_player.play()
 	create_tween().tween_property(_music_player, "volume_db", 0.0, 1.0)
 
 
+## Set an audio bus' volume from its key.
+func set_bus_volume(key: String, value: float) -> void:
+	value = clampf(value, 0.0, 100.0)
+	AudioServer.set_bus_volume_db(_buses[key], linear_to_db(value * 0.01))
+	Config.set_int("volume/%s" % key, int(value))
+
+
+## Get an audio bus' volume from its key.
+func get_bus_volume(key: String) -> float:
+	return Config.get_float("volume/%s" % key)
+
+
 ## Get an audio bus' name from its key.
 func get_bus_name(key: String) -> String:
-	assert(key in _buses, "Audio bus '%s' does not exist." % key)
-	
 	return AudioServer.get_bus_name(_buses[key])
-
-
-## Set an audio bus' volume from its key.
-func _set_bus_volume(value: float, key: String) -> void:
-	if value >= 0.0 and value <= 100.0:
-		AudioServer.set_bus_volume_db(_buses[key], linear_to_db(value * 0.01))
-	else:
-		Config.set_int("volume/%s" % key, clampi(int(value), 0, 100))
