@@ -2,12 +2,6 @@
 class_name MainGUICard
 extends GUICard
 
-## Run when the main gui card is ready. Notify the game that the main menu is
-## active.
-func _ready() -> void:
-	Global.is_main_card = true
-
-
 ## Run when the start [Button] is pressed. Start a new game or display a
 ## tutorial if there is no high score.
 func _on_start_button_pressed() -> void:

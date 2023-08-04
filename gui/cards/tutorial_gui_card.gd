@@ -67,7 +67,7 @@ func _on_continue_button_pressed() -> void:
 		await _finished_player.finished
 		Config.set_bool("progress/has_seen_tutorial", true)
 		
-		if Global.is_main_card:
+		if GUICardManager.is_from_main_card:
 			Global.new_game()
 			close_card()
 		else:

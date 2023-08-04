@@ -1,12 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://dnjoq3cue8j2c"]
+[gd_scene load_steps=4 format=3 uid="uid://dnjoq3cue8j2c"]
 
 [ext_resource type="PackedScene" uid="uid://deche81a76i5" path="res://gui/gui_card.tscn" id="1_kqotr"]
-[ext_resource type="Script" path="res://gui/cards/options_gui_card.gd" id="2_xv3dp"]
 [ext_resource type="AudioStream" uid="uid://ck8yg1glcuwmk" path="res://resources/audio/gui/card/blip.ogg" id="3_bi6us"]
 [ext_resource type="PackedScene" uid="uid://b23kmeeyw2xl4" path="res://gui/widgets/volume_slider.tscn" id="3_v6xge"]
 
 [node name="OptionsGUICard" instance=ExtResource("1_kqotr")]
-script = ExtResource("2_xv3dp")
 
 [node name="HeadingLabel" type="Label" parent="VBoxContainer" index="0"]
 layout_mode = 2

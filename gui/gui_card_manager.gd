@@ -2,6 +2,9 @@
 class_name GUICardManager
 extends Control
 
+## Whether the current [GUICard] was accessed from the [MainGUICard].
+static var is_from_main_card: bool = false
+
 ## The current [GUICard] to display. [code]null[/code] if no [GUICard] is being
 ## displayed.
 var _card: GUICard = null
@@ -19,6 +22,11 @@ func change_card(card_name: String) -> void:
 		return
 	
 	_is_changing = true
+	
+	if card_name == "main":
+		is_from_main_card = true
+	elif card_name == "options":
+		is_from_main_card = false
 	
 	if _card:
 		_navigate_player.play()
