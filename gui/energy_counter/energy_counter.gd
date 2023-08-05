@@ -15,9 +15,9 @@ var _points: Array[EnergyPoint] = []
 @onready var _gain_player: AudioStreamPlayer = $GainPlayer
 
 ## Run when the energy counter is ready. Connect the energy counter to event
-## signals.
+## [Signal]s.
 func _ready() -> void:
-	Event.new_game_started.connect(_on_boost_used)
+	Event.on(Event.new_game_started, _on_boost_used)
 
 
 ## Run when energy is gained. Add an [EnergyPoint].

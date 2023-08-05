@@ -6,3 +6,8 @@ signal new_game_started
 
 ## Emitted when a [GameOverGUICard] is closed.
 signal game_over_cleared
+
+## Connect an event [Signal] to a target [Callable].
+func on(event: Signal, callable: Callable) -> void:
+	if not event.is_connected(callable):
+		event.connect(callable)
