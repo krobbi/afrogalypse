@@ -5,30 +5,6 @@ extends Sprite2D
 ## The car's speed in pixels per second.
 static var speed: float = 0.0
 
-## Emitted when the score changes.
-signal score_changed(score: int)
-
-## Emitted when energy is gained.
-signal energy_gained
-
-## Emitted when energy is lost.
-signal energy_lost
-
-## Emitted when a boost is used.
-signal boost_used
-
-## Emitted when a boost is available.
-signal boost_available
-
-## Emitted when the car has started.
-signal started
-
-## Emitted when the car is stopping.
-signal stopping
-
-## Emitted when the car stops.
-signal stopped
-
 ## A state of the car.
 enum State {
 	IDLE, ## The car is not in an in-game state.
@@ -142,6 +118,7 @@ var _boost_cooldown: float = 0.0
 ## Run when the car is ready. Connect the car to event [Signal]s.
 func _ready() -> void:
 	Event.on(Event.new_game_started, _on_new_game_started)
+	Event.on(Event.sign_passed, _on_sign_passed)
 
 
 ## Run on every physics frame. Process the car's state.
@@ -163,10 +140,10 @@ func get_difficulty() -> float:
 	return _difficulty
 
 
-## Set the car's score and emit [signal score_changed].
+## Set the car's score and emit [signal Event.score_changed].
 func _set_score(value: int) -> void:
 	_score = value
-	score_changed.emit(_score)
+	Event.score_changed.emit(_score)
 
 
 ## Gain a duration of invincibility.
@@ -175,19 +152,19 @@ func _gain_invincibility(duration: float) -> void:
 
 
 ## Gain an energy point if the maximum has not been reached and emit
-## [signal energy_gained].
+## [signal Event.energy_gained].
 func _gain_energy() -> void:
 	if _energy < 5:
 		_energy += 1
 		_gain_invincibility(0.5)
-		energy_gained.emit()
+		Event.energy_gained.emit()
 
 
-## Lose an energy point if available and emit [signal energy_lost].
+## Lose an energy point if available and emit [signal Event.energy_lost].
 func _lose_energy() -> void:
 	if _energy > 0:
 		_energy -= 1
-		energy_lost.emit()
+		Event.energy_lost.emit()
 
 
 ## Play a hit sound with an intensity.
@@ -232,15 +209,15 @@ func _handle_input(delta: float, can_steer: bool) -> void:
 	)
 
 
-## Process the car's starting [enum State]. Emit [signal started] when the car
-## has started.
+## Process the car's starting [enum State]. Emit [signal Event.level_started]
+## when the car has started.
 func _process_starting_state(delta: float) -> void:
 	_target_speed = minf(_target_speed + _START_ACCELERATION * delta, _START_SPEED)
 	_handle_input(delta, true)
 	
 	if _target_speed >= _START_SPEED and not get_tree().get_first_node_in_group("frogs"):
 		_state = State.GAME
-		started.emit()
+		Event.level_started.emit()
 
 
 ## Process the car's game [enum State].
@@ -252,7 +229,7 @@ func _process_game_state(delta: float) -> void:
 		
 		if _boost_cooldown <= 0.0:
 			_boost_cooldown_player.play()
-			boost_available.emit()
+			Event.boost_available.emit()
 	
 	if _energy > 0 and _boost_cooldown <= 0.0 and Input.is_action_just_pressed("boost"):
 		_boost_cooldown = _BOOST_PERIOD
@@ -260,7 +237,7 @@ func _process_game_state(delta: float) -> void:
 		_lose_energy()
 		_boost_effects.enable()
 		_boost_player.play()
-		boost_used.emit()
+		Event.boost_used.emit()
 	
 	_handle_input(delta, true)
 	
@@ -274,15 +251,15 @@ func _process_game_state(delta: float) -> void:
 		_boost_effects.disable()
 
 
-## Process the car's stopping [enum State]. Emit [signal stopped] when the car
-## has stopped.
+## Process the car's stopping [enum State]. Emit [signal Event.game_over] when
+## the car has stopped.
 func _process_stopping_state(delta: float) -> void:
 	_target_speed = maxf(_target_speed - _STOP_DECELERATION * delta, 0.0)
 	_handle_input(delta, false)
 	
 	if speed <= 0.0:
 		_state = State.IDLE
-		stopped.emit()
+		Event.game_over.emit()
 
 
 ## Run when a new game starts. Reset the stats.
@@ -296,6 +273,12 @@ func _on_new_game_started() -> void:
 	_boost_cooldown = 0.01
 
 
+## Run when the car passes a sign. Gain an energy point.
+func _on_sign_passed() -> void:
+	if _state == State.GAME or _state == State.STARTING:
+		_gain_energy()
+
+
 ## Run when the [DistanceClock] reaches a distance. Increment the current score.
 func _on_distance_clock_distance_reached() -> void:
 	if _score % 10 == 9 and _score < 30:
@@ -304,14 +287,9 @@ func _on_distance_clock_distance_reached() -> void:
 	_set_score(_score + 1)
 
 
-## Run when the car passes a sign. Gain an energy point.
-func _on_sign_passed() -> void:
-	if _state == State.GAME or _state == State.STARTING:
-		_gain_energy()
-
-
 ## Run when a [Frog] is hit. Hit the [Frog], adjust the difficulty and lose an
-## energy point if vulnerable.
+## energy point if vulnerable. Emit [signal Event.level_finished] if the energy
+## points are depleted.
 func _on_frog_hit(frog: Frog) -> void:
 	frog.hit(speed * 0.25)
 	
@@ -325,6 +303,6 @@ func _on_frog_hit(frog: Frog) -> void:
 		else:
 			_play_hit(1.4)
 			_state = State.STOPPING
-			stopping.emit()
+			Event.level_finished.emit()
 	else:
 		_play_hit(0.2)

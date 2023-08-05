@@ -2,9 +2,6 @@
 class_name SignSpawner
 extends Marker2D
 
-## Emitted when one of the sign spawner's signs exits the scene tree.
-signal sign_passed
-
 ## The [PackedScene] to instantiate signs from.
 @export var _sign_scene: PackedScene
 
@@ -23,6 +20,6 @@ func _on_distance_clock_distance_reached() -> void:
 	add_child(sign_entity)
 
 
-## Run when a sign exits the scene tree. Emit [signal sign_passed].
+## Run when a sign exits the scene tree. Emit [signal Event.sign_passed].
 func _on_sign_tree_exiting() -> void:
-	sign_passed.emit()
+	Event.sign_passed.emit()

@@ -18,6 +18,10 @@ var _points: Array[EnergyPoint] = []
 ## [Signal]s.
 func _ready() -> void:
 	Event.on(Event.new_game_started, _on_boost_used)
+	Event.on(Event.energy_gained, _on_energy_gained)
+	Event.on(Event.energy_lost, _on_energy_lost)
+	Event.on(Event.boost_used, _on_boost_used)
+	Event.on(Event.boost_available, _on_boost_available)
 
 
 ## Run when energy is gained. Add an [EnergyPoint].

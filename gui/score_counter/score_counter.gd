@@ -16,6 +16,7 @@ var _high_score: int = 0
 func _ready() -> void:
 	_high_score = maxi(Config.get_int("progress/high_score"), 0)
 	_on_score_changed(_high_score)
+	Event.on(Event.score_changed, _on_score_changed)
 	Event.on(Event.game_over_cleared, _on_game_over_cleared)
 
 
