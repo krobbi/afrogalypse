@@ -17,6 +17,9 @@ const _WAIT_MIN: float = 0.3
 ## The maximum time to wait between jumps in seconds.
 const _WAIT_MAX: float = 0.9
 
+## The frog's [RandomNumberGenerator].
+var rng: RandomNumberGenerator
+
 ## The frog's forward horizontal force when jumping.
 var _forward_force: float = 160.0
 
@@ -73,10 +76,10 @@ func _physics_process(delta: float) -> void:
 			queue_free()
 		
 		if _vertical_velocity >= 0.0 and _sprite.position.y >= 0.0:
-			_jump_timer = Global.rng.randf_range(_WAIT_MIN, _WAIT_MAX)
+			_jump_timer = rng.randf_range(_WAIT_MIN, _WAIT_MAX)
 
 
-# Make the frog move right to left.
+## Make the frog move right to left.
 func flip_left() -> void:
 	_sprite.flip_h = true
 	_sprite.offset.x = -_sprite.offset.x

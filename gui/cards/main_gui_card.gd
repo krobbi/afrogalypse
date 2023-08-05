@@ -6,7 +6,7 @@ extends GUICard
 ## tutorial if there is no high score.
 func _on_start_button_pressed() -> void:
 	if Config.get_bool("progress/has_seen_tutorial"):
-		Global.new_game()
+		Global.new_game_started.emit()
 		close_card()
 	else:
 		change_card("tutorial")

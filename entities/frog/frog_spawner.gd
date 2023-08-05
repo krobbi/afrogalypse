@@ -33,13 +33,18 @@ enum Direction {
 ## The [PackedScene] to instantiate [Frog]s from.
 @export var _frog_scene: PackedScene
 
+## The frog spawner's [RandomNumberGenerator]
+var _rng: RandomNumberGenerator = RandomNumberGenerator.new()
+
 ## The time in seconds until the next batch of [Frog]s is spawned.
 var _timer: float = 0.0
 
 ## Run when the frog spawner is ready. Disable the frog spawner's physics
-## process and connect the [Car] to the frog spawner.
+## process, set the [RandomNumberGenerator]'s seed and connect the [Car] to the
+## frog spawner.
 func _ready() -> void:
 	set_physics_process(false)
+	_rng.seed = hash("[%d, %d]" % [position.x, position.y])
 	_car.started.connect(_on_car_started)
 	_car.stopping.connect(_on_car_stopping)
 
@@ -54,22 +59,25 @@ func _physics_process(delta: float) -> void:
 		
 		var scaled_max: int = _max_count + int(_car.get_difficulty() * _difficulty_curve)
 		
-		for i in range(Global.rng.randi_range(_min_count, scaled_max)):
+		for i in range(_rng.randi_range(_min_count, scaled_max)):
 			var frog: Frog = _frog_scene.instantiate()
-			frog.position.x = Global.rng.randf_range(0.0, _bottom_right.position.x)
-			frog.position.y = Global.rng.randf_range(0.0, _bottom_right.position.y)
+			frog.rng = _rng
+			frog.position.x = _rng.randf_range(0.0, _bottom_right.position.x)
+			frog.position.y = _rng.randf_range(0.0, _bottom_right.position.y)
 			add_child(frog)
 			
 			match _direction:
 				Direction.LEFT:
 					frog.flip_left()
 				Direction.BOTH:
-					if Global.rng.randi() & 1:
+					if _rng.randi() & 1:
 						frog.flip_left()
 
 
-## Run when the [Car] has started. Start spawning [Frog]s.
+## Run when the [Car] has started. Reset the [RandomNumberGenerator] and start
+## spawning [Frog]s.
 func _on_car_started() -> void:
+	_rng.state = hash("%d" % _rng.seed)
 	_timer = 0.0
 	set_physics_process(true)
 
