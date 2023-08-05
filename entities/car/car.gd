@@ -141,7 +141,7 @@ var _boost_cooldown: float = 0.0
 
 ## Run when the car is ready. Connect to event signals.
 func _ready() -> void:
-	Global.new_game_started.connect(_on_new_game_started)
+	Event.new_game_started.connect(_on_new_game_started)
 
 
 ## Run on every physics frame. Process the car's state.

@@ -17,7 +17,7 @@ var _points: Array[EnergyPoint] = []
 ## Run when the energy counter is ready. Connect the energy counter to event
 ## signals.
 func _ready() -> void:
-	Global.new_game_started.connect(_on_boost_used)
+	Event.new_game_started.connect(_on_boost_used)
 
 
 ## Run when energy is gained. Add an [EnergyPoint].

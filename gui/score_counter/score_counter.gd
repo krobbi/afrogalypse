@@ -16,7 +16,7 @@ var _high_score: int = 0
 func _ready() -> void:
 	_high_score = maxi(Config.get_int("progress/high_score"), 0)
 	_on_score_changed(_high_score)
-	Global.game_over_cleared.connect(_on_game_over_cleared)
+	Event.game_over_cleared.connect(_on_game_over_cleared)
 
 
 ## Run when the score changes. Display the score.
