@@ -11,14 +11,14 @@ signal sign_passed
 ## The [DistanceClock] to spawn signs with.
 @onready var _distance_clock: DistanceClock = $DistanceClock
 
-## Run when the [DistanceClock] reaches its distance. Spawn a sign and reset the
-## [DistanceClock].
+## Run when the [DistanceClock] reaches its distance. Reset the [DistanceClock]
+## and spawn a sign.
 func _on_distance_clock_distance_reached() -> void:
-	var sign_entity: Sprite2D = _sign_scene.instantiate()
 	randomize()
-	sign_entity.position.x = randf_range(-16.0, 16.0)
-	_distance_clock.distance = Global.rng.randf_range(4200.0, 6000.0)
+	_distance_clock.distance = randf_range(4200.0, 6000.0)
 	_distance_clock.reset()
+	var sign_entity: Sprite2D = _sign_scene.instantiate()
+	sign_entity.position.x = randf_range(-16.0, 16.0)
 	sign_entity.tree_exiting.connect(_on_sign_tree_exiting, CONNECT_ONE_SHOT)
 	add_child(sign_entity)
 
