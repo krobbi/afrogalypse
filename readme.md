@@ -27,7 +27,7 @@ You can download Afrogalypse or play it online at
 [GitHub releases page](https://github.com/krobbi/afrogalypse/releases).
 
 # Default Controls
-All controls are mappable. Keyboard, mouse button, and joypad button input are
+All controls are mappable. Keyboard, mouse button, and joypad input are
 supported. Joypad input has not been tested on real hardware.
 
 | Action      | Input |

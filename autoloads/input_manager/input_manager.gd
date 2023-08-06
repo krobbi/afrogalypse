@@ -101,6 +101,28 @@ func get_mapping_name(action: String) -> String:
 				return tr("input.joypad_button.touchpad")
 			_:
 				return tr("input.joypad_button.unknown").format({"index": joy_button})
+	elif code_parts[0] == "joypad_motion" and code_parts.size() == 3:
+		var joy_axis: JoyAxis = int(code_parts[1]) as JoyAxis
+		var direction: String = code_parts[2]
+		
+		if direction != "positive" and direction != "negative":
+			return tr("input.unknown")
+		
+		match joy_axis:
+			JOY_AXIS_LEFT_X:
+				return tr("input.joypad_motion.left_x.%s" % direction)
+			JOY_AXIS_LEFT_Y:
+				return tr("input.joypad_motion.left_y.%s" % direction)
+			JOY_AXIS_RIGHT_X:
+				return tr("input.joypad_motion.right_x.%s" % direction)
+			JOY_AXIS_RIGHT_Y:
+				return tr("input.joypad_motion.right_y.%s" % direction)
+			JOY_AXIS_TRIGGER_LEFT:
+				return tr("input.joypad_motion.trigger_left.%s" % direction)
+			JOY_AXIS_TRIGGER_RIGHT:
+				return tr("input.joypad_motion.trigger_right.%s" % direction)
+			_:
+				return tr("input.joypad_motion.unknown.%s" % direction).format({"index": joy_axis})
 	else:
 		return tr("input.unknown")
 
@@ -143,6 +165,19 @@ func _get_code_event(code: String) -> InputEvent:
 		var event: InputEventJoypadButton = InputEventJoypadButton.new()
 		event.button_index = int(code_parts[1]) as JoyButton
 		return event
+	elif code_parts[0] == "joypad_motion" and code_parts.size() == 3:
+		var event: InputEventJoypadMotion = InputEventJoypadMotion.new()
+		event.axis = int(code_parts[1]) as JoyAxis
+		
+		match code_parts[2]:
+			"positive":
+				event.axis_value = 1.0
+			"negative":
+				event.axis_value = -1.0
+			_:
+				return null
+		
+		return event
 	else:
 		return null
 
@@ -156,6 +191,11 @@ func _get_event_code(event: InputEvent) -> String:
 		return "mouse_button/%d" % event.button_index
 	elif event is InputEventJoypadButton:
 		return "joypad_button/%d" % event.button_index
+	elif event is InputEventJoypadMotion and absf(event.axis_value) >= 0.5:
+		if event.axis_value >= 0.0:
+			return "joypad_motion/%d/positive" % event.axis
+		else:
+			return "joypad_motion/%d/negative" % event.axis
 	else:
 		return ""
 
