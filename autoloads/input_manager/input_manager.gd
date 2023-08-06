@@ -53,6 +53,54 @@ func get_mapping_name(action: String) -> String:
 				return tr("input.mouse_button.xbutton2")
 			_:
 				return tr("input.mouse_button.unknown").format({"index": mouse_button})
+	elif code_parts[0] == "joypad_button" and code_parts.size() == 2:
+		var joy_button: JoyButton = int(code_parts[1]) as JoyButton
+		
+		match joy_button:
+			JOY_BUTTON_A:
+				return tr("input.joypad_button.a")
+			JOY_BUTTON_B:
+				return tr("input.joypad_button.b")
+			JOY_BUTTON_X:
+				return tr("input.joypad_button.x")
+			JOY_BUTTON_Y:
+				return tr("input.joypad_button.y")
+			JOY_BUTTON_BACK:
+				return tr("input.joypad_button.back")
+			JOY_BUTTON_GUIDE:
+				return tr("input.joypad_button.guide")
+			JOY_BUTTON_START:
+				return tr("input.joypad_button.start")
+			JOY_BUTTON_LEFT_STICK:
+				return tr("input.joypad_button.left_stick")
+			JOY_BUTTON_RIGHT_STICK:
+				return tr("input.joypad_button.right_stick")
+			JOY_BUTTON_LEFT_SHOULDER:
+				return tr("input.joypad_button.left_shoulder")
+			JOY_BUTTON_RIGHT_SHOULDER:
+				return tr("input.joypad_button.right_shoulder")
+			JOY_BUTTON_DPAD_UP:
+				return tr("input.joypad_button.dpad_up")
+			JOY_BUTTON_DPAD_DOWN:
+				return tr("input.joypad_button.dpad_down")
+			JOY_BUTTON_DPAD_LEFT:
+				return tr("input.joypad_button.dpad_left")
+			JOY_BUTTON_DPAD_RIGHT:
+				return tr("input.joypad_button.dpad_right")
+			JOY_BUTTON_MISC1:
+				return tr("input.joypad_button.misc1")
+			JOY_BUTTON_PADDLE1:
+				return tr("input.joypad_button.paddle1")
+			JOY_BUTTON_PADDLE2:
+				return tr("input.joypad_button.paddle2")
+			JOY_BUTTON_PADDLE3:
+				return tr("input.joypad_button.paddle3")
+			JOY_BUTTON_PADDLE4:
+				return tr("input.joypad_button.paddle4")
+			JOY_BUTTON_TOUCHPAD:
+				return tr("input.joypad_button.touchpad")
+			_:
+				return tr("input.joypad_button.unknown").format({"index": joy_button})
 	else:
 		return tr("input.unknown")
 
@@ -91,6 +139,10 @@ func _get_code_event(code: String) -> InputEvent:
 		var event: InputEventMouseButton = InputEventMouseButton.new()
 		event.button_index = int(code_parts[1]) as MouseButton
 		return event
+	elif code_parts[0] == "joypad_button" and code_parts.size() == 2:
+		var event: InputEventJoypadButton = InputEventJoypadButton.new()
+		event.button_index = int(code_parts[1]) as JoyButton
+		return event
 	else:
 		return null
 
@@ -102,6 +154,8 @@ func _get_event_code(event: InputEvent) -> String:
 		return "key/%d" % event.physical_keycode
 	elif event is InputEventMouseButton:
 		return "mouse_button/%d" % event.button_index
+	elif event is InputEventJoypadButton:
+		return "joypad_button/%d" % event.button_index
 	else:
 		return ""
 
