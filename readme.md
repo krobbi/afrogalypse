@@ -27,7 +27,8 @@ You can download Afrogalypse or play it online at
 [GitHub releases page](https://github.com/krobbi/afrogalypse/releases).
 
 # Default Controls
-All controls are mappable, however only keyboard input is currently supported.
+All controls are mappable, however only keyboard and mouse button input is
+currently supported.
 
 | Action      | Input |
 | :---------- | :---- |
