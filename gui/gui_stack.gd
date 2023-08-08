@@ -1,5 +1,5 @@
-## Manages changing between [GUICard]s.
-class_name GUICardManager
+## A navigable stack of [GUICard]s.
+class_name GUIStack
 extends Control
 
 ## Whether the current [GUICard] was accessed from the [MainGUICard].
@@ -56,7 +56,7 @@ func _update_card() -> void:
 		# Should probably find a better solution for this.
 		if card_name == "main":
 			is_from_main_card = true
-		elif card_name == "option":
+		elif card_name == "options":
 			is_from_main_card = false
 		
 		_card = load("res://gui/cards/%s_gui_card.tscn" % card_name).instantiate()
