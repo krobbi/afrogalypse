@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://ce26bmikob7bk"]
+[gd_scene load_steps=12 format=3 uid="uid://ce26bmikob7bk"]
 
 [ext_resource type="Shader" path="res://resources/shaders/flash.gdshader" id="1_6sagg"]
 [ext_resource type="Texture2D" uid="uid://x21oliy31kwa" path="res://resources/textures/entities/car/car.png" id="1_xurhx"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://wrsulnlolt62" path="res://components/distance_clock/distance_clock.tscn" id="5_82x3d"]
 [ext_resource type="AudioStream" uid="uid://kmfj4on6gys" path="res://resources/audio/car/hit.ogg" id="5_wxq8r"]
 [ext_resource type="AudioStream" uid="uid://dl5krhlb3vfwi" path="res://resources/audio/car/boost_cooldown.ogg" id="6_gggac"]
+[ext_resource type="AudioStream" uid="uid://dm0gnxqhglvj5" path="res://resources/audio/car/engine.ogg" id="8_xgu3u"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_mmvq5"]
 shader = ExtResource("1_6sagg")
@@ -50,6 +51,10 @@ bus = &"Sound"
 position = Vector2(0, -21)
 stream = ExtResource("5_wxq8r")
 bus = &"Sound"
+
+[node name="EnginePlayer" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("8_xgu3u")
+bus = &"Engine"
 
 [node name="DistanceClock" parent="." instance=ExtResource("5_82x3d")]
 distance = 8.0

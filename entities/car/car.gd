@@ -112,6 +112,9 @@ var _boost_cooldown: float = 0.0
 ## The [AudioStreamPlayer2D] to play when the car hits a [Frog].
 @onready var _hit_player: AudioStreamPlayer2D = $HitPlayer
 
+## The [AudioStreamPlayer2D] that plays engine sounds.
+@onready var _engine_player: AudioStreamPlayer2D = $EnginePlayer
+
 ## The [DistanceClock] to count the score with.
 @onready var _distance_clock: DistanceClock = $DistanceClock
 
@@ -181,6 +184,7 @@ func _apply_speed() -> void:
 	var braked_speed: float = lerpf(
 			boosted_speed, boosted_speed * _BRAKE_SPEED_MULTIPLIER, _brake_position)
 	speed = braked_speed
+	_engine_player.pitch_scale = maxf(speed * 0.005, 0.01)
 
 
 ## Update the car's steering, braking, position, and rotation.
@@ -259,6 +263,7 @@ func _process_stopping_state(delta: float) -> void:
 	
 	if speed <= 0.0:
 		_state = State.IDLE
+		_engine_player.stop()
 		Event.game_over.emit()
 
 
@@ -271,6 +276,7 @@ func _on_new_game_started() -> void:
 	_set_score(0)
 	_hit_cooldown = 2.0
 	_boost_cooldown = 0.01
+	_engine_player.play()
 
 
 ## Run when the car passes a sign. Gain an energy point.
