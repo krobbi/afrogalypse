@@ -11,13 +11,13 @@ var _high_score: int = 0
 ## The [Label] to display the score on.
 @onready var _label: Label = $Label
 
-## Run when the score counter is ready. Get the high score and connect to event
-## [Signal]s.
+## Run when the score counter is ready. Get the high score and subscribe the
+## score counter to event [Signal]s.
 func _ready() -> void:
 	_high_score = maxi(Config.get_int("progress/high_score"), 0)
 	_on_score_changed(_high_score)
-	Event.on(Event.score_changed, _on_score_changed)
-	Event.on(Event.game_over_cleared, _on_game_over_cleared)
+	Event.subscribe(Event.score_changed, _on_score_changed)
+	Event.subscribe(Event.game_over_cleared, _on_game_over_cleared)
 
 
 ## Run when the score changes. Display the score.

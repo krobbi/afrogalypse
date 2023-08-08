@@ -1,9 +1,13 @@
-[gd_scene load_steps=3 format=3 uid="uid://cubuf3byc5tko"]
+[gd_scene load_steps=4 format=3 uid="uid://cubuf3byc5tko"]
 
 [ext_resource type="Theme" uid="uid://4g6q0qitk4oc" path="res://resources/themes/default_theme.tres" id="1_7eacg"]
 [ext_resource type="Script" path="res://gui/widgets/mapping_button.gd" id="2_5q080"]
 
-[node name="MappingButton" type="HBoxContainer" groups=["mapping_buttons"]]
+[sub_resource type="ButtonGroup" id="ButtonGroup_1ueli"]
+resource_local_to_scene = false
+allow_unpress = true
+
+[node name="MappingButton" type="HBoxContainer"]
 anchors_preset = 10
 anchor_right = 1.0
 grow_horizontal = 2
@@ -21,11 +25,12 @@ custom_minimum_size = Vector2(112, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 toggle_mode = true
+button_group = SubResource("ButtonGroup_1ueli")
 text = "Input"
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 8.0
 one_shot = true
 
-[connection signal="toggled" from="Button" to="." method="set_active"]
-[connection signal="timeout" from="Timer" to="." method="set_active" binds= [false]]
+[connection signal="toggled" from="Button" to="." method="_on_button_toggled"]
+[connection signal="timeout" from="Timer" to="." method="_deactivate"]

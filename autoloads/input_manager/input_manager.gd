@@ -137,6 +137,12 @@ func translate(message: String) -> String:
 	return message.format(mapping_names)
 
 
+## Reset the mappings to their defaults.
+func reset_mappings() -> void:
+	_mappings = _DEFAULT_MAPPINGS.duplicate()
+	_apply_mappings()
+
+
 ## Attempt to map an action [String] to an [InputEvent] and return whether it
 ## was successful.
 func map_action_event(action: String, event: InputEvent) -> bool:
@@ -229,10 +235,12 @@ func _map_action_code(action: String, code: String) -> void:
 	_mappings[action] = code
 
 
-## Apply the current mappings.
+## Apply the current mappings. Emit [signal Event.input_mappings_changed].
 func _apply_mappings() -> void:
 	for action in _mappings:
 		var code: String = _mappings[action]
 		InputMap.action_erase_events(action)
 		InputMap.action_add_event(action, _get_code_event(code))
 		Config.set_string("controls/%s" % action, code)
+	
+	Event.input_mappings_changed.emit()

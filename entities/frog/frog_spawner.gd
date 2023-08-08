@@ -40,13 +40,13 @@ var _rng: RandomNumberGenerator = RandomNumberGenerator.new()
 var _timer: float = 0.0
 
 ## Run when the frog spawner is ready. Disable the frog spawner's physics
-## process, set the [RandomNumberGenerator]'s seed, and connect the sign spawner
-## to event [Signal]s.
+## process, set the [RandomNumberGenerator]'s seed, and subscribe the frog
+## spawner to event [Signal]s.
 func _ready() -> void:
 	set_physics_process(false)
 	_rng.seed = hash("[%d, %d]" % [position.x, position.y])
-	Event.on(Event.level_started, _on_level_started)
-	Event.on(Event.level_finished, _on_level_finished)
+	Event.subscribe(Event.level_started, _on_level_started)
+	Event.subscribe(Event.level_finished, _on_level_finished)
 
 
 ## Run on every physics frame while the frog spawner's physics process is

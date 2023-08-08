@@ -15,10 +15,11 @@ extends HBoxContainer
 var _is_active: bool = false
 
 ## Run when the mapping button is ready. Initialize the mapping button's
-## [Control]s.
+## [Control]s and subscribe the mapping button to event [Signal]s.
 func _ready() -> void:
 	$Label.text = "action.%s" % _action
-	set_active(false)
+	_deactivate()
+	Event.subscribe(Event.input_mappings_changed, _deactivate)
 
 
 ## Run when the mapping button receives an [InputEvent]. Attempt to map the
@@ -26,24 +27,28 @@ func _ready() -> void:
 func _input(event: InputEvent) -> void:
 	if _is_active and InputManager.map_action_event(_action, event):
 		get_viewport().set_input_as_handled() # Consume the input.
-		_deactivate_all()
 
 
-## Set whether the mapping button is active.
-func set_active(value: bool) -> void:
-	if value:
-		_deactivate_all()
-		_button.text = "input.prompt"
-		_timer.start()
+## Activate the mapping button.
+func _activate() -> void:
+	_is_active = true
+	_button.set_pressed_no_signal(true)
+	_button.text = "input.prompt"
+	_timer.start()
+
+
+## Deactivate the mapping button.
+func _deactivate() -> void:
+	_is_active = false
+	_timer.stop()
+	_button.set_pressed_no_signal(false)
+	_button.text = InputManager.get_mapping_name(_action)
+
+
+## Run when the mapping button's [Button] is toggled. Activate or deactivate the
+## mapping button.
+func _on_button_toggled(button_pressed: bool) -> void:
+	if button_pressed:
+		_activate()
 	else:
-		_timer.stop()
-		_button.text = InputManager.get_mapping_name(_action)
-	
-	_is_active = value
-	_button.set_pressed_no_signal(_is_active)
-
-
-## Deactivate all mapping buttons.
-func _deactivate_all() -> void:
-	for action_button in get_tree().get_nodes_in_group("mapping_buttons"):
-		action_button.set_active(false)
+		_deactivate()

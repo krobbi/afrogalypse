@@ -115,10 +115,10 @@ var _boost_cooldown: float = 0.0
 ## The [DistanceClock] to count the score with.
 @onready var _distance_clock: DistanceClock = $DistanceClock
 
-## Run when the car is ready. Connect the car to event [Signal]s.
+## Run when the car is ready. Subscribe the car to event [Signal]s.
 func _ready() -> void:
-	Event.on(Event.new_game_started, _on_new_game_started)
-	Event.on(Event.sign_passed, _on_sign_passed)
+	Event.subscribe(Event.new_game_started, _on_new_game_started)
+	Event.subscribe(Event.sign_passed, _on_sign_passed)
 
 
 ## Run on every physics frame. Process the car's state.

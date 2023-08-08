@@ -1,33 +1,45 @@
-[gd_scene load_steps=3 format=3 uid="uid://c6an3tg3xs4d8"]
+[gd_scene load_steps=5 format=3 uid="uid://c6an3tg3xs4d8"]
 
 [ext_resource type="PackedScene" uid="uid://deche81a76i5" path="res://gui/gui_card.tscn" id="1_f6ori"]
 [ext_resource type="PackedScene" uid="uid://cubuf3byc5tko" path="res://gui/widgets/mapping_button.tscn" id="2_6th8t"]
+[ext_resource type="Script" path="res://gui/cards/controls_gui_card.gd" id="2_lxci3"]
+[ext_resource type="AudioStream" uid="uid://ck8yg1glcuwmk" path="res://resources/audio/gui/card/blip.ogg" id="4_u432a"]
 
 [node name="ControlsGUICard" instance=ExtResource("1_f6ori")]
+script = ExtResource("2_lxci3")
 
 [node name="HeadingLabel" type="Label" parent="VBoxContainer" index="0"]
 layout_mode = 2
 text = "heading.controls"
 horizontal_alignment = 1
 
-[node name="SteerLeftAction" parent="VBoxContainer" index="1" instance=ExtResource("2_6th8t")]
-layout_mode = 2
-_action = "steer_left"
-
-[node name="SteerRightAction" parent="VBoxContainer" index="2" instance=ExtResource("2_6th8t")]
-layout_mode = 2
-_action = "steer_right"
-
-[node name="BrakeAction" parent="VBoxContainer" index="3" instance=ExtResource("2_6th8t")]
-layout_mode = 2
-_action = "brake"
-
-[node name="BoostAction" parent="VBoxContainer" index="4" instance=ExtResource("2_6th8t")]
-layout_mode = 2
-_action = "boost"
-
-[node name="BackButton" type="Button" parent="VBoxContainer" index="5" groups=["focus"]]
+[node name="BackButton" type="Button" parent="VBoxContainer" index="1" groups=["focus"]]
 layout_mode = 2
 text = "button.back"
 
+[node name="ResetControlsButton" type="Button" parent="VBoxContainer" index="2"]
+layout_mode = 2
+text = "button.reset_controls"
+
+[node name="SteerLeftAction" parent="VBoxContainer" index="3" instance=ExtResource("2_6th8t")]
+layout_mode = 2
+_action = "steer_left"
+
+[node name="SteerRightAction" parent="VBoxContainer" index="4" instance=ExtResource("2_6th8t")]
+layout_mode = 2
+_action = "steer_right"
+
+[node name="BrakeAction" parent="VBoxContainer" index="5" instance=ExtResource("2_6th8t")]
+layout_mode = 2
+_action = "brake"
+
+[node name="BoostAction" parent="VBoxContainer" index="6" instance=ExtResource("2_6th8t")]
+layout_mode = 2
+_action = "boost"
+
+[node name="BlipPlayer" type="AudioStreamPlayer" parent="." index="1"]
+stream = ExtResource("4_u432a")
+bus = &"Sound"
+
 [connection signal="pressed" from="VBoxContainer/BackButton" to="." method="change_card" binds= ["options"]]
+[connection signal="pressed" from="VBoxContainer/ResetControlsButton" to="." method="_on_reset_controls_button_pressed"]
