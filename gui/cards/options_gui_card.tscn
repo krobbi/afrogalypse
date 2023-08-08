@@ -40,7 +40,7 @@ text = "button.back"
 stream = ExtResource("3_bi6us")
 bus = &"Sound"
 
-[connection signal="pressed" from="VBoxContainer/ControlsButton" to="." method="change_card" binds= ["controls"]]
-[connection signal="pressed" from="VBoxContainer/CreditsButton" to="." method="change_card" binds= ["credits"]]
-[connection signal="pressed" from="VBoxContainer/TutorialButton" to="." method="change_card" binds= ["tutorial"]]
-[connection signal="pressed" from="VBoxContainer/BackButton" to="." method="change_card" binds= ["main"]]
+[connection signal="pressed" from="VBoxContainer/ControlsButton" to="." method="push_card" binds= ["controls"]]
+[connection signal="pressed" from="VBoxContainer/CreditsButton" to="." method="push_card" binds= ["credits"]]
+[connection signal="pressed" from="VBoxContainer/TutorialButton" to="." method="push_card" binds= ["tutorial"]]
+[connection signal="pressed" from="VBoxContainer/BackButton" to="." method="pop_card"]

@@ -50,4 +50,4 @@ func _on_continue_button_pressed() -> void:
 			_finished_player.play()
 		
 		await _finished_player.finished
-		change_card("options")
+		pop_card()

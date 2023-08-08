@@ -82,3 +82,5 @@ offset_left = -20.0
 offset_bottom = 20.0
 
 [node name="FrameStepper" parent="." instance=ExtResource("11_ulwx1")]
+
+[connection signal="root_popped" from="GUILayer/MainMenuGUIStack" to="." method="_on_main_menu_root_popped"]

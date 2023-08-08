@@ -41,5 +41,5 @@ _action = "boost"
 stream = ExtResource("4_u432a")
 bus = &"Sound"
 
-[connection signal="pressed" from="VBoxContainer/BackButton" to="." method="change_card" binds= ["options"]]
+[connection signal="pressed" from="VBoxContainer/BackButton" to="." method="pop_card"]
 [connection signal="pressed" from="VBoxContainer/ResetControlsButton" to="." method="_on_reset_controls_button_pressed"]
