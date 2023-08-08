@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://entities/frog/frog.gd" id="1_6saia"]
 [ext_resource type="PackedScene" uid="uid://ny61orou7nqh" path="res://components/mover/mover.tscn" id="2_5n6ao"]
 [ext_resource type="Texture2D" uid="uid://burjoj85dxohh" path="res://resources/textures/entities/frog/shadow.png" id="3_1gjve"]
-[ext_resource type="Texture2D" uid="uid://cn8mtqqxm7wt7" path="res://resources/textures/entities/frog/frog.png" id="4_b5i86"]
+[ext_resource type="Texture2D" uid="uid://dk4pu4j4mmiwu" path="res://resources/textures/entities/frog/frog.png" id="4_b5i86"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_lgslm"]
 radius = 2.0
@@ -20,7 +20,7 @@ texture = ExtResource("3_1gjve")
 
 [node name="Sprite" type="Sprite2D" parent="."]
 texture = ExtResource("4_b5i86")
-offset = Vector2(4, -6)
+offset = Vector2(4, -7)
 hframes = 2
 
 [node name="CollisionShape" type="CollisionShape2D" parent="."]
