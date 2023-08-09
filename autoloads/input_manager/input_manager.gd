@@ -7,6 +7,7 @@ const _DEFAULT_MAPPINGS: Dictionary = {
 	"steer_right": "key/%d" % KEY_D,
 	"brake": "key/%d" % KEY_SHIFT,
 	"boost": "key/%d" % KEY_SPACE,
+	"pause": "key/%d" % KEY_ESCAPE,
 }
 
 ## The map of action [String]s to their current mapping code [String]s.

@@ -15,6 +15,7 @@ var _data: Dictionary = {
 	"controls/steer_right": "",
 	"controls/brake": "",
 	"controls/boost": "",
+	"controls/pause": "",
 	"progress/has_seen_tutorial": false,
 	"progress/high_score": 0,
 }

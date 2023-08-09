@@ -1,0 +1,13 @@
+[gd_resource type="StyleBoxTexture" load_steps=2 format=3 uid="uid://cn0sottg6ngny"]
+
+[ext_resource type="Texture2D" uid="uid://4fxvw0d8jqw4" path="res://resources/textures/gui/scroll_bars.png" id="1_gwbjj"]
+
+[resource]
+content_margin_left = 3.0
+content_margin_top = 0.0
+content_margin_right = 3.0
+content_margin_bottom = 0.0
+texture = ExtResource("1_gwbjj")
+texture_margin_top = 3.0
+texture_margin_bottom = 3.0
+region_rect = Rect2(12, 0, 6, 12)

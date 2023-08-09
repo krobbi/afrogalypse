@@ -30,12 +30,13 @@ You can download Afrogalypse or play it online at
 All controls are mappable. Keyboard, mouse button, and joypad input are
 supported. Joypad input has not been tested on real hardware.
 
-| Action      | Input |
-| :---------- | :---- |
-| Steer Left  | A     |
-| Steer Right | D     |
-| Brake       | Shift |
-| Boost       | Space |
+| Action      | Input  |
+| :---------- | :----- |
+| Steer Left  | A      |
+| Steer Right | D      |
+| Brake       | Shift  |
+| Boost       | Space  |
+| Pause       | Escape |
 
 # Development
 Afrogalypse was created as my first solo game jam project and an entry to the
@@ -76,7 +77,7 @@ For each rating, enjoyment, creativity, and presentation were rated from 1 to 5
 stars:
 
 | Rating | Distribution |
-| -----: | -----------: |
+| :----- | :----------- |
 | 5 star | 19%          |
 | 4 star | 33.3%        |
 | 3 star | 23.8%        |

@@ -1,0 +1,18 @@
+[gd_scene load_steps=2 format=3 uid="uid://n8s74uewyiem"]
+
+[ext_resource type="PackedScene" uid="uid://deche81a76i5" path="res://gui/gui_card.tscn" id="1_uslbu"]
+
+[node name="ScrollableGUICard" instance=ExtResource("1_uslbu")]
+
+[node name="VBoxContainer" parent="." index="0"]
+custom_minimum_size = Vector2(0, 158)
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer" index="0"]
+layout_mode = 2
+size_flags_vertical = 3
+follow_focus = true
+horizontal_scroll_mode = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/ScrollContainer" index="0"]
+custom_minimum_size = Vector2(194, 0)
+layout_mode = 2

@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=9 format=3 uid="uid://4g6q0qitk4oc"]
+[gd_resource type="Theme" load_steps=14 format=3 uid="uid://4g6q0qitk4oc"]
 
 [ext_resource type="StyleBox" uid="uid://wxt1rahslv5n" path="res://resources/style_boxes/button_hover.tres" id="1_3a3k3"]
 [ext_resource type="StyleBox" uid="uid://reeofrnymnvk" path="res://resources/style_boxes/button_normal.tres" id="1_51hm5"]
@@ -8,6 +8,11 @@
 [ext_resource type="StyleBox" uid="uid://cfxlxb3ig2dfs" path="res://resources/style_boxes/button_pressed.tres" id="3_n413q"]
 [ext_resource type="Texture2D" uid="uid://c1j3ergggjv6a" path="res://resources/textures/gui/grabber.png" id="5_frmc3"]
 [ext_resource type="Texture2D" uid="uid://l6xwk25xtim1" path="res://resources/textures/gui/grabber_highlight.png" id="6_7kfc4"]
+[ext_resource type="StyleBox" uid="uid://dv7pigi5jobji" path="res://resources/style_boxes/scroll_container.tres" id="8_c4pfc"]
+[ext_resource type="StyleBox" uid="uid://bq4oo02a1jsb8" path="res://resources/style_boxes/scroll_grabber.tres" id="8_mqipg"]
+[ext_resource type="StyleBox" uid="uid://pql0ttj6543u" path="res://resources/style_boxes/scroll.tres" id="8_t3jey"]
+[ext_resource type="StyleBox" uid="uid://cn0sottg6ngny" path="res://resources/style_boxes/scroll_grabber_highlight.tres" id="9_vkgqw"]
+[ext_resource type="StyleBox" uid="uid://bbs76u4oee3pv" path="res://resources/style_boxes/scroll_grabber_pressed.tres" id="10_q163c"]
 
 [resource]
 default_font = ExtResource("1_gjyeg")
@@ -27,3 +32,9 @@ HSlider/styles/grabber_area_highlight = ExtResource("1_3a3k3")
 HSlider/styles/slider = ExtResource("3_n413q")
 Label/colors/font_color = Color(0.0627451, 0.0666667, 0.133333, 1)
 PanelContainer/styles/panel = ExtResource("1_t1ikr")
+ScrollContainer/styles/panel = ExtResource("8_c4pfc")
+VScrollBar/styles/grabber = ExtResource("8_mqipg")
+VScrollBar/styles/grabber_highlight = ExtResource("9_vkgqw")
+VScrollBar/styles/grabber_pressed = ExtResource("10_q163c")
+VScrollBar/styles/scroll = ExtResource("8_t3jey")
+VScrollBar/styles/scroll_focus = ExtResource("8_t3jey")

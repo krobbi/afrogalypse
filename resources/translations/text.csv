@@ -1,6 +1,7 @@
 keys,en
 action.boost,"Boost:"
 action.brake,"Brake:"
+action.pause,"Pause:"
 action.steer_left,"Steer Left:"
 action.steer_right,"Steer Right:"
 button.back,"Back"
