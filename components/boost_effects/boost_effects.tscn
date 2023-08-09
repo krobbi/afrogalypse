@@ -27,6 +27,8 @@ amount = 16
 process_material = SubResource("ParticleProcessMaterial_gwiaw")
 texture = ExtResource("2_r147u")
 lifetime = 0.3
+fixed_fps = 60
+interpolate = false
 visibility_rect = Rect2(-10, -10, 20, 50)
 local_coords = true
 
