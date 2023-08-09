@@ -4,6 +4,7 @@
 [ext_resource type="AudioStream" uid="uid://bhia2mib2fwjs" path="res://resources/audio/gui/card/navigate.ogg" id="2_tsqdi"]
 
 [node name="GUIStack" type="Control"]
+process_mode = 3
 custom_minimum_size = Vector2(320, 180)
 layout_mode = 3
 anchors_preset = 0

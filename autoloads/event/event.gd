@@ -34,6 +34,9 @@ signal game_over
 ## Emitted when a [GameOverGUICard] is closed.
 signal game_over_cleared
 
+## Emitted when the game is paused.
+signal game_paused
+
 ## Emitted when the input mappings are changed.
 signal input_mappings_changed
 

@@ -253,6 +253,9 @@ func _process_game_state(delta: float) -> void:
 	
 	if _boost_amount <= 0.0:
 		_boost_effects.disable()
+	
+	if Input.is_action_just_pressed("pause"):
+		Event.game_paused.emit()
 
 
 ## Process the car's stopping [enum State]. Emit [signal Event.game_over] when

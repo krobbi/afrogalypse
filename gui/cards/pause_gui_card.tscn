@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://coi6ukapt4vdk"]
+
+[ext_resource type="PackedScene" uid="uid://deche81a76i5" path="res://gui/gui_card.tscn" id="1_bkj4s"]
+[ext_resource type="Script" path="res://gui/cards/pause_gui_card.gd" id="2_p2tno"]
+
+[node name="PauseGUICard" instance=ExtResource("1_bkj4s")]
+script = ExtResource("2_p2tno")
+
+[node name="HeadingLabel" type="Label" parent="VBoxContainer" index="0"]
+layout_mode = 2
+text = "heading.paused"
+horizontal_alignment = 1
+
+[node name="ResumeButton" type="Button" parent="VBoxContainer" index="1" groups=["focus"]]
+layout_mode = 2
+text = "button.resume"
+
+[connection signal="pressed" from="VBoxContainer/ResumeButton" to="." method="resume"]
