@@ -37,6 +37,9 @@ signal game_over_cleared
 ## Emitted when the game is paused.
 signal game_paused
 
+## Emitted when the game is manually ended.
+signal game_ended
+
 ## Emitted when the input mappings are changed.
 signal input_mappings_changed
 

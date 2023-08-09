@@ -19,5 +19,10 @@ text = "button.resume"
 layout_mode = 2
 text = "button.options"
 
+[node name="EndRunButton" type="Button" parent="VBoxContainer" index="3"]
+layout_mode = 2
+text = "button.end_run"
+
 [connection signal="pressed" from="VBoxContainer/ResumeButton" to="." method="resume"]
 [connection signal="pressed" from="VBoxContainer/OptionsButton" to="." method="push_card" binds= ["options"]]
+[connection signal="pressed" from="VBoxContainer/EndRunButton" to="." method="_on_end_run_button_pressed"]

@@ -11,3 +11,10 @@ func _ready() -> void:
 func resume() -> void:
 	get_tree().paused = false
 	pop_card()
+
+
+## Run when the end run [Button] is pressed. Resume the game and emit
+## [signal Event.game_ended].
+func _on_end_run_button_pressed() -> void:
+	resume()
+	Event.game_ended.emit()

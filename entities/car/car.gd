@@ -11,6 +11,7 @@ enum State {
 	STARTING, ## The car is accelerating for the game state.
 	GAME, ## The car is in an in-game state.
 	STOPPING, ## The car is stopping for a game over.
+	ENDING, ## The game is manually being ended.
 }
 
 ## The rate to gain difficulty per second.
@@ -122,6 +123,7 @@ var _boost_cooldown: float = 0.0
 func _ready() -> void:
 	Event.subscribe(Event.new_game_started, _on_new_game_started)
 	Event.subscribe(Event.sign_passed, _on_sign_passed)
+	Event.subscribe(Event.game_ended, _on_game_ended)
 
 
 ## Run on every physics frame. Process the car's state.
@@ -133,6 +135,8 @@ func _physics_process(delta: float) -> void:
 			_process_game_state(delta)
 		State.STOPPING:
 			_process_stopping_state(delta)
+		State.ENDING:
+			_process_ending_state(delta)
 	
 	_apply_speed()
 	_boost_amount = maxf(_boost_amount - _BOOST_DECAY * delta, 0.0)
@@ -270,6 +274,27 @@ func _process_stopping_state(delta: float) -> void:
 		Event.game_over.emit()
 
 
+## Process the car's ending [enum State]. Deplete the car's energy and change to
+## the stopping [enum State].
+func _process_ending_state(delta: float) -> void:
+	_handle_input(delta, false)
+	
+	if _boost_amount <= 0.0:
+		_boost_effects.disable()
+	
+	if _hit_cooldown > 0.0 or _boost_amount > 0.0:
+		_hit_cooldown = maxf(_hit_cooldown - delta, 0.0)
+		material.set_shader_parameter("flash_amount", minf(_hit_cooldown, 1.0))
+	else:
+		if _energy > 0:
+			_gain_invincibility(0.2)
+			_play_hit(1.0)
+			_lose_energy()
+		else:
+			_play_hit(1.4)
+			_state = State.STOPPING
+
+
 ## Run when a new game starts. Reset the stats.
 func _on_new_game_started() -> void:
 	_state = State.STARTING
@@ -286,6 +311,14 @@ func _on_new_game_started() -> void:
 func _on_sign_passed() -> void:
 	if _state == State.GAME or _state == State.STARTING:
 		_gain_energy()
+
+
+## Run when the game is manually ended. Change to the ending [enum State] and
+## emit [signal Event.level_finished].
+func _on_game_ended() -> void:
+	if _state == State.GAME:
+		_state = State.ENDING
+		Event.level_finished.emit()
 
 
 ## Run when the [DistanceClock] reaches a distance. Increment the current score.
