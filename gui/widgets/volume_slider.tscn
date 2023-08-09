@@ -13,11 +13,12 @@ script = ExtResource("1_kyl0x")
 metadata/_edit_lock_ = true
 
 [node name="Label" type="Label" parent="."]
-custom_minimum_size = Vector2(40, 0)
 layout_mode = 2
+size_flags_horizontal = 3
 text = "Volume:"
 
 [node name="Slider" type="HSlider" parent="."]
+custom_minimum_size = Vector2(112, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 step = 5.0
