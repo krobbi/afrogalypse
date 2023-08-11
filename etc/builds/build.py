@@ -211,33 +211,28 @@ def publish_channel(channel: str) -> bool:
                     f"{PROJECT}:{channel}"))
 
 
-def publish_all_channels() -> bool:
+def publish_all_channels() -> None:
     """ Publish all channels and return whether it was successful. """
     
     passcode: str = f"Yes. Version {VERSION}. #{random.randint(111, 999)}"
     print(f"Are you sure you want to publish? Enter '{passcode}' to continue.")
     prompt: str = input("> ")
     
-    if prompt != passcode:
+    if prompt == passcode:
+        for_each_channel(publish_channel)
+    else:
         print("Publishing canceled.")
-        return True
-    
-    return for_each_channel(publish_channel)
 
 
-def for_each_channel(action: Callable[[str], bool]) -> bool:
+def for_each_channel(action: Callable[[str], bool]) -> None:
     """
     Call an action function for each channel and return whether they
     were all successful.
     """
     
-    is_successful: bool = True
-    
     for channel in CHANNELS:
         if not action(channel):
-            is_successful = False
-    
-    return is_successful
+            raise BuildError(f"Action failed on channel '{channel}'.")
 
 
 def raise_usage_error() -> None:
@@ -257,11 +252,11 @@ def run_command(command: list[str]) -> bool:
     
     if len(command) == 1:
         if command[0] == "clean":
-            return for_each_channel(clean_channel)
+            for_each_channel(clean_channel)
         elif command[0] == "export":
-            return for_each_channel(export_channel)
+            for_each_channel(export_channel)
         elif command[0] == "publish":
-            return publish_all_channels()
+            publish_all_channels()
         else:
             raise_usage_error()
     elif len(command) == 2:
