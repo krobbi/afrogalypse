@@ -240,6 +240,18 @@ def for_each_channel(action: Callable[[str], bool]) -> bool:
     return is_successful
 
 
+def raise_usage_error() -> None:
+    """ Raise a build command usage error. """
+    
+    raise BuildError(
+            "Usage:"
+            "\n * 'build clean'            - Clean all channels."
+            "\n * 'build clean <channel>'  - Clean a channel."
+            "\n * 'build export'           - Export all channels."
+            "\n * 'build export <channel>' - Export a channel."
+            "\n * 'build publish'          - Publish all channels.")
+
+
 def run_command(command: list[str]) -> bool:
     """ Run a build command and return whether it was successful. """
     
@@ -250,19 +262,19 @@ def run_command(command: list[str]) -> bool:
             return for_each_channel(export_channel)
         elif command[0] == "publish":
             return publish_all_channels()
+        else:
+            raise_usage_error()
     elif len(command) == 2:
         if command[0] == "clean":
             return clean_channel(command[1])
         elif command[0] == "export":
             return export_channel(command[1])
+        else:
+            raise_usage_error()
+    else:
+        raise_usage_error()
     
-    return err(
-            "Usage:"
-            "\n * 'build clean'            - Clean all channels."
-            "\n * 'build clean <channel>'  - Clean a channel."
-            "\n * 'build export'           - Export all channels."
-            "\n * 'build export <channel>' - Export a channel."
-            "\n * 'build publish'          - Publish all channels.")
+    return True
 
 
 def main() -> None:
