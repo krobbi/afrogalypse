@@ -57,14 +57,13 @@ def err(message: str) -> bool:
     return False
 
 
-def call_process(*args: str) -> bool:
-    """ Call a process and return whether it was successful. """
+def call_process(*args: str) -> None:
+    """ Call a process. """
     
     try:
         subprocess.check_call(args)
-        return True
     except (subprocess.CalledProcessError, OSError):
-        return err("Could not call process.")
+        raise BuildError("Could not call process.")
 
 
 def check_channel(channel: str) -> None:
@@ -105,7 +104,8 @@ def check_godot() -> bool:
     
     if has_godot is None:
         print("Checking Godot Engine...")
-        has_godot = check_config() and call_process(godot, "--version")
+        has_godot = check_config()
+        call_process(godot, "--version")
     
     return has_godot
 
@@ -120,7 +120,8 @@ def check_butler() -> bool:
     
     if has_butler is None:
         print("Checking butler...")
-        has_butler = check_config() and call_process(butler, "version")
+        has_butler = check_config()
+        call_process(butler, "version")
     
     return has_butler
 
@@ -180,19 +181,18 @@ def export_channel(channel: str) -> bool:
     
     check_channel(channel)
     
-    if (
-            not check_godot()
-            or not clean_channel(channel)
-            or not call_process(
-                    godot, "--path", "../..", "--headless",
-                    "--export-release", channel)):
+    if not (check_godot() and clean_channel(channel)):
         return False
+    
+    call_process(
+            godot, "--path", "../..", "--headless", "--export-release",
+            channel)
     
     if channel not in PLAIN_CHANNELS:
         try:
             shutil.copy("../../license.txt", channel)
         except shutil.Error:
-            return err(f"Could not copy license text to channel '{channel}'.")
+            raise BuildError(f"Could not copy license to channel '{channel}'.")
     
     return True
 
@@ -202,13 +202,14 @@ def publish_channel(channel: str) -> bool:
     
     check_channel(channel)
     
-    return (
-            check_godot()
-            and check_butler()
-            and export_channel(channel)
-            and call_process(
-                    butler, "push", f"--userversion={VERSION}", channel,
-                    f"{PROJECT}:{channel}"))
+    if not (check_godot() and check_butler() and export_channel(channel)):
+        return False
+    
+    call_process(
+            butler, "push", f"--userversion={VERSION}", channel,
+            f"{PROJECT}:{channel}")
+    
+    return True
 
 
 def publish_all_channels() -> None:
