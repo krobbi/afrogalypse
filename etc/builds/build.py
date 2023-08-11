@@ -8,6 +8,7 @@ import subprocess
 import sys
 
 from collections.abc import Callable
+from typing import Self
 
 VERSION: str = "1.0.1"
 """ The version number to publish with. Only update when ready. """
@@ -35,6 +36,19 @@ has_godot: bool | None = None
 
 has_butler: bool | None = None
 """ Whether the build script has a butler command. """
+
+class BuildError(Exception):
+    """ An error raised by a build command. """
+    
+    message: str
+    """ The build error's error message. """
+    
+    def __init__(self: Self, message: str) -> None:
+        """ Initialize the build error's error message. """
+        
+        super().__init__(message)
+        self.message = message
+
 
 def err(message: str) -> bool:
     """ Log an error message and return `False`. """
@@ -258,8 +272,11 @@ def main() -> None:
     Run the build script from arguments and exit if an error occured.
     """
     
-    if not run_command(sys.argv[1:]):
-        sys.exit(1)
+    try:
+        if not run_command(sys.argv[1:]):
+            raise BuildError("An error occured during the build command.")
+    except BuildError as build_error:
+        sys.exit(build_error.message)
 
 
 if __name__ == "__main__":
