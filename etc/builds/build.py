@@ -23,19 +23,19 @@ PLAIN_CHANNELS: tuple[str] = ("web",)
 """ The channels to not package with license text. """
 
 godot: str = ""
-""" The command to call Godot Engine. """
+""" The command to call Godot Engine with. """
 
 butler: str = ""
-""" The command to call butler. """
+""" The command to call butler with. """
 
-has_config: bool | None = None
-""" Whether the build script has a valid config file. """
+has_checked_config: bool = False
+""" Whether the build script has checked for a valid config file. """
 
-has_godot: bool | None = None
-""" Whether the build script has a Godot Engine command. """
+has_checked_godot: bool = False
+""" Whether the build script has checked for a Godot Engine command. """
 
-has_butler: bool | None = None
-""" Whether the build script has a butler command. """
+has_checked_butler: bool = False
+""" Whether the build script has checked for a butler command. """
 
 class BuildError(Exception):
     """ An error raised by a build command. """
@@ -73,57 +73,49 @@ def check_channel(channel: str) -> None:
         raise BuildError(f"Channel '{channel}' does not exist.")
 
 
-def check_config() -> bool:
-    """
-    Return whether the build script has a valid config file and log an
-    error message if it does not.
-    """
+def check_config() -> None:
+    """ Raise an error if a valid config file does not exist. """
     
-    global has_config, godot, butler
+    global has_checked_config, godot, butler
     
-    if has_config is None:
+    if not has_checked_config:
         try:
             config: configparser.ConfigParser = configparser.ConfigParser()
             config.read("build.cfg")
             godot = config.get("commands", "godot")
             butler = config.get("commands", "butler")
-            has_config = True
         except configparser.Error:
-            has_config = err("Could not read config.")
-    
-    return has_config
+            raise BuildError("Could not read config.")
+        
+        has_checked_config = True
 
 
 def check_godot() -> bool:
-    """
-    Return whether the build script has a Godot Engine command and log
-    an error message if it does not.
-    """
+    """ Raise an error if a Godot Engine command does not exist. """
     
-    global has_godot
+    global has_checked_godot
     
-    if has_godot is None:
+    if not has_checked_godot:
         print("Checking Godot Engine...")
-        has_godot = check_config()
+        check_config()
         call_process(godot, "--version")
+        has_checked_godot = True
     
-    return has_godot
+    return True
 
 
 def check_butler() -> bool:
-    """
-    Return whether the build script has a butler command and log an
-    error message if it does not.
-    """
+    """ Raise an error if a butler command does not exist. """
     
-    global has_butler
+    global has_checked_butler
     
-    if has_butler is None:
+    if not has_checked_butler:
         print("Checking butler...")
-        has_butler = check_config()
+        check_config()
         call_process(butler, "version")
+        has_checked_butler = True
     
-    return has_butler
+    return True
 
 
 def is_entry_file(entry: os.DirEntry[str]) -> bool:
