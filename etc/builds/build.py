@@ -139,8 +139,8 @@ def clean_dir(path: str, depth: int = 0) -> None:
                 raise BuildError(f"Broken directory entry at '{entry.path}'.")
 
 
-def clean_channel(channel: str) -> bool:
-    """ Clean a channel and return whether it was successful. """
+def clean_channel(channel: str) -> None:
+    """ Clean a channel. """
     
     check_channel(channel)
     
@@ -148,19 +148,14 @@ def clean_channel(channel: str) -> bool:
         clean_dir(channel, 0)
     except OSError:
         raise BuildError(f"Could not clean channel '{channel}'.")
-    
-    return True
 
 
-def export_channel(channel: str) -> bool:
-    """ Export a channel and return whether it was successful. """
+def export_channel(channel: str) -> None:
+    """ Export a channel. """
     
     check_channel(channel)
     check_godot()
-    
-    if not clean_channel(channel):
-        return False
-    
+    clean_channel(channel)
     call_process(
             godot, "--path", "../..", "--headless", "--export-release",
             channel)
@@ -170,25 +165,18 @@ def export_channel(channel: str) -> bool:
             shutil.copy("../../license.txt", channel)
         except shutil.Error:
             raise BuildError(f"Could not copy license to channel '{channel}'.")
-    
-    return True
 
 
-def publish_channel(channel: str) -> bool:
-    """ Publish a channel and return whether it was successful. """
+def publish_channel(channel: str) -> None:
+    """ Publish a channel. """
     
     check_channel(channel)
     check_godot()
     check_butler()
-    
-    if not export_channel(channel):
-        return False
-    
+    export_channel(channel)
     call_process(
             butler, "push", f"--userversion={VERSION}", channel,
             f"{PROJECT}:{channel}")
-    
-    return True
 
 
 def publish_all_channels() -> None:
@@ -204,12 +192,11 @@ def publish_all_channels() -> None:
         print("Publishing canceled.")
 
 
-def for_each_channel(action: Callable[[str], bool]) -> None:
-    """ Call an action function for each channel. """
+def for_each_channel(subroutine: Callable[[str], None]) -> None:
+    """ Call a subroutine for each channel. """
     
     for channel in CHANNELS:
-        if not action(channel):
-            raise BuildError(f"Action failed on channel '{channel}'.")
+        subroutine(channel)
 
 
 def raise_usage_error() -> None:
@@ -224,8 +211,8 @@ def raise_usage_error() -> None:
             "\n * 'build publish'          - Publish all channels.")
 
 
-def run_command(command: list[str]) -> bool:
-    """ Run a build command and return whether it was successful. """
+def run_command(command: list[str]) -> None:
+    """ Run a build command. """
     
     if len(command) == 1:
         if command[0] == "clean":
@@ -238,25 +225,22 @@ def run_command(command: list[str]) -> bool:
             raise_usage_error()
     elif len(command) == 2:
         if command[0] == "clean":
-            return clean_channel(command[1])
+            clean_channel(command[1])
         elif command[0] == "export":
-            return export_channel(command[1])
+            export_channel(command[1])
         else:
             raise_usage_error()
     else:
         raise_usage_error()
-    
-    return True
 
 
 def main() -> None:
     """
-    Run the build script from arguments and exit if an error occured.
+    Run the build script from arguments and exit if an error was raised.
     """
     
     try:
-        if not run_command(sys.argv[1:]):
-            raise BuildError("An error occured during the build command.")
+        run_command(sys.argv[1:])
     except BuildError as build_error:
         sys.exit(build_error.message)
 
