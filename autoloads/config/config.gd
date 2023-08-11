@@ -2,7 +2,7 @@
 extends Node
 
 ## The file path to save config data to.
-const _FILE_PATH: String = "user://options.cfg"
+const _FILE_PATH: String = "user://settings.cfg"
 
 ## Whether the config data should be saved.
 var _should_save: bool = false

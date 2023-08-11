@@ -17,9 +17,9 @@ stretch_mode = 3
 layout_mode = 2
 text = "button.start"
 
-[node name="OptionsButton" type="Button" parent="VBoxContainer" index="2"]
+[node name="SettingsButton" type="Button" parent="VBoxContainer" index="2"]
 layout_mode = 2
-text = "button.options"
+text = "button.settings"
 
 [node name="QuitButton" type="Button" parent="VBoxContainer" index="3"]
 layout_mode = 2
@@ -30,5 +30,5 @@ _node = NodePath("..")
 _web_build = 2
 
 [connection signal="pressed" from="VBoxContainer/StartButton" to="." method="_on_start_button_pressed"]
-[connection signal="pressed" from="VBoxContainer/OptionsButton" to="." method="push_card" binds= ["options"]]
+[connection signal="pressed" from="VBoxContainer/SettingsButton" to="." method="push_card" binds= ["settings"]]
 [connection signal="pressed" from="VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]

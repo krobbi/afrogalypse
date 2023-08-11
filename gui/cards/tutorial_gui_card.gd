@@ -1,5 +1,4 @@
-## A [GUICard] that displays a tutorial before exiting to the options menu or
-## starting a new game.
+## A [GUICard] that displays a tutorial.
 class_name TutorialGUICard
 extends GUICard
 

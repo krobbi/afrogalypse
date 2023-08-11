@@ -15,14 +15,14 @@ horizontal_alignment = 1
 layout_mode = 2
 text = "button.resume"
 
-[node name="OptionsButton" type="Button" parent="VBoxContainer" index="2"]
+[node name="SettingsButton" type="Button" parent="VBoxContainer" index="2"]
 layout_mode = 2
-text = "button.options"
+text = "button.settings"
 
 [node name="EndRunButton" type="Button" parent="VBoxContainer" index="3"]
 layout_mode = 2
 text = "button.end_run"
 
 [connection signal="pressed" from="VBoxContainer/ResumeButton" to="." method="resume"]
-[connection signal="pressed" from="VBoxContainer/OptionsButton" to="." method="push_card" binds= ["options"]]
+[connection signal="pressed" from="VBoxContainer/SettingsButton" to="." method="push_card" binds= ["settings"]]
 [connection signal="pressed" from="VBoxContainer/EndRunButton" to="." method="_on_end_run_button_pressed"]

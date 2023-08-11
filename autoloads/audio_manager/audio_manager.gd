@@ -1,4 +1,4 @@
-## Manages audio options.
+## Manages audio settings.
 extends Node
 
 ## A map of keys to audio bus indices.
