@@ -17,7 +17,6 @@ var _data: Dictionary = {
 	"controls/boost": "",
 	"controls/pause": "",
 	"progress/has_seen_tutorial": false,
-	"progress/high_score": 0,
 }
 
 ## Run when the config data is ready. Load the config data.

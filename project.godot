@@ -33,6 +33,7 @@ Event="*res://autoloads/event/event.tscn"
 AudioManager="*res://autoloads/audio_manager/audio_manager.tscn"
 InputManager="*res://autoloads/input_manager/input_manager.tscn"
 SceneManager="*res://autoloads/scene_manager/scene_manager.tscn"
+ScoreManager="*res://autoloads/score_manager/score_manager.tscn"
 
 [debug]
 

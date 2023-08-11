@@ -14,7 +14,7 @@ var _high_score: int = 0
 ## Run when the score counter is ready. Get the high score and subscribe the
 ## score counter to event [Signal]s.
 func _ready() -> void:
-	_high_score = maxi(Config.get_int("progress/high_score"), 0)
+	_high_score = ScoreManager.get_high_score()
 	_on_score_changed(_high_score)
 	Event.subscribe(Event.score_changed, _on_score_changed)
 	Event.subscribe(Event.game_over_cleared, _on_game_over_cleared)
@@ -34,6 +34,6 @@ func _on_score_changed(score: int) -> void:
 func _on_game_over_cleared() -> void:
 	if _score > _high_score:
 		_high_score = _score
-		Config.set_int("progress/high_score", _high_score)
+		ScoreManager.set_high_score(_high_score)
 	
 	_on_score_changed(_high_score)
