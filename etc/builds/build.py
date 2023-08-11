@@ -67,14 +67,11 @@ def call_process(*args: str) -> bool:
         return err("Could not call process.")
 
 
-def check_channel(channel: str) -> bool:
-    """
-    Return whether a channel exists and log an error message if it does
-    not.
-    """
+def check_channel(channel: str) -> None:
+    """ Raise an error if a channel does not exist. """
     
-    return True if channel in CHANNELS else err(
-            f"Channel '{channel}' does not exist.")
+    if channel not in CHANNELS:
+        raise BuildError(f"Channel '{channel}' does not exist.")
 
 
 def check_config() -> bool:
@@ -170,8 +167,7 @@ def clean_dir(path: str, depth: int = 0) -> bool:
 def clean_channel(channel: str) -> bool:
     """ Clean a channel and return whether it was successful. """
     
-    if not check_channel(channel):
-        return False
+    check_channel(channel)
     
     try:
         return clean_dir(channel, 0)
@@ -182,9 +178,10 @@ def clean_channel(channel: str) -> bool:
 def export_channel(channel: str) -> bool:
     """ Export a channel and return whether it was successful. """
     
+    check_channel(channel)
+    
     if (
-            not check_channel(channel)
-            or not check_godot()
+            not check_godot()
             or not clean_channel(channel)
             or not call_process(
                     godot, "--path", "../..", "--headless",
@@ -203,9 +200,10 @@ def export_channel(channel: str) -> bool:
 def publish_channel(channel: str) -> bool:
     """ Publish a channel and return whether it was successful. """
     
+    check_channel(channel)
+    
     return (
-            check_channel(channel)
-            and check_godot()
+            check_godot()
             and check_butler()
             and export_channel(channel)
             and call_process(
