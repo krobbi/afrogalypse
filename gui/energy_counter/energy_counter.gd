@@ -27,13 +27,13 @@ func _ready() -> void:
 ## Run when energy is gained. Add an [EnergyPoint].
 func _on_energy_gained() -> void:
 	var point: EnergyPoint = _point_scene.instantiate()
-	point.position.y = len(_points) * -16.0
+	point.position.y = _points.size() * -16.0
 	randomize()
 	point.position.x = randf_range(-2.0, 2.0)
 	point.position.y += randf_range(-1.0, 1.0)
 	add_child(point)
 	_points.push_back(point)
-	_gain_player.pitch_scale = 0.5 + 0.1 * len(_points)
+	_gain_player.pitch_scale = 0.5 + 0.1 * _points.size()
 	_gain_player.play()
 
 

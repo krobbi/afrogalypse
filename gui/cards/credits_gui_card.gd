@@ -42,7 +42,7 @@ func _display_credits() -> void:
 func _on_continue_button_pressed() -> void:
 	_credits_screen += 1
 	
-	if _credits_screen < len(_CREDIT_SCREENS):
+	if _credits_screen < _CREDIT_SCREENS.size():
 		_continue_player.play()
 		_display_credits()
 	else:

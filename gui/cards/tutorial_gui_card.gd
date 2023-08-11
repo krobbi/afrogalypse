@@ -56,7 +56,7 @@ func _display_tutorial() -> void:
 func _on_continue_button_pressed() -> void:
 	_tutorial_line += 1
 	
-	if _tutorial_line < len(_TUTORIAL):
+	if _tutorial_line < _TUTORIAL.size():
 		_continue_player.play()
 		_display_tutorial()
 	else:
