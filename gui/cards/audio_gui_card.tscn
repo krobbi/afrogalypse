@@ -1,0 +1,25 @@
+[gd_scene load_steps=3 format=3 uid="uid://8mp6x51p0p4a"]
+
+[ext_resource type="PackedScene" uid="uid://deche81a76i5" path="res://gui/gui_card.tscn" id="1_lwu2v"]
+[ext_resource type="PackedScene" uid="uid://b23kmeeyw2xl4" path="res://gui/widgets/volume_slider.tscn" id="2_q1jsx"]
+
+[node name="AudioGUICard" instance=ExtResource("1_lwu2v")]
+
+[node name="HeadingLabel" type="Label" parent="VBoxContainer" index="0"]
+layout_mode = 2
+text = "heading.audio"
+horizontal_alignment = 1
+
+[node name="BackButton" type="Button" parent="VBoxContainer" index="1" groups=["focus"]]
+layout_mode = 2
+text = "button.back"
+
+[node name="SoundVolume" parent="VBoxContainer" index="2" instance=ExtResource("2_q1jsx")]
+layout_mode = 2
+_key = "sound"
+
+[node name="MusicVolume" parent="VBoxContainer" index="3" instance=ExtResource("2_q1jsx")]
+layout_mode = 2
+_key = "music"
+
+[connection signal="pressed" from="VBoxContainer/BackButton" to="." method="pop_card"]

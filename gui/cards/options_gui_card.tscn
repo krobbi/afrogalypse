@@ -1,8 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://dnjoq3cue8j2c"]
+[gd_scene load_steps=3 format=3 uid="uid://dnjoq3cue8j2c"]
 
 [ext_resource type="PackedScene" uid="uid://deche81a76i5" path="res://gui/gui_card.tscn" id="1_kqotr"]
 [ext_resource type="AudioStream" uid="uid://ck8yg1glcuwmk" path="res://resources/audio/gui/card/blip.ogg" id="3_bi6us"]
-[ext_resource type="PackedScene" uid="uid://b23kmeeyw2xl4" path="res://gui/widgets/volume_slider.tscn" id="3_v6xge"]
 
 [node name="OptionsGUICard" instance=ExtResource("1_kqotr")]
 
@@ -11,36 +10,32 @@ layout_mode = 2
 text = "heading.options"
 horizontal_alignment = 1
 
-[node name="SoundSlider" parent="VBoxContainer" index="1" instance=ExtResource("3_v6xge")]
+[node name="BackButton" type="Button" parent="VBoxContainer" index="1" groups=["focus"]]
 layout_mode = 2
-_key = "sound"
-_is_focus = true
+text = "button.back"
 
-[node name="MusicSlider" parent="VBoxContainer" index="2" instance=ExtResource("3_v6xge")]
+[node name="AudioButton" type="Button" parent="VBoxContainer" index="2"]
 layout_mode = 2
-_key = "music"
+text = "button.audio"
 
 [node name="ControlsButton" type="Button" parent="VBoxContainer" index="3"]
 layout_mode = 2
 text = "button.controls"
 
-[node name="CreditsButton" type="Button" parent="VBoxContainer" index="4"]
-layout_mode = 2
-text = "button.credits"
-
-[node name="TutorialButton" type="Button" parent="VBoxContainer" index="5"]
+[node name="TutorialButton" type="Button" parent="VBoxContainer" index="4"]
 layout_mode = 2
 text = "button.tutorial"
 
-[node name="BackButton" type="Button" parent="VBoxContainer" index="6"]
+[node name="CreditsButton" type="Button" parent="VBoxContainer" index="5"]
 layout_mode = 2
-text = "button.back"
+text = "button.credits"
 
 [node name="BlipPlayer" type="AudioStreamPlayer" parent="." index="1"]
 stream = ExtResource("3_bi6us")
 bus = &"Sound"
 
-[connection signal="pressed" from="VBoxContainer/ControlsButton" to="." method="push_card" binds= ["controls"]]
-[connection signal="pressed" from="VBoxContainer/CreditsButton" to="." method="push_card" binds= ["credits"]]
-[connection signal="pressed" from="VBoxContainer/TutorialButton" to="." method="push_card" binds= ["tutorial"]]
 [connection signal="pressed" from="VBoxContainer/BackButton" to="." method="pop_card"]
+[connection signal="pressed" from="VBoxContainer/AudioButton" to="." method="push_card" binds= ["audio"]]
+[connection signal="pressed" from="VBoxContainer/ControlsButton" to="." method="push_card" binds= ["controls"]]
+[connection signal="pressed" from="VBoxContainer/TutorialButton" to="." method="push_card" binds= ["tutorial"]]
+[connection signal="pressed" from="VBoxContainer/CreditsButton" to="." method="push_card" binds= ["credits"]]

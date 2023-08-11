@@ -5,9 +5,6 @@ extends HBoxContainer
 ## The key of the audio bus to control.
 @export var _key: String
 
-## Whether the volume slider should be a focus.
-@export var _is_focus: bool = false
-
 ## The volume slider's [HSlider].
 @onready var _slider: HSlider = $Slider
 
@@ -18,10 +15,6 @@ extends HBoxContainer
 ## [Control]s.
 func _ready() -> void:
 	$Label.text = "slider.volume.%s" % _key
-	
-	if _is_focus:
-		_slider.add_to_group("focus")
-	
 	_blip_player.bus = AudioManager.get_bus_name(_key)
 	_slider.set_value_no_signal(AudioManager.get_bus_volume(_key))
 
