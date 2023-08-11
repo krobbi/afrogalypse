@@ -13,9 +13,9 @@ layout_mode = 2
 text = "heading.controls"
 horizontal_alignment = 1
 
-[node name="BackButton" type="Button" parent="VBoxContainer/ScrollContainer/VBoxContainer" index="0" groups=["focusable"]]
+[node name="GoBackButton" type="Button" parent="VBoxContainer/ScrollContainer/VBoxContainer" index="0" groups=["focusable"]]
 layout_mode = 2
-text = "button.back"
+text = "button.go_back"
 
 [node name="ResetControlsButton" type="Button" parent="VBoxContainer/ScrollContainer/VBoxContainer" index="1" groups=["focusable"]]
 layout_mode = 2
@@ -45,5 +45,5 @@ _action = "pause"
 stream = ExtResource("4_u432a")
 bus = &"Sound"
 
-[connection signal="pressed" from="VBoxContainer/ScrollContainer/VBoxContainer/BackButton" to="." method="pop_card"]
+[connection signal="pressed" from="VBoxContainer/ScrollContainer/VBoxContainer/GoBackButton" to="." method="pop_card"]
 [connection signal="pressed" from="VBoxContainer/ScrollContainer/VBoxContainer/ResetControlsButton" to="." method="_on_reset_controls_button_pressed"]

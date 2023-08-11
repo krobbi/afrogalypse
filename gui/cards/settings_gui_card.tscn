@@ -10,9 +10,9 @@ layout_mode = 2
 text = "heading.settings"
 horizontal_alignment = 1
 
-[node name="BackButton" type="Button" parent="VBoxContainer" index="1" groups=["focusable"]]
+[node name="GoBackButton" type="Button" parent="VBoxContainer" index="1" groups=["focusable"]]
 layout_mode = 2
-text = "button.back"
+text = "button.go_back"
 
 [node name="AudioButton" type="Button" parent="VBoxContainer" index="2" groups=["focusable"]]
 layout_mode = 2
@@ -34,7 +34,7 @@ text = "button.credits"
 stream = ExtResource("2_yv1w6")
 bus = &"Sound"
 
-[connection signal="pressed" from="VBoxContainer/BackButton" to="." method="pop_card"]
+[connection signal="pressed" from="VBoxContainer/GoBackButton" to="." method="pop_card"]
 [connection signal="pressed" from="VBoxContainer/AudioButton" to="." method="push_card" binds= ["audio"]]
 [connection signal="pressed" from="VBoxContainer/ControlsButton" to="." method="push_card" binds= ["controls"]]
 [connection signal="pressed" from="VBoxContainer/TutorialButton" to="." method="push_card" binds= ["tutorial"]]
