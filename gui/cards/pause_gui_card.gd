@@ -7,6 +7,13 @@ func _ready() -> void:
 	get_tree().paused = true
 
 
+## Run when the pause GUI card receives an [InputEvent]. Handle controls for
+## resuming.
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("pause"):
+		resume()
+
+
 ## Unpause the game and make a request to pop the pause GUI card.
 func resume() -> void:
 	get_tree().paused = false
