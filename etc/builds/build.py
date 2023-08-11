@@ -253,45 +253,14 @@ def run_command(command: list[str]) -> bool:
             "\n * 'build publish'          - Publish all channels.")
 
 
-def main(args: list[str]) -> bool:
+def main() -> None:
     """
-    Run the build script from arguments and return whether it was
-    successful.
+    Run the build script from arguments and exit if an error occured.
     """
     
-    try:
-        builds_path: str = os.path.dirname(os.path.realpath(__file__))
-    except OSError:
-        if not args or args[0] in ("", "-c"):
-            return err("Could not find builds path from arguments.")
-        
-        builds_path = os.path.realpath(args[0])
-        
-        if os.path.isfile(builds_path):
-            builds_path = os.path.dirname(builds_path)
-    
-    if not os.path.isdir(builds_path):
-        return err("Could not find builds path.")
-    
-    return_path: str = os.path.realpath(os.getcwd())
-    
-    if not os.path.isdir(return_path):
-        return err("Could not find return path.")
-    
-    try:
-        os.chdir(builds_path)
-    except OSError:
-        return err("Could not change to builds path.")
-    
-    is_successful: bool = run_command(args[1:])
-    
-    try:
-        os.chdir(return_path)
-    except OSError:
-        return err("Could not change to return path.")
-    
-    return is_successful
+    if not run_command(sys.argv[1:]):
+        sys.exit(1)
 
 
 if __name__ == "__main__":
-    sys.exit(0 if main(sys.argv) else 1)
+    main()
