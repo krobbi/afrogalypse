@@ -32,8 +32,8 @@ var _tutorial_line: int = 0
 ## The [AudioStreamPlayer] to play when the tutorial is continued.
 @onready var _continue_player: AudioStreamPlayer = $ContinuePlayer
 
-## The [AudioStreamPlayer] to play when the tutorial is finished.
-@onready var _finished_player: AudioStreamPlayer = $FinishedPlayer
+## The [RemoteAudioPlayer] to play when the tutorial is finished.
+@onready var _finished_player: RemoteAudioPlayer = $FinishedPlayer
 
 ## Run when the tutorial GUI card is ready. Display the first line of the
 ## tutorial.
@@ -60,9 +60,6 @@ func _on_continue_button_pressed() -> void:
 		_continue_player.play()
 		_display_tutorial()
 	else:
-		if not _finished_player.playing:
-			_finished_player.play()
-		
-		await _finished_player.finished
+		_finished_player.play_remote()
 		Config.set_bool("progress/has_seen_tutorial", true)
 		pop_card()

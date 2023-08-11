@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://cxtpgr80uq1ib"]
+[gd_scene load_steps=6 format=3 uid="uid://cxtpgr80uq1ib"]
 
 [ext_resource type="PackedScene" uid="uid://deche81a76i5" path="res://gui/gui_card.tscn" id="1_w35es"]
 [ext_resource type="Script" path="res://gui/cards/tutorial_gui_card.gd" id="2_sno3i"]
 [ext_resource type="AudioStream" uid="uid://d2ssnljcftjpl" path="res://resources/audio/gui/card/continue.ogg" id="3_scgte"]
+[ext_resource type="PackedScene" uid="uid://dqvfew2ida065" path="res://components/remote_audio_player/remote_audio_player.tscn" id="4_mvcln"]
 [ext_resource type="AudioStream" uid="uid://by75rlp8d41ao" path="res://resources/audio/gui/card/finished.ogg" id="4_ud5pt"]
 
 [node name="TutorialGUICard" instance=ExtResource("1_w35es")]
@@ -28,7 +29,7 @@ text = "button.continue"
 stream = ExtResource("3_scgte")
 bus = &"Sound"
 
-[node name="FinishedPlayer" type="AudioStreamPlayer" parent="." index="2"]
+[node name="FinishedPlayer" parent="." index="2" instance=ExtResource("4_mvcln")]
 stream = ExtResource("4_ud5pt")
 bus = &"Sound"
 

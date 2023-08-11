@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://bkciko41efmse"]
+[gd_scene load_steps=6 format=3 uid="uid://bkciko41efmse"]
 
 [ext_resource type="PackedScene" uid="uid://deche81a76i5" path="res://gui/gui_card.tscn" id="1_tilm0"]
 [ext_resource type="Script" path="res://gui/cards/credits_gui_card.gd" id="2_r7tjm"]
 [ext_resource type="AudioStream" uid="uid://d2ssnljcftjpl" path="res://resources/audio/gui/card/continue.ogg" id="3_j2xda"]
+[ext_resource type="PackedScene" uid="uid://dqvfew2ida065" path="res://components/remote_audio_player/remote_audio_player.tscn" id="4_6tr5k"]
 [ext_resource type="AudioStream" uid="uid://by75rlp8d41ao" path="res://resources/audio/gui/card/finished.ogg" id="4_o8iy5"]
 
 [node name="CreditsGUICard" instance=ExtResource("1_tilm0")]
@@ -24,7 +25,7 @@ text = "button.continue"
 stream = ExtResource("3_j2xda")
 bus = &"Sound"
 
-[node name="FinishedPlayer" type="AudioStreamPlayer" parent="." index="2"]
+[node name="FinishedPlayer" parent="." index="2" instance=ExtResource("4_6tr5k")]
 stream = ExtResource("4_o8iy5")
 bus = &"Sound"
 

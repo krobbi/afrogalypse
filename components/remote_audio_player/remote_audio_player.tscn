@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dqvfew2ida065"]
+
+[ext_resource type="Script" path="res://components/remote_audio_player/remote_audio_player.gd" id="1_kjlqf"]
+
+[node name="RemoteAudioPlayer" type="AudioStreamPlayer"]
+script = ExtResource("1_kjlqf")

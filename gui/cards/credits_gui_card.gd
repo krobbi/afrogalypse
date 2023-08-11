@@ -19,8 +19,8 @@ var _credits_screen: int = 0
 ## The [AudioStreamPlayer] to play when the credits are continued.
 @onready var _continue_player: AudioStreamPlayer = $ContinuePlayer
 
-## The [AudioStreamPlayer] to play when the credits are finished.
-@onready var _finished_player: AudioStreamPlayer = $FinishedPlayer
+## The [RemoteAudioPlayer] to play when the credits are finished.
+@onready var _finished_player: RemoteAudioPlayer = $FinishedPlayer
 
 ## Run when the credits gui card is ready. Display the first screen of credits.
 func _ready() -> void:
@@ -46,8 +46,5 @@ func _on_continue_button_pressed() -> void:
 		_continue_player.play()
 		_display_credits()
 	else:
-		if not _finished_player.playing:
-			_finished_player.play()
-		
-		await _finished_player.finished
+		_finished_player.play_remote()
 		pop_card()
