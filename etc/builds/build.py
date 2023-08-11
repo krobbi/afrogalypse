@@ -50,13 +50,6 @@ class BuildError(Exception):
         self.message = message
 
 
-def err(message: str) -> bool:
-    """ Log an error message and return `False`. """
-    
-    print(message, file=sys.stderr)
-    return False
-
-
 def call_process(*args: str) -> None:
     """ Call a process and raise an error if it failed. """
     
@@ -126,14 +119,11 @@ def is_entry_file(entry: os.DirEntry[str]) -> bool:
         return False
 
 
-def clean_dir(path: str, depth: int = 0) -> bool:
-    """
-    Recursively clean a directory and return whether it was successful.
-    May raise an `OSError`.
-    """
+def clean_dir(path: str, depth: int = 0) -> None:
+    """ Recursively clean a directory. May raise an OS error. """
     
     if depth >= 8:
-        return err(f"Cleaning depth exceeded at '{path}'.")
+        raise BuildError(f"Cleaning depth exceeded at '{path}'.")
     
     with os.scandir(path) as dir:
         for entry in dir:
@@ -143,14 +133,10 @@ def clean_dir(path: str, depth: int = 0) -> bool:
             if is_entry_file(entry):
                 os.remove(entry)
             elif entry.is_dir(follow_symlinks=False):
-                if not clean_dir(entry.path, depth + 1):
-                    return False
-                
+                clean_dir(entry.path, depth + 1)
                 os.rmdir(entry)
             else:
-                return err(f"Broken directory entry at '{entry.path}'.")
-    
-    return True
+                raise BuildError(f"Broken directory entry at '{entry.path}'.")
 
 
 def clean_channel(channel: str) -> bool:
@@ -159,9 +145,11 @@ def clean_channel(channel: str) -> bool:
     check_channel(channel)
     
     try:
-        return clean_dir(channel, 0)
+        clean_dir(channel, 0)
     except OSError:
-        return err(f"Could not clean channel '{channel}'.")
+        raise BuildError(f"Could not clean channel '{channel}'.")
+    
+    return True
 
 
 def export_channel(channel: str) -> bool:
