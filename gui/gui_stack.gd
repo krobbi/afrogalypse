@@ -21,6 +21,13 @@ var _is_updating: bool = false
 ## The [AudioStreamPlayer] to play when a [GUICard] is changed or closed.
 @onready var _navigate_player: AudioStreamPlayer = $NavigatePlayer
 
+## Run when the GUI stack receives an input event. Pop the current [GUICard] if
+## it is not the root [GUICard].
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("pause") and _card_stack.size() > 1:
+		pop_card()
+
+
 ## Push a [GUICard] to the GUI stack from its name.
 func push_card(card_name: String) -> void:
 	if not _is_updating:
