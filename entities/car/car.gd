@@ -119,8 +119,11 @@ var _boost_cooldown: float = 0.0
 ## The [DistanceClock] to count the score with.
 @onready var _distance_clock: DistanceClock = $DistanceClock
 
-## Run when the car is ready. Subscribe the car to event [Signal]s.
+## Run when the car is ready. Set the car's shader parameters and subscribe the
+## car to event [Signal]s.
 func _ready() -> void:
+	material.set_shader_parameter("flash_color", Color("#f1f2f1"))
+	material.set_shader_parameter("flash_amount", 0.0)
 	Event.subscribe(Event.new_game_started, _on_new_game_started)
 	Event.subscribe(Event.sign_passed, _on_sign_passed)
 	Event.subscribe(Event.game_ended, _on_game_ended)
