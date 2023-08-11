@@ -58,7 +58,7 @@ def err(message: str) -> bool:
 
 
 def call_process(*args: str) -> None:
-    """ Call a process. """
+    """ Call a process and raise an error if it failed. """
     
     try:
         subprocess.check_call(args)
@@ -90,7 +90,7 @@ def check_config() -> None:
         has_checked_config = True
 
 
-def check_godot() -> bool:
+def check_godot() -> None:
     """ Raise an error if a Godot Engine command does not exist. """
     
     global has_checked_godot
@@ -100,11 +100,9 @@ def check_godot() -> bool:
         check_config()
         call_process(godot, "--version")
         has_checked_godot = True
-    
-    return True
 
 
-def check_butler() -> bool:
+def check_butler() -> None:
     """ Raise an error if a butler command does not exist. """
     
     global has_checked_butler
@@ -114,8 +112,6 @@ def check_butler() -> bool:
         check_config()
         call_process(butler, "version")
         has_checked_butler = True
-    
-    return True
 
 
 def is_entry_file(entry: os.DirEntry[str]) -> bool:
@@ -172,8 +168,9 @@ def export_channel(channel: str) -> bool:
     """ Export a channel and return whether it was successful. """
     
     check_channel(channel)
+    check_godot()
     
-    if not (check_godot() and clean_channel(channel)):
+    if not clean_channel(channel):
         return False
     
     call_process(
@@ -193,8 +190,10 @@ def publish_channel(channel: str) -> bool:
     """ Publish a channel and return whether it was successful. """
     
     check_channel(channel)
+    check_godot()
+    check_butler()
     
-    if not (check_godot() and check_butler() and export_channel(channel)):
+    if not export_channel(channel):
         return False
     
     call_process(
@@ -205,7 +204,7 @@ def publish_channel(channel: str) -> bool:
 
 
 def publish_all_channels() -> None:
-    """ Publish all channels and return whether it was successful. """
+    """ Publish all channels. """
     
     passcode: str = f"Yes. Version {VERSION}. #{random.randint(111, 999)}"
     print(f"Are you sure you want to publish? Enter '{passcode}' to continue.")
@@ -218,10 +217,7 @@ def publish_all_channels() -> None:
 
 
 def for_each_channel(action: Callable[[str], bool]) -> None:
-    """
-    Call an action function for each channel and return whether they
-    were all successful.
-    """
+    """ Call an action function for each channel. """
     
     for channel in CHANNELS:
         if not action(channel):
