@@ -16,10 +16,10 @@ VERSION: str = "1.0.1"
 PROJECT: str = "krobbizoid/afrogalypse"
 """ The itch.io project to publish to. """
 
-CHANNELS: tuple[str, str, str, str] = ("web", "win", "linux", "mac")
+CHANNELS: list[str] = ["web", "win", "linux", "mac"]
 """ The build script's channels. """
 
-PLAIN_CHANNELS: tuple[str] = ("web",)
+PLAIN_CHANNELS: list[str] = ["web"]
 """ The channels to not package with license text. """
 
 godot: str = ""
