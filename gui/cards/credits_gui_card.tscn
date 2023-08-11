@@ -16,7 +16,7 @@ horizontal_alignment = 1
 [node name="CreditsLabel" type="Label" parent="VBoxContainer" index="1"]
 layout_mode = 2
 
-[node name="ContinueButton" type="Button" parent="VBoxContainer" index="2" groups=["focus"]]
+[node name="ContinueButton" type="Button" parent="VBoxContainer" index="2" groups=["focusable"]]
 layout_mode = 2
 text = "button.continue"
 

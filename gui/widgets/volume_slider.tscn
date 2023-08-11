@@ -17,7 +17,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 text = "Volume:"
 
-[node name="Slider" type="HSlider" parent="."]
+[node name="Slider" type="HSlider" parent="." groups=["focusable"]]
 custom_minimum_size = Vector2(112, 0)
 layout_mode = 2
 size_flags_horizontal = 3

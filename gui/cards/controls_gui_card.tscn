@@ -13,11 +13,11 @@ layout_mode = 2
 text = "heading.controls"
 horizontal_alignment = 1
 
-[node name="BackButton" type="Button" parent="VBoxContainer/ScrollContainer/VBoxContainer" index="0" groups=["focus"]]
+[node name="BackButton" type="Button" parent="VBoxContainer/ScrollContainer/VBoxContainer" index="0" groups=["focusable"]]
 layout_mode = 2
 text = "button.back"
 
-[node name="ResetControlsButton" type="Button" parent="VBoxContainer/ScrollContainer/VBoxContainer" index="1"]
+[node name="ResetControlsButton" type="Button" parent="VBoxContainer/ScrollContainer/VBoxContainer" index="1" groups=["focusable"]]
 layout_mode = 2
 text = "button.reset_controls"
 

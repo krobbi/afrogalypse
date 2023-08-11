@@ -13,15 +13,15 @@ layout_mode = 2
 texture = ExtResource("2_4eh0t")
 stretch_mode = 3
 
-[node name="StartButton" type="Button" parent="VBoxContainer" index="1" groups=["focus"]]
+[node name="StartButton" type="Button" parent="VBoxContainer" index="1" groups=["focusable"]]
 layout_mode = 2
 text = "button.start"
 
-[node name="SettingsButton" type="Button" parent="VBoxContainer" index="2"]
+[node name="SettingsButton" type="Button" parent="VBoxContainer" index="2" groups=["focusable"]]
 layout_mode = 2
 text = "button.settings"
 
-[node name="QuitButton" type="Button" parent="VBoxContainer" index="3"]
+[node name="QuitButton" type="Button" parent="VBoxContainer" index="3" groups=["focusable"]]
 layout_mode = 2
 text = "button.quit"
 

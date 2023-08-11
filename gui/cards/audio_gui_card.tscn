@@ -10,7 +10,7 @@ layout_mode = 2
 text = "heading.audio"
 horizontal_alignment = 1
 
-[node name="BackButton" type="Button" parent="VBoxContainer" index="1" groups=["focus"]]
+[node name="BackButton" type="Button" parent="VBoxContainer" index="1" groups=["focusable"]]
 layout_mode = 2
 text = "button.back"
 

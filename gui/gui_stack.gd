@@ -8,6 +8,9 @@ signal root_popped
 ## The stack of current [GUICard] names.
 var _card_stack: Array[String] = []
 
+## The stack of focusable [Control] indices.
+var _focus_stack: Array[int] = []
+
 ## The current [GUICard] to display. [code]null[/code] if no [GUICard] is being
 ## displayed.
 var _card: GUICard = null
@@ -21,7 +24,16 @@ var _is_updating: bool = false
 ## Push a [GUICard] to the GUI stack from its name.
 func push_card(card_name: String) -> void:
 	if not _is_updating:
+		if not _card_stack.is_empty():
+			var focusables: Array[Control] = _get_focusables()
+			
+			for i in range(focusables.size()):
+				if focusables[i].has_focus():
+					_focus_stack[-1] = i
+					break
+		
 		_card_stack.push_back(card_name)
+		_focus_stack.push_back(0)
 		_update_card()
 
 
@@ -30,6 +42,7 @@ func push_card(card_name: String) -> void:
 func pop_card() -> void:
 	if not _is_updating and not _card_stack.is_empty():
 		_card_stack.pop_back()
+		_focus_stack.pop_back()
 		_update_card()
 		
 		if _card_stack.is_empty():
@@ -39,9 +52,20 @@ func pop_card() -> void:
 ## Change to a root [GUICard] from its name.
 func change_card(card_name: String) -> void:
 	if not _is_updating:
-		_card_stack.resize(1)
-		_card_stack[0] = card_name
+		_card_stack = [card_name]
+		_focus_stack = [0]
 		_update_card()
+
+
+## Get an [Array] of currently focusable [Control]s.
+func _get_focusables() -> Array[Control]:
+	var focusables: Array[Control] = []
+	
+	for node in get_tree().get_nodes_in_group("focusable"):
+		if node is Control:
+			focusables.push_back(node)
+	
+	return focusables
 
 
 ## Update the current [GUICard] from the card stack.
@@ -66,10 +90,9 @@ func _update_card() -> void:
 		_card.change_requested.connect(change_card)
 		add_child(_card)
 		await create_tween().tween_property(_card, "modulate", Color.WHITE, 0.1).finished
+		var focusables: Array[Control] = _get_focusables()
 		
-		var focus: Node = get_tree().get_first_node_in_group("focus")
-		
-		if focus is Control:
-			focus.grab_focus()
+		if not focusables.is_empty():
+			focusables[clampi(_focus_stack[-1], 0, focusables.size())].grab_focus()
 	
 	_is_updating = false

@@ -10,23 +10,23 @@ layout_mode = 2
 text = "heading.settings"
 horizontal_alignment = 1
 
-[node name="BackButton" type="Button" parent="VBoxContainer" index="1" groups=["focus"]]
+[node name="BackButton" type="Button" parent="VBoxContainer" index="1" groups=["focusable"]]
 layout_mode = 2
 text = "button.back"
 
-[node name="AudioButton" type="Button" parent="VBoxContainer" index="2"]
+[node name="AudioButton" type="Button" parent="VBoxContainer" index="2" groups=["focusable"]]
 layout_mode = 2
 text = "button.audio"
 
-[node name="ControlsButton" type="Button" parent="VBoxContainer" index="3"]
+[node name="ControlsButton" type="Button" parent="VBoxContainer" index="3" groups=["focusable"]]
 layout_mode = 2
 text = "button.controls"
 
-[node name="TutorialButton" type="Button" parent="VBoxContainer" index="4"]
+[node name="TutorialButton" type="Button" parent="VBoxContainer" index="4" groups=["focusable"]]
 layout_mode = 2
 text = "button.tutorial"
 
-[node name="CreditsButton" type="Button" parent="VBoxContainer" index="5"]
+[node name="CreditsButton" type="Button" parent="VBoxContainer" index="5" groups=["focusable"]]
 layout_mode = 2
 text = "button.credits"
 

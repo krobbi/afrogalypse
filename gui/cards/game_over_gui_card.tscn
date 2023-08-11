@@ -11,7 +11,7 @@ layout_mode = 2
 text = "heading.game_over"
 horizontal_alignment = 1
 
-[node name="RetryButton" type="Button" parent="VBoxContainer" index="1" groups=["focus"]]
+[node name="RetryButton" type="Button" parent="VBoxContainer" index="1" groups=["focusable"]]
 layout_mode = 2
 text = "button.retry"
 
