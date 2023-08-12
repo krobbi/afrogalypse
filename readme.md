@@ -8,11 +8,12 @@ _All rights reserved._
 # Contents
 1. [Afrogalypse](#afrogalypse)
 2. [Default Controls](#default-controls)
-3. [Development](#development)
-4. [Jam Results](#jam-results)
-5. [Previous Jams](#previous-jams)
-6. [Credits](#credits)
-7. [License](#license)
+3. [Building](#building)
+4. [Development](#development)
+5. [Jam Results](#jam-results)
+6. [Previous Jams](#previous-jams)
+7. [Credits](#credits)
+8. [License](#license)
 
 # Afrogalypse
 Afrogalypse is a bullet hell-esque score attack game where you are driving to
@@ -22,7 +23,7 @@ signs, which can be exchanged for a boost and a brief period of invincibility.
 [![Afrogalypse gameplay.](/etc/images/gameplay.png)](
 https://krobbizoid.itch.io/afrogalypse)
 
-You can download Afrogalypse or play it online at
+You can download the game or play it online at
 [itch.io](https://krobbizoid.itch.io/afrogalypse) or the
 [GitHub releases page](https://github.com/krobbi/afrogalypse/releases).
 
@@ -38,8 +39,12 @@ supported. Joypad input has not been tested on real hardware.
 | Boost       | Space  |
 | Pause       | Escape |
 
+# Building
+See [etc/builds/readme.md](/etc/builds/readme.md) for documentation on building
+the game.
+
 # Development
-Afrogalypse was created as my first solo game jam project and an entry to the
+The game was created as my first solo game jam project and an entry to the
 [GMTK Game Jam 2023](https://itch.io/jam/gmtk-2023) - a 48-hour game jam hosted
 by [Game Maker's Toolkit](https://www.youtube.com/@GMTK) with a secret theme
 that is revealed when the jam starts.
@@ -59,7 +64,7 @@ robotic frogs. This increased the sense of danger, and helped tie the game
 together with an aesthetic.
 
 # Jam Results
-Afrogalypse received the following
+The game received the following
 [results](https://itch.io/jam/gmtk-2023/rate/2155249) from 14 ratings:
 
 | Criteria     | Rank / 6,839 | Score | Raw Score |
