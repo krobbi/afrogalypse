@@ -10,7 +10,7 @@ import sys
 from collections.abc import Callable
 from typing import Self
 
-VERSION: str = "1.0.1"
+VERSION: str = "1.1.0"
 """ The version number to publish with. Only update when ready. """
 
 PROJECT: str = "krobbizoid/afrogalypse"
