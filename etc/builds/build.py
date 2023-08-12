@@ -179,6 +179,13 @@ def publish_channel(channel: str) -> None:
             f"{PROJECT}:{channel}")
 
 
+def for_each_channel(subroutine: Callable[[str], None]) -> None:
+    """ Call a subroutine for each channel. """
+    
+    for channel in CHANNELS:
+        subroutine(channel)
+
+
 def publish_all_channels() -> None:
     """ Publish all channels. """
     
@@ -190,13 +197,6 @@ def publish_all_channels() -> None:
         for_each_channel(publish_channel)
     else:
         print("Publishing canceled.")
-
-
-def for_each_channel(subroutine: Callable[[str], None]) -> None:
-    """ Call a subroutine for each channel. """
-    
-    for channel in CHANNELS:
-        subroutine(channel)
 
 
 def raise_usage_error() -> None:
