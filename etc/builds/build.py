@@ -171,7 +171,7 @@ def clean_channel(channel: str) -> None:
     check_channel(channel)
     
     try:
-        clean_dir(channel, 0)
+        clean_dir(channel)
     except OSError:
         raise BuildError(f"Could not clean channel '{channel}'.")
 
