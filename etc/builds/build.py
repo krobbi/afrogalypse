@@ -28,6 +28,9 @@ godot: str = ""
 butler: str = ""
 """ The command to call butler with. """
 
+has_checked_files: bool = False
+""" Whether expected files have been checked for. """
+
 has_checked_config: bool = False
 """ Whether a valid config file has been checked for. """
 
@@ -59,8 +62,28 @@ def call_process(*args: str) -> None:
         raise BuildError("Could not call process.")
 
 
+def check_files() -> None:
+    """ Raise an error if expected files are not found. """
+    
+    global has_checked_files
+    
+    if not has_checked_files:
+        for path in [
+            "../../export_presets.cfg",
+            "../../license.txt",
+            "../../project.godot",
+            "../.gdignore",
+        ] + [f"{channel}/.itch" for channel in CHANNELS]:
+            if not os.path.isfile(path):
+                raise BuildError("Run the build script from 'etc/builds'.")
+        
+        has_checked_files = True
+
+
 def check_channel(channel: str) -> None:
     """ Raise an error if a channel does not exist. """
+    
+    check_files()
     
     if channel not in CHANNELS:
         raise BuildError(f"Channel '{channel}' does not exist.")
@@ -72,13 +95,16 @@ def check_config() -> None:
     global has_checked_config, godot, butler
     
     if not has_checked_config:
+        if not os.path.isfile("build.cfg"):
+            raise BuildError("Create a 'build.cfg' file.")
+        
         try:
             config: configparser.ConfigParser = configparser.ConfigParser()
             config.read("build.cfg")
             godot = config.get("commands", "godot")
             butler = config.get("commands", "butler")
         except configparser.Error:
-            raise BuildError("Could not read config.")
+            raise BuildError("Could not parse 'build.cfg'.")
         
         has_checked_config = True
 
