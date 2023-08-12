@@ -53,7 +53,7 @@ class BuildError(Exception):
         self.message = message
 
 
-def call_process(*args: str) -> None:
+def call(*args: str) -> None:
     """ Call a process and raise an error if it failed. """
     
     try:
@@ -117,7 +117,7 @@ def check_godot() -> None:
     if not has_checked_godot:
         print("Checking Godot Engine...")
         check_config()
-        call_process(godot, "--version")
+        call(godot, "--version")
         has_checked_godot = True
 
 
@@ -129,7 +129,7 @@ def check_butler() -> None:
     if not has_checked_butler:
         print("Checking butler...")
         check_config()
-        call_process(butler, "version")
+        call(butler, "version")
         has_checked_butler = True
 
 
@@ -182,9 +182,7 @@ def export_channel(channel: str) -> None:
     check_channel(channel)
     check_godot()
     clean_channel(channel)
-    call_process(
-            godot, "--path", "../..", "--headless", "--export-release",
-            channel)
+    call(godot, "--path", "../..", "--headless", "--export-release", channel)
     
     if channel not in PLAIN_CHANNELS:
         try:
@@ -200,7 +198,7 @@ def publish_channel(channel: str) -> None:
     check_godot()
     check_butler()
     export_channel(channel)
-    call_process(
+    call(
             butler, "push", f"--userversion={VERSION}", channel,
             f"{PROJECT}:{channel}")
 
