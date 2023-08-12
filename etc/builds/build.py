@@ -239,10 +239,20 @@ def main() -> None:
     Run the build script from arguments and exit if an error was raised.
     """
     
+    return_path: str = os.path.realpath(os.getcwd())
+    
+    if not os.path.isdir(return_path):
+        sys.exit("Could not find return path.")
+    
     try:
         run_command(sys.argv[1:])
     except BuildError as build_error:
         sys.exit(build_error.message)
+    finally:
+        try:
+            os.chdir(return_path)
+        except OSError:
+            sys.exit("Could not change to return path.")
 
 
 if __name__ == "__main__":
