@@ -17,7 +17,7 @@ PROJECT: str = "krobbizoid/afrogalypse"
 """ The itch.io project to publish to. """
 
 CHANNELS: list[str] = ["web", "win", "linux", "mac"]
-""" The build script's channels. """
+""" The channels to build. """
 
 PLAIN_CHANNELS: list[str] = ["web"]
 """ The channels to not package with license text. """
@@ -29,16 +29,16 @@ butler: str = ""
 """ The command to call butler with. """
 
 has_checked_config: bool = False
-""" Whether the build script has checked for a valid config file. """
+""" Whether a valid config file has been checked for. """
 
 has_checked_godot: bool = False
-""" Whether the build script has checked for a Godot Engine command. """
+""" Whether a Godot Engine command has been checked for. """
 
 has_checked_butler: bool = False
-""" Whether the build script has checked for a butler command. """
+""" Whether a butler command has been checked for. """
 
 class BuildError(Exception):
-    """ An error raised by a build command. """
+    """ An error raised by the build script. """
     
     message: str
     """ The build error's error message. """
@@ -234,17 +234,41 @@ def run_command(command: list[str]) -> None:
         raise_usage_error()
 
 
+def change_to_builds_dir() -> None:
+    """ Change to the builds directory. """
+    
+    try:
+        path: str = os.path.dirname(os.path.realpath(__file__))
+    except NameError:
+        if not sys.argv or sys.argv[0] in ("", "-c"):
+            raise BuildError("Could not find builds directory from arguments.")
+        
+        path = os.path.realpath(sys.argv[0])
+        
+        if os.path.isfile(path):
+            path = os.path.dirname(path)
+    
+    if not os.path.isdir(path):
+        raise BuildError("Could not find builds directory.")
+    
+    try:
+        os.chdir(path)
+    except OSError:
+        raise BuildError("Could not change to builds directory.")
+
+
 def main() -> None:
     """
-    Run the build script from arguments and exit if an error was raised.
+    Run a build command from arguments and exit if an error occured.
     """
     
     return_path: str = os.path.realpath(os.getcwd())
     
     if not os.path.isdir(return_path):
-        sys.exit("Could not find return path.")
+        sys.exit("Could not find return directory.")
     
     try:
+        change_to_builds_dir()
         run_command(sys.argv[1:])
     except BuildError as build_error:
         sys.exit(build_error.message)
@@ -252,7 +276,7 @@ def main() -> None:
         try:
             os.chdir(return_path)
         except OSError:
-            sys.exit("Could not change to return path.")
+            sys.exit("Could not change to return directory.")
 
 
 if __name__ == "__main__":
