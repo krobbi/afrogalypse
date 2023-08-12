@@ -35,8 +35,8 @@ table of versions is shown below:
 To export the game, export templates must be installed. This can be done in the
 Godot Engine editor at `Editor > Manage Export Templates...`.
 
-The game should ideally be opened in the editor at least once before exporting.
-This will reimport assets and create metadata.
+The game may need to be opened in the editor several times before exporting to
+reimport assets.
 
 The editor should be fully closed before exporting the game from the command
 line.
