@@ -20,7 +20,7 @@ Afrogalypse is a bullet hell-esque score attack game where you are driving to
 avoid an apocalypse of robotic frogs. You gain hit points when you pass road
 signs, which can be exchanged for a boost and a brief period of invincibility.
 
-[![Afrogalypse gameplay.](/etc/images/gameplay.png)](
+[![Afrogalypse gameplay.](/etc/images/screenshot.png)](
 https://krobbizoid.itch.io/afrogalypse)
 
 You can download the game or play it online at
